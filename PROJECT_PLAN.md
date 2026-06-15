@@ -173,3 +173,42 @@ General-Store-POS/
 - Urdu interface option rakhna — shopkeepers English nahi jaante
 - Android tablet version bhi socho (web-based so it's easy)
 - Target: Rs. 5,000-8,000 per shop — 1000 shops = Rs. 50 lakh+
+
+---
+
+## 🔐 Final Phase: Security & Licensing System (Launch Se Pehle Lazim)
+
+> **Is phase ko complete kiye baghair software sell nahi karna!**
+> **Note:** BiteDesk/PharmaPOS jaisi exact same security — PHP/Node.js stack.
+
+### Steps:
+
+#### Step 1 — PC ID Generation
+- [ ] Python helper ya PHP exec se `MachineGuid` read → SHA256
+- [ ] Fallback: MAC + hostname → SHA256
+
+#### Step 2 — Trial (Server-Side, 15 days)
+- [ ] File nahi — server pe track
+- [ ] "Trial — X days remaining"
+
+#### Step 3 — License Activation
+- [ ] `XXXX-XXXX-XXXX-XXXX` format
+- [ ] `POST /api/activate` → encrypted local save
+
+#### Step 4 — Startup Validation
+- [ ] PC ID verify + expiry + 3-din online check
+- [ ] 7-din offline grace
+
+#### Step 5 — Deactivation + 3-Day Lock
+#### Step 6 — Code Protection (IonCube PHP / JS obfuscator)
+#### Step 7 — Admin License Panel
+
+### Phase Table:
+| Phase | Tasks | Status |
+|-------|-------|--------|
+| Phase 7 | PC ID + Trial (server) | 🔴 Not Started |
+| Phase 7 | License activation | 🔴 Not Started |
+| Phase 7 | Startup validation | 🔴 Not Started |
+| Phase 7 | Deactivation + lock | 🔴 Not Started |
+| Phase 7 | Admin license panel | 🔴 Not Started |
+| Phase 7 | Code protection + build | 🔴 Not Started |
