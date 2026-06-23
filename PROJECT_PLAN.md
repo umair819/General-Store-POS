@@ -1,8 +1,8 @@
 # 🏪 General Store / Kiryana POS System
-**Project Status:** 🔴 Not Started  
+**Project Status:** 🟡 In Progress (Core Checkout, Khata, Purchases, WhatsApp Marketing, and Gemini AI OCR Completed)  
 **Priority:** ⭐⭐⭐⭐⭐ Very High  
 **Target Market:** Kiryana stores, general shops, departmental stores, utility stores across Pakistan  
-**Tech Stack (Planned):** PHP + MySQL OR Node.js + SQLite + HTML/CSS/JS
+**Tech Stack:** PHP + SQLite + Electron + HTML/CSS/JS
 
 ---
 
@@ -18,85 +18,91 @@ BiteDesk POS aur PharmaPOS ki technology ka combination use kar ke yeh jaldi ban
 ## ✅ Features To Develop (Kya Banana Hai)
 
 ### 1. 🔐 Login & User Management
-- [ ] Admin / Owner login
-- [ ] Cashier / Staff login (limited access)
-- [ ] PIN-based quick login at POS screen
-- [ ] Activity log (kon ne kya kiya)
+- [x] Admin / Owner login
+- [x] Cashier / Staff login (limited access)
+- [x] PIN-based quick login at POS screen
+- [x] Activity log (kon ne kya kiya)
 
 ### 2. 🛒 POS / Billing Screen (Main Screen)
-- [ ] Barcode scanner support (USB barcode reader)
-- [ ] Quick item search by name or barcode
-- [ ] Touch/click item to add to cart
-- [ ] Quantity adjustment in cart
-- [ ] Multiple items per bill
-- [ ] Discount per item or on total bill
-- [ ] Hold bill / resume later
-- [ ] Fast checkout with keyboard shortcuts
-- [ ] Cash tendered & change calculation
+- [x] Dual-language support (Urdu / English quick toggle)
+- [x] Barcode scanner support (USB barcode reader)
+- [x] Quick item search by name or barcode
+- [x] Touch/click item to add to cart
+- [x] Quantity adjustment in cart
+- [x] Multiple items per bill
+- [x] Discount per item or on total bill
+- [x] Hold bill / resume later
+- [x] Fast checkout with keyboard shortcuts
+- [x] Cash tendered & change calculation
 
 ### 3. 💳 Payment Methods
-- [ ] Cash payment
-- [ ] Easypaisa / JazzCash (manual confirm)
-- [ ] Bank transfer / cheque
-- [ ] Credit (Udhaar / Khata) — customer balance tracking
-- [ ] Split payment (partial cash + partial Udhaar)
+- [x] Cash payment
+- [x] Easypaisa / JazzCash (manual confirm)
+- [x] Bank transfer / cheque
+- [x] Credit (Udhaar / Khata) — customer balance tracking
+- [x] Split payment (partial cash + partial Udhaar)
 
 ### 4. 📦 Product / Item Management
-- [ ] Add products (Name, Category, Barcode, Purchase Price, Sale Price, Unit)
-- [ ] Categories (Atta/Chawal, Drinks, Biscuits, Cleaning, etc.)
-- [ ] Units: Kg, Gram, Packet, Dozen, Piece, Liter
-- [ ] Multiple purchase units vs sale units (e.g., buy by carton, sell by piece)
-- [ ] Product photo (optional)
-- [ ] Bulk product import via Excel/CSV
+- [x] Add products (Name, Category, Barcode, Purchase Price, Sale Price, Unit)
+- [x] Categories (Atta/Chawal, Drinks, Biscuits, Cleaning, etc.)
+- [x] Units: Kg, Gram, Packet, Dozen, Piece, Liter
+- [x] Multiple purchase units vs sale units (e.g., buy by carton, sell by piece)
+- [x] Product photo (optional)
+- [x] Bulk product import via Excel/CSV
+- [x] Vyapar Backup Import Tool (Free 1-click migration of Products & Customers from Vyapar Excel/CSV exports)
 
 ### 5. 📊 Inventory / Stock Management
-- [ ] Current stock levels per item
-- [ ] Low stock alert (set minimum threshold)
-- [ ] Stock adjustment (damage, theft, correction)
-- [ ] Stock in (purchase/restock entry)
-- [ ] Expiry date tracking for perishables
+- [x] Current stock levels per item
+- [x] Low stock alert (set minimum threshold)
+- [x] Near-expiry stock alerts/notifications (for perishables)
+- [x] Stock adjustment (damage, theft, correction)
+- [x] Stock in (purchase/restock entry)
+- [x] Expiry date tracking for perishables
 
 ### 6. 🧾 Purchase Management
-- [ ] Supplier/vendor list
-- [ ] Purchase order creation
-- [ ] Goods received entry
-- [ ] Supplier payment tracking
-- [ ] Supplier ledger (outstanding balance)
+- [x] Supplier/vendor list
+- [x] Purchase order creation
+- [x] Goods received entry
+- [x] Supplier payment tracking
+- [x] Supplier ledger (outstanding balance)
+- [x] 🤖 Gemini AI OCR Bill Scanner (Auto-extracts bill items, quantities, prices, and matches with catalog to update stock)
 
 ### 7. 👥 Customer & Khata (Udhaar) Management
-- [ ] Customer list (Name, Phone, Address)
-- [ ] Udhaar (credit) tracking per customer
-- [ ] Payment collection from customer
-- [ ] Customer statement print karo
-- [ ] Send balance reminder via WhatsApp
+- [x] Customer list (Name, Phone, Address)
+- [x] Udhaar (credit) tracking per customer
+- [x] Payment collection from customer (Ledger Statement sheets)
+- [x] Customer statement print karo
+- [x] Send balance reminder via WhatsApp
 
 ### 8. 🧾 Receipt & Invoice Printing
-- [ ] 80mm thermal receipt printing
+- [x] 80mm thermal receipt printing
 - [ ] A4/A5 invoice printing
-- [ ] Shop name, logo, address on receipt
-- [ ] Duplicate receipt reprint
+- [ ] 10+ customizable receipt/invoice templates (different layouts, fonts, and colors)
+- [x] Shop name, logo, address on receipt
+- [x] Duplicate receipt reprint
 
 ### 9. 📈 Reports & Analytics
-- [ ] Daily sales report
+- [x] Daily sales report
 - [ ] Item-wise sales report (best sellers)
 - [ ] Category-wise sales
 - [ ] Profit & loss report (daily/monthly)
-- [ ] Low stock report
-- [ ] Udhaar/pending payments report
-- [ ] Supplier outstanding report
+- [x] Low stock report
+- [x] Udhaar/pending payments report
+- [x] Supplier outstanding report
 
 ### 10. 📱 WhatsApp Integration
 - [ ] Daily sales summary to owner on WhatsApp
-- [ ] Udhaar reminder to customer via WhatsApp
-- [ ] Low stock alert to owner
-- [ ] Receipt share to customer via WhatsApp (optional)
+- [x] Automated Udhaar/balance reminder scheduler to customers
+- [x] Near-expiry & low stock alert notifications to owner
+- [x] Receipt share to customer via WhatsApp (Text template)
 
 ### 11. ⚙️ Settings
-- [ ] Shop name, logo, address, phone
-- [ ] Tax/GST settings (optional)
-- [ ] Default currency (PKR)
-- [ ] Receipt header/footer customization
-- [ ] Backup & restore
+- [x] Shop name, logo, address, phone
+- [x] Tax/GST settings (optional)
+- [x] Default currency (PKR)
+- [x] Receipt header/footer customization
+- [x] Backup & restore (Support own POS format backups)
+- [x] Advanced Restore & Migration Engine: Support direct upload & 1-click import of Vyapar (.vyb) backups and other market softwares
 - [ ] Multi-branch support (Phase 2)
 
 ### 12. 🔒 Licensing
@@ -110,13 +116,13 @@ BiteDesk POS aur PharmaPOS ki technology ka combination use kar ke yeh jaldi ban
 
 | Layer | Technology |
 |-------|-----------|
-| Backend | Node.js + Express OR PHP |
-| Database | SQLite (offline first) |
-| Frontend | HTML + CSS + JS |
+| Backend | PHP + SQLite (offline first) |
+| Database | SQLite 3 |
+| Frontend | HTML + CSS + JS (Outfit / Poppins typography) |
 | Barcode | USB barcode scanner (HID input) |
-| Printing | 80mm thermal + PDF |
-| WhatsApp | Baileys Node.js |
-| Packaging | Electron (.exe) OR XAMPP-based |
+| Printing | 80mm thermal (HTML preview / print) |
+| WhatsApp | Web URL redirection & hooks |
+| Packaging | Electron wrapper |
 
 ---
 
@@ -124,20 +130,17 @@ BiteDesk POS aur PharmaPOS ki technology ka combination use kar ke yeh jaldi ban
 
 ```
 General-Store-POS/
-├── index.js / server.php    # Main backend
-├── database.js / db.php     # DB operations
-├── db_config.json
-├── index.html               # POS billing screen
-├── inventory.html           # Stock management
-├── purchases.html           # Purchase management
-├── customers.html           # Customer/Khata list
-├── reports.html             # All reports
-├── settings.html            # Settings page
-├── whatsapp/
-│   └── wa-server.js
-├── 1. Start_POS.bat
-├── 1. End_POS.bat
-└── PROJECT_PLAN.md
+├── api.php                  # Central AJAX backend API
+├── billing.php              # POS billing checkout interface
+├── categories.php           # Categories registry CRUD
+├── customers.php            # Customer Khata & ledger payments
+├── purchases.php            # Stock purchases & Gemini AI OCR scanning
+├── marketing.php            # WhatsApp promotions campaigns
+├── products.php             # Inventory / Products CRUD
+├── settings.php             # Shop settings & restoration engine
+├── main.js                  # Electron bootstrapper
+├── package.json             # Electron configuration
+└── PROJECT_PLAN.md          # Project plan roadmap
 ```
 
 ---
@@ -157,10 +160,12 @@ General-Store-POS/
 
 | Phase | Tasks | Status |
 |-------|-------|--------|
-| Phase 1 | Products + Categories + Inventory | 🔴 Not Started |
-| Phase 2 | POS billing screen + Payments | 🔴 Not Started |
-| Phase 3 | Customer Khata + Udhaar tracking | 🔴 Not Started |
-| Phase 4 | Purchase management + Suppliers | 🔴 Not Started |
+| Phase 1 | Products + Categories + Inventory | 🟢 Completed |
+| Phase 2 | POS billing screen + Payments | 🟢 Completed |
+| Phase 3 | Customer Khata + Udhaar tracking | 🟢 Completed |
+| Phase 4 | Purchase management + Suppliers | 🟢 Completed |
+| Phase 5 | Reports + Printing | 🟡 In Progress (Receipt printing done) |
+| Phase 6 | WhatsApp + Licensing + Packaging | 🟡 In Progress (WhatsApp Campaigns done) |Phase 4 | Purchase management + Suppliers | 🔴 Not Started |
 | Phase 5 | Reports + Printing | 🔴 Not Started |
 | Phase 6 | WhatsApp + Licensing + Packaging | 🔴 Not Started |
 
@@ -168,11 +173,17 @@ General-Store-POS/
 
 ## 📝 Notes & Ideas
 
-- BiteDesk-POS-Web aur PharmaPOS ka code bohot reuse ho sakta hai
-- Barcode scanner support add karo — yeh killer feature hai kiryana stores ke liye
-- Urdu interface option rakhna — shopkeepers English nahi jaante
-- Android tablet version bhi socho (web-based so it's easy)
-- Target: Rs. 5,000-8,000 per shop — 1000 shops = Rs. 50 lakh+
+- **Code Reuse:** BiteDesk-POS-Web aur PharmaPOS ka code bohot reuse ho sakta hai.
+- **Competitive Advantage vs Vyapar (vyapar.pk):**
+  - **One-time Pricing:** Vyapar is yearly subscription-based (Rs. 3000-6000/year). Hum local shops ko Rs. 5,000-8,000 one-time lifetime license key pe offer karenge, jo Pakistan market ke liye zyada attractive hai.
+  - **Urdu-First Simplicity:** Vyapar contains complex accounting terms. Hum interface ko Urdu main aur aam fahm terms (Sale, Purchase, Stock, Udhaar) ke sath rakhain ge.
+  - **10+ Receipt/Invoice Templates:** Vyapar ki tarah thermal aur A4 templates ki customization options denge (jis me client apna logo, header, footer aur design choose kar sake).
+  - **Free WhatsApp Messaging:** Vyapar charges extra for SMS. Hum direct WhatsApp Web/Baileys integration se free messaging setup karenge.
+  - **Advanced Multi-Software Restore Engine:** System settings mein 1-click restore option hoga jo humari backup file ke sath sath Vyapar (.vyb) aur baaqi competitors ke backups se directly data migrate/restore kar sakega (switching cost to zero).
+  - **Offline Reliability:** 100% offline local setup without requiring high-speed internet.
+- **Hardware Integration:** Barcode scanner support (USB) is critical for faster kiryana checkouts.
+- **Device Support:** Tablet version can be supported in Phase 2 via local network web access.
+- **Financial Goal:** Target: Rs. 5,000-8,000 per shop — 1000 shops = Rs. 50 lakh+.
 
 ---
 

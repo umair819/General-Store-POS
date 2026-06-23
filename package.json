@@ -1,0 +1,14 @@
+{
+  "name": "tijarat-pro",
+  "version": "1.0.0",
+  "description": "TijaratPro - Smart business software for retail & wholesale",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Umair",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.3.3"
+  }
+}

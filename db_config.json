@@ -1,0 +1,10 @@
+{
+    "db_type": "sqlite",
+    "db_name": "general_store.db",
+    "shop_name": "TijaratPro",
+    "shop_phone": "03001234567",
+    "shop_address": "Saddar, Karachi, Pakistan",
+    "shop_currency": "PKR",
+    "gemini_api_key": "",
+    "whatsapp_mode": "link"
+}

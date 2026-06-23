@@ -1,0 +1,4 @@
+node_modules/
+scratch/
+general_store.db
+.DS_Store
