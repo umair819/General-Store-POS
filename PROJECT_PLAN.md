@@ -129,7 +129,7 @@ BiteDesk POS aur PharmaPOS ki technology ka combination use kar ke yeh jaldi ban
 ## 📁 Planned Folder Structure
 
 ```
-General-Store-POS/
+Tijarat-PRO/
 ├── api.php                  # Central AJAX backend API
 ├── billing.php              # POS billing checkout interface
 ├── categories.php           # Categories registry CRUD
