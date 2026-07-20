@@ -41,6 +41,17 @@ $trans = [
         'whatsapp_mode' => 'WhatsApp Marketing Send Mode',
         'whatsapp_mode_link' => 'WhatsApp Web (Browser Tabs - Safe)',
         'whatsapp_mode_api' => 'Local headless background service (Needs Setup)',
+        'receipt_template' => 'Thermal Receipt Design Template',
+        'template_default' => 'Default Classic (Thermal)',
+        'template_modern' => 'Sleek Modern (Sans-serif)',
+        'template_elegant' => 'Elegant Serif (Traditional)',
+        'template_compact' => 'Compact (Paper Saver)',
+        'template_bold' => 'Bold Accent (High Contrast)',
+        'template_blue' => 'Corporate Blue',
+        'template_green' => 'Grocery Green',
+        'template_urdu' => 'Urdu Traditional (RTL)',
+        'template_luxury' => 'Retail Luxury (Spaced)',
+        'template_vintage' => 'Vintage Dot-Matrix',
     ],
     'ur' => [
         'title' => 'تجارت پرو - سیٹنگز',
@@ -72,6 +83,17 @@ $trans = [
         'whatsapp_mode' => 'واٹس ایپ پروموشن بھیجنے کا طریقہ',
         'whatsapp_mode_link' => 'واٹس ایپ ویب (محفوظ اور آسان)',
         'whatsapp_mode_api' => 'لوکل بیک گراؤنڈ سروس (سیٹ اپ ضروری ہے)',
+        'receipt_template' => 'تھرمل رسید ڈیزائن ٹیمپلیٹ',
+        'template_default' => 'ڈیفالٹ کلاسک (تھرمل)',
+        'template_modern' => 'جدید سلیک (سینس-سیرف)',
+        'template_elegant' => 'خوبصورت سیرف (روایتی)',
+        'template_compact' => 'کمپیکٹ (کاغذ بچت)',
+        'template_bold' => 'بولڈ لہجہ (اعلی کنٹراسٹ)',
+        'template_blue' => 'کارپوریٹ نیلا',
+        'template_green' => 'گروسری ہرا',
+        'template_urdu' => 'اردو روایتی (RTL)',
+        'template_luxury' => 'ریٹیل لگژری (کشادہ)',
+        'template_vintage' => 'ونٹیج ڈاٹ میٹرکس',
     ]
 ];
 
@@ -90,6 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         'shop_currency' => trim($_POST['shop_currency'] ?? 'PKR'),
         'gemini_api_key' => trim($_POST['gemini_api_key'] ?? ''),
         'whatsapp_mode' => trim($_POST['whatsapp_mode'] ?? 'link'),
+        'receipt_template' => trim($_POST['receipt_template'] ?? 'default'),
     ];
     file_put_contents(__DIR__ . '/db_config.json', json_encode($config_data, JSON_PRETTY_PRINT));
     $success_msg = $trans[$lang]['success_saved'];
@@ -236,6 +259,22 @@ if (file_exists(__DIR__ . '/db_config.json')) {
                             <select class="form-control" id="whatsappMode" name="whatsapp_mode">
                                 <option value="link" <?php echo (($config['whatsapp_mode'] ?? 'link') === 'link') ? 'selected' : ''; ?>><?php echo $trans[$lang]['whatsapp_mode_link']; ?></option>
                                 <option value="local_api" <?php echo (($config['whatsapp_mode'] ?? 'link') === 'local_api') ? 'selected' : ''; ?>><?php echo $trans[$lang]['whatsapp_mode_api']; ?></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="receiptTemplate"><?php echo $trans[$lang]['receipt_template']; ?></label>
+                            <select class="form-control" id="receiptTemplate" name="receipt_template">
+                                <option value="default" <?php echo (($config['receipt_template'] ?? 'default') === 'default') ? 'selected' : ''; ?>><?php echo $trans[$lang]['template_default']; ?></option>
+                                <option value="modern" <?php echo (($config['receipt_template'] ?? 'default') === 'modern') ? 'selected' : ''; ?>><?php echo $trans[$lang]['template_modern']; ?></option>
+                                <option value="elegant" <?php echo (($config['receipt_template'] ?? 'default') === 'elegant') ? 'selected' : ''; ?>><?php echo $trans[$lang]['template_elegant']; ?></option>
+                                <option value="compact" <?php echo (($config['receipt_template'] ?? 'default') === 'compact') ? 'selected' : ''; ?>><?php echo $trans[$lang]['template_compact']; ?></option>
+                                <option value="bold" <?php echo (($config['receipt_template'] ?? 'default') === 'bold') ? 'selected' : ''; ?>><?php echo $trans[$lang]['template_bold']; ?></option>
+                                <option value="blue" <?php echo (($config['receipt_template'] ?? 'default') === 'blue') ? 'selected' : ''; ?>><?php echo $trans[$lang]['template_blue']; ?></option>
+                                <option value="green" <?php echo (($config['receipt_template'] ?? 'default') === 'green') ? 'selected' : ''; ?>><?php echo $trans[$lang]['template_green']; ?></option>
+                                <option value="urdu" <?php echo (($config['receipt_template'] ?? 'default') === 'urdu') ? 'selected' : ''; ?>><?php echo $trans[$lang]['template_urdu']; ?></option>
+                                <option value="luxury" <?php echo (($config['receipt_template'] ?? 'default') === 'luxury') ? 'selected' : ''; ?>><?php echo $trans[$lang]['template_luxury']; ?></option>
+                                <option value="vintage" <?php echo (($config['receipt_template'] ?? 'default') === 'vintage') ? 'selected' : ''; ?>><?php echo $trans[$lang]['template_vintage']; ?></option>
                             </select>
                         </div>
  

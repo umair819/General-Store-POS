@@ -145,4 +145,16 @@ function dbExecute($sql, $params = []) {
         ];
     }
 }
+
+// ================= LICENSE VERIFICATION SYSTEM =================
+require_once __DIR__ . '/license_manager.php';
+$current_page = basename($_SERVER['PHP_SELF']);
+
+if ($current_page !== 'login.php') {
+    $license_status = check_license();
+    if ($license_status['status'] === 'invalid') {
+        header("Location: login.php?license_status=invalid&message=" . urlencode($license_status['message']));
+        exit();
+    }
+}
 ?>

@@ -7,6 +7,22 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+$config_file = __DIR__ . '/db_config.json';
+$shopName = 'TijaratPro';
+$shopPhone = '03001234567';
+$shopAddress = 'Saddar, Karachi';
+$receiptTemplate = 'default';
+
+if (file_exists($config_file)) {
+    $config_data = json_decode(file_get_contents($config_file), true);
+    if ($config_data) {
+        $shopName = $config_data['shop_name'] ?? 'TijaratPro';
+        $shopPhone = $config_data['shop_phone'] ?? '03001234567';
+        $shopAddress = $config_data['shop_address'] ?? 'Saddar, Karachi';
+        $receiptTemplate = $config_data['receipt_template'] ?? 'default';
+    }
+}
+
 $lang = $_COOKIE['lang'] ?? 'en';
 $theme = $_COOKIE['theme'] ?? 'light';
 
@@ -735,9 +751,9 @@ $trans = [
 
             document.getElementById('invoiceContent').innerHTML = `
                 <div class="center">
-                    <span class="header-title">TIJARATPRO</span><br>
-                    <span>Saddar, Karachi</span><br>
-                    <span>Phone: 0300-1234567</span>
+                    <span class="header-title"><?php echo strtoupper(htmlspecialchars($shopName)); ?></span><br>
+                    <span><?php echo htmlspecialchars($shopAddress); ?></span><br>
+                    <span>Phone: <?php echo htmlspecialchars($shopPhone); ?></span>
                 </div>
                 <div class="divider"></div>
                 <div>
@@ -784,15 +800,134 @@ $trans = [
             const invoiceHTML = document.getElementById('invoiceContent').innerHTML;
             const printWindow = window.open('', '', 'height=600,width=400');
             printWindow.document.write('<html><head><title>Print Receipt</title>');
-            printWindow.document.write('<style>');
-            printWindow.document.write('.thermal-invoice { font-family: "Courier New", Courier, monospace; font-size: 12px; line-height: 1.4; }');
-            printWindow.document.write('.center { text-align: center; }');
-            printWindow.document.write('.divider { border-top: 1px dashed black; margin: 10px 0; }');
-            printWindow.document.write('.header-title { font-size: 16px; font-weight: bold; }');
-            printWindow.document.write('.invoice-table { width: 100%; border-collapse: collapse; margin: 10px 0; }');
-            printWindow.document.write('.invoice-table th, .invoice-table td { text-align: left; padding: 2px 0; }');
-            printWindow.document.write('.invoice-table .right, .right { text-align: right; }');
-            printWindow.document.write('</style></head><body>');
+            
+            const template = "<?php echo $receiptTemplate; ?>";
+            let customStyle = '';
+
+            switch (template) {
+                case 'modern':
+                    customStyle = `
+                        .thermal-invoice { font-family: 'Inter', 'Segoe UI', sans-serif; font-size: 11px; line-height: 1.5; color: #1e293b; padding: 10px; }
+                        .center { text-align: center; }
+                        .divider { border-top: 1px solid #cbd5e1; margin: 8px 0; }
+                        .header-title { font-size: 18px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px; }
+                        .invoice-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+                        .invoice-table th { border-bottom: 2px solid #0f172a; text-align: left; padding: 4px 0; font-weight: bold; font-size: 10px; text-transform: uppercase; }
+                        .invoice-table td { text-align: left; padding: 6px 0; border-bottom: 1px solid #f1f5f9; }
+                        .invoice-table .right, .right { text-align: right; }
+                    `;
+                    break;
+                case 'elegant':
+                    customStyle = `
+                        .thermal-invoice { font-family: 'Georgia', serif; font-size: 12px; line-height: 1.6; color: #000; padding: 15px; }
+                        .center { text-align: center; }
+                        .divider { border-top: 3px double #000; margin: 12px 0; }
+                        .header-title { font-size: 20px; font-weight: bold; font-style: italic; }
+                        .invoice-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                        .invoice-table th { border-bottom: 1px solid #000; text-align: left; padding: 5px 0; font-variant: small-caps; }
+                        .invoice-table td { text-align: left; padding: 5px 0; }
+                        .invoice-table .right, .right { text-align: right; }
+                    `;
+                    break;
+                case 'compact':
+                    customStyle = `
+                        .thermal-invoice { font-family: Arial, sans-serif; font-size: 9px; line-height: 1.2; color: #000; padding: 2px; }
+                        .center { text-align: center; }
+                        .divider { border-top: 1px solid #000; margin: 4px 0; }
+                        .header-title { font-size: 12px; font-weight: bold; }
+                        .invoice-table { width: 100%; border-collapse: collapse; margin: 4px 0; }
+                        .invoice-table th { border-bottom: 1px solid #000; text-align: left; padding: 1px 0; font-weight: bold; }
+                        .invoice-table td { text-align: left; padding: 1px 0; }
+                        .invoice-table .right, .right { text-align: right; }
+                    `;
+                    break;
+                case 'bold':
+                    customStyle = `
+                        .thermal-invoice { font-family: 'Arial Black', Gadget, sans-serif; font-size: 12px; line-height: 1.4; color: #000; padding: 8px; }
+                        .center { text-align: center; }
+                        .divider { border-top: 3px solid #000; margin: 10px 0; }
+                        .header-title { font-size: 22px; font-weight: 900; text-transform: uppercase; }
+                        .invoice-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                        .invoice-table th { border-bottom: 3px solid #000; text-align: left; padding: 4px 0; font-weight: 900; }
+                        .invoice-table td { text-align: left; padding: 4px 0; font-weight: bold; }
+                        .invoice-table .right, .right { text-align: right; font-weight: 900; }
+                    `;
+                    break;
+                case 'blue':
+                    customStyle = `
+                        .thermal-invoice { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 11px; line-height: 1.5; color: #1e293b; padding: 10px; }
+                        .center { text-align: center; }
+                        .divider { border-top: 2px solid #2563eb; margin: 8px 0; }
+                        .header-title { font-size: 18px; font-weight: 800; color: #2563eb; }
+                        .invoice-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+                        .invoice-table th { background: #eff6ff; color: #1e40af; text-align: left; padding: 4px 6px; font-size: 10px; font-weight: bold; }
+                        .invoice-table td { text-align: left; padding: 6px; border-bottom: 1px solid #e0f2fe; }
+                        .invoice-table .right, .right { text-align: right; }
+                    `;
+                    break;
+                case 'green':
+                    customStyle = `
+                        .thermal-invoice { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 11px; line-height: 1.5; color: #1e293b; padding: 10px; }
+                        .center { text-align: center; }
+                        .divider { border-top: 2px solid #16a34a; margin: 8px 0; }
+                        .header-title { font-size: 18px; font-weight: 800; color: #16a34a; }
+                        .invoice-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+                        .invoice-table th { background: #f0fdf4; color: #166534; text-align: left; padding: 4px 6px; font-size: 10px; font-weight: bold; }
+                        .invoice-table td { text-align: left; padding: 6px; border-bottom: 1px solid #dcfce7; }
+                        .invoice-table .right, .right { text-align: right; }
+                    `;
+                    break;
+                case 'urdu':
+                    customStyle = `
+                        .thermal-invoice { font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif; font-size: 14px; line-height: 1.8; color: #000; direction: rtl; text-align: right; padding: 10px; }
+                        .center { text-align: center; }
+                        .divider { border-top: 1px dashed #000; margin: 8px 0; }
+                        .header-title { font-size: 22px; font-weight: bold; }
+                        .invoice-table { width: 100%; border-collapse: collapse; margin: 8px 0; direction: rtl; }
+                        .invoice-table th { border-bottom: 2px solid #000; text-align: right; padding: 4px 0; }
+                        .invoice-table td { text-align: right; padding: 6px 0; }
+                        .invoice-table .right, .right { text-align: left; }
+                    `;
+                    break;
+                case 'luxury':
+                    customStyle = `
+                        .thermal-invoice { font-family: 'Garamond', serif; font-size: 12px; line-height: 1.6; color: #111; letter-spacing: 0.5px; padding: 15px; }
+                        .center { text-align: center; }
+                        .divider { border-top: 1px solid #d4af37; margin: 10px 0; }
+                        .header-title { font-size: 20px; font-weight: 300; text-transform: uppercase; color: #b8860b; }
+                        .invoice-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                        .invoice-table th { border-bottom: 1px solid #d4af37; text-align: left; padding: 4px 0; font-weight: normal; text-transform: uppercase; font-size: 10px; color: #b8860b; }
+                        .invoice-table td { text-align: left; padding: 8px 0; border-bottom: 1px solid #faf5e6; }
+                        .invoice-table .right, .right { text-align: right; }
+                    `;
+                    break;
+                case 'vintage':
+                    customStyle = `
+                        .thermal-invoice { font-family: monospace; font-size: 12px; line-height: 1.3; color: #000; padding: 5px; }
+                        .center { text-align: center; }
+                        .divider { border-top: 1px dotted #000; margin: 8px 0; }
+                        .header-title { font-size: 16px; font-weight: bold; text-transform: uppercase; }
+                        .invoice-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+                        .invoice-table th { border-bottom: 1px dotted #000; text-align: left; padding: 2px 0; }
+                        .invoice-table td { text-align: left; padding: 2px 0; }
+                        .invoice-table .right, .right { text-align: right; }
+                    `;
+                    break;
+                case 'default':
+                default:
+                    customStyle = `
+                        .thermal-invoice { font-family: "Courier New", Courier, monospace; font-size: 12px; line-height: 1.4; }
+                        .center { text-align: center; }
+                        .divider { border-top: 1px dashed black; margin: 10px 0; }
+                        .header-title { font-size: 16px; font-weight: bold; }
+                        .invoice-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+                        .invoice-table th, .invoice-table td { text-align: left; padding: 2px 0; }
+                        .invoice-table .right, .right { text-align: right; }
+                    `;
+                    break;
+            }
+
+            printWindow.document.write('<style>' + customStyle + '</style></head><body>');
             printWindow.document.write('<div class="thermal-invoice">' + invoiceHTML + '</div>');
             printWindow.document.write('</body></html>');
             printWindow.document.close();

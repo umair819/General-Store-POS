@@ -4,11 +4,14 @@
   "description": "TijaratPro - Smart business software for retail & wholesale",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "npx electron-packager . TijaratPro --platform=darwin --arch=universal --out=dist --overwrite --ignore=\"(dist|.git)\"",
+    "build:win": "npx electron-packager . TijaratPro --platform=win32 --arch=x64 --out=dist --overwrite --ignore=\"(dist|.git)\""
   },
   "author": "Umair",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^28.3.3"
+    "electron": "^28.3.3",
+    "electron-packager": "^17.1.2"
   }
 }
