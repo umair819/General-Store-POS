@@ -75,58 +75,58 @@ $trans = [
         'ribbon_product' => '📦 Add Product',
     ],
     'ur' => [
-        'title' => 'تجارت پرو',
-        'welcome' => 'خوش آمدید',
-        'dashboard' => 'ڈیش بورڈ جائزہ',
+        'title' => 'TijaratPro',
+        'welcome' => 'Welcome',
+        'dashboard' => 'Dashboard Overview',
         'menu_billing' => '🛒 Tijarat POS',
-        'menu_inventory' => '📦 اسٹاک اور انوینٹری',
-        'menu_customers' => '👥 Tijarat Ledger (کھاتہ)',
-        'menu_purchases' => '🧾 خریداری',
-        'menu_reports' => '📈 سیلز رپورٹ',
-        'menu_settings' => '⚙️ سیٹنگز',
-        'menu_marketing' => '📢 مارکیٹنگ ٹول',
-        'logout' => '🚪 لاگ آؤٹ',
-        'sales_today' => 'آج کی فروخت',
-        'low_stock' => 'کم اسٹاک آئٹمز',
-        'pending_udhaar' => 'بقایا ادھار',
-        'total_products' => 'مجموعی پروڈکٹس',
-        'currency' => 'روپے',
-        'quick_actions' => 'فوری لنکس',
-        'new_sale' => 'نیا بل بنائیں',
-        'add_product' => 'نئی پروڈکٹ',
-        'add_customer' => 'نیا کسٹمر',
+        'menu_inventory' => '📦 Stock & Inventory',
+        'menu_customers' => '👥 Customers & Khata (Udhaar)',
+        'menu_purchases' => '🧾 Purchases (Khareedari)',
+        'menu_reports' => '📈 Sales Reports',
+        'menu_settings' => '⚙️ Settings',
+        'menu_marketing' => '📢 Marketing Tool',
+        'logout' => '🚪 Logout',
+        'sales_today' => 'Aaj Ki Sales',
+        'low_stock' => 'Low Stock Items',
+        'pending_udhaar' => 'Pending Udhaar',
+        'total_products' => 'Total Products',
+        'currency' => 'PKR',
+        'quick_actions' => 'Quick Links',
+        'new_sale' => 'Naya Bill Banayein',
+        'add_product' => 'Nayi Product',
+        'add_customer' => 'Naya Customer',
         // Redesign labels
-        'cash_bank' => 'کیش اور بینک',
-        'cash_in_hand' => 'کیش ان ہینڈ',
-        'bank_balance' => 'بینک بیلنس',
-        'to_receive' => 'وصول کرنا (ادھار)',
-        'to_pay' => 'ادا کرنا (سپلائر)',
-        'stock_value' => 'اسٹاک کی کل مالیت',
-        'value_cost' => 'مالیت (خریداری ریٹ)',
-        'value_retail' => 'مالیت (فروخت ریٹ)',
-        'profit_summary' => 'نفع کی تفصیلات',
-        'profit_today' => 'آج کا نفع',
-        'profit_month' => 'اس مہینے کا نفع',
-        'recent_tx' => 'حالیہ لین دین',
-        'tx_date' => 'تاریخ',
-        'tx_ref' => 'حوالہ نمبر',
-        'tx_type' => 'قسم',
-        'tx_party' => 'پارٹی کا نام',
-        'tx_total' => 'کل رقم',
-        'tx_remaining' => 'بقایا رقم',
-        'tx_status' => 'حیثیت',
-        'day_book' => 'روزانہ بک',
-        'profit_loss' => 'نفع اور نقصان',
-        'cash_in' => 'کیش آمد (وصولی)',
-        'cash_out' => 'کیش ادائیگی (اخراج)',
-        'net_change' => 'خالص کیش تبدیلی',
-        'total_revenue' => 'کل آمدنی (سیلز)',
-        'cost_of_goods' => 'فروخت شدہ مال کی قیمت',
-        'profit_margin' => 'نفع کا تناسب (Margin)',
-        'ribbon_sale' => '🛒 سیل بل بنائیں',
-        'ribbon_purchase' => '🧾 خریداری درج کریں',
-        'ribbon_receive' => '👥 ادھار وصول کریں',
-        'ribbon_product' => '📦 نئی پروڈکٹ ڈالیں',
+        'cash_bank' => 'Cash & Bank',
+        'cash_in_hand' => 'Cash in Hand',
+        'bank_balance' => 'Bank Balance',
+        'to_receive' => 'Udhaar Inflow (To Receive)',
+        'to_pay' => 'Supplier Outflow (To Pay)',
+        'stock_value' => 'Stock Valuation',
+        'value_cost' => 'Valuation at Purchase Cost',
+        'value_retail' => 'Valuation at Retail Price',
+        'profit_summary' => 'Business Profitability',
+        'profit_today' => 'Aaj Ka Profit',
+        'profit_month' => 'Is Month Ka Profit',
+        'recent_tx' => 'Recent Transactions',
+        'tx_date' => 'Date',
+        'tx_ref' => 'Ref No.',
+        'tx_type' => 'Type',
+        'tx_party' => 'Party Name',
+        'tx_total' => 'Total Amount',
+        'tx_remaining' => 'Remaining Amount',
+        'tx_status' => 'Status',
+        'day_book' => 'Day Book',
+        'profit_loss' => 'Profit & Loss',
+        'cash_in' => 'Cash In (Inflow)',
+        'cash_out' => 'Cash Out (Outflow)',
+        'net_change' => 'Net Cash Change',
+        'total_revenue' => 'Total Sales Revenue',
+        'cost_of_goods' => 'Cost of Goods Sold (COGS)',
+        'profit_margin' => 'Profit Margin %',
+        'ribbon_sale' => '🛒 Sale Bill Banayein',
+        'ribbon_purchase' => '🧾 Khareedari Add Karein',
+        'ribbon_receive' => '👥 Udhaar Collect Karein',
+        'ribbon_product' => '📦 Nayi Product Add Karein',
     ]
 ];
 
@@ -411,9 +411,7 @@ for ($i = 6; $i >= 0; $i--) {
             border-collapse: collapse;
             text-align: left;
         }
-        .lang-urdu .data-table {
-            text-align: right;
-        }
+
         .data-table th, .data-table td {
             padding: 12px 14px;
             border-bottom: 1px solid var(--border-color);
@@ -611,74 +609,14 @@ for ($i = 6; $i >= 0; $i--) {
             margin-top: 15px;
         }
 
-        /* RTL Handling for Urdu Layout */
-        .lang-urdu .sidebar {
-            border-right: none;
-            border-left: 1px solid var(--border-color);
-        }
 
-        .lang-urdu .menu-link:hover, .lang-urdu .menu-link.active {
-            border-left: none;
-            border-right: 4px solid var(--accent);
-            padding-left: 20px;
-            padding-right: 16px;
-        }
     </style>
 </head>
 <body class="<?php echo ($lang === 'ur') ? 'lang-urdu' : ''; ?>">
 
     <div class="layout-wrapper">
         
-        <!-- Sidebar Navigation Drawer -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <img src="TijaratPro.png" alt="TijaratPro" style="width: 28px; height: 28px; border-radius: 6px; vertical-align: middle; margin-right: 6px;"> <?php echo $trans[$lang]['title']; ?>
-            </div>
-            
-            <ul class="sidebar-menu">
-                <li>
-                    <a href="index.php" class="menu-link active">
-                        🏠 <?php echo $trans[$lang]['dashboard']; ?>
-                    </a>
-                </li>
-                <li>
-                    <a href="billing.php" class="menu-link">
-                        <?php echo $trans[$lang]['menu_billing']; ?>
-                    </a>
-                </li>
-                <li>
-                    <a href="products.php" class="menu-link">
-                        <?php echo $trans[$lang]['menu_inventory']; ?>
-                    </a>
-                </li>
-                <li>
-                    <a href="customers.php" class="menu-link">
-                        <?php echo $trans[$lang]['menu_customers']; ?>
-                    </a>
-                </li>
-                <li>
-                    <a href="purchases.php" class="menu-link">
-                        <?php echo $trans[$lang]['menu_purchases']; ?>
-                    </a>
-                </li>
-                <li>
-                    <a href="marketing.php" class="menu-link">
-                        <?php echo $trans[$lang]['menu_marketing']; ?>
-                    </a>
-                </li>
-                <li>
-                    <a href="settings.php" class="menu-link">
-                        <?php echo $trans[$lang]['menu_settings']; ?>
-                    </a>
-                </li>
-            </ul>
-
-            <div style="margin-top: auto;">
-                <a href="index.php?action=logout" class="menu-link" style="color: var(--danger); border-left: none !important; border-right: none !important;">
-                    <?php echo $trans[$lang]['logout']; ?>
-                </a>
-            </div>
-        </aside>
+        <?php include __DIR__ . '/sidebar.php'; ?>
 
         <!-- Main Display Panel -->
         <main class="content-panel">
@@ -706,7 +644,7 @@ for ($i = 6; $i >= 0; $i--) {
             </header>
 
             <!-- Ribbon Actions (Vyapar Style) -->
-            <div class="ribbon-actions" style="direction: <?php echo ($lang === 'ur') ? 'rtl' : 'ltr'; ?>">
+            <div class="ribbon-actions">
                 <a href="billing.php" class="ribbon-btn btn-sale">
                     <?php echo $trans[$lang]['ribbon_sale']; ?>
                 </a>
@@ -722,7 +660,7 @@ for ($i = 6; $i >= 0; $i--) {
             </div>
 
             <!-- Financial Status Metrics Grid -->
-            <section class="dashboard-sections" style="direction: <?php echo ($lang === 'ur') ? 'rtl' : 'ltr'; ?>">
+            <section class="dashboard-sections">
                 <!-- Section: Cash Book -->
                 <div class="section-box">
                     <h3>💵 <?php echo $trans[$lang]['cash_bank']; ?></h3>
@@ -740,7 +678,7 @@ for ($i = 6; $i >= 0; $i--) {
 
                 <!-- Section: Receivables & Payables -->
                 <div class="section-box">
-                    <h3>👥 Udhaar / Ledger (کھاتہ)</h3>
+                    <h3>👥 Udhaar / Ledger (Khata)</h3>
                     <div class="section-metrics">
                         <div class="metric-row">
                             <span class="metric-label"><?php echo $trans[$lang]['to_receive']; ?></span>
@@ -785,10 +723,10 @@ for ($i = 6; $i >= 0; $i--) {
             </section>
 
             <!-- Charts and Reports Panels -->
-            <section class="charts-grid" style="direction: <?php echo ($lang === 'ur') ? 'rtl' : 'ltr'; ?>">
+            <section class="charts-grid">
                 <!-- Trend Chart -->
                 <div class="card" style="padding: 20px;">
-                    <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 15px;">📊 7-Day Business Trend (گذشتہ 7 دن کی سیلز اور خریداری)</h3>
+                    <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 15px;">📊 7-Day Business Trend (Guzashta 7 din ki sales aur khareedari)</h3>
                     <div style="height: 320px; position: relative;">
                         <canvas id="businessTrendChart"></canvas>
                     </div>
@@ -862,7 +800,7 @@ for ($i = 6; $i >= 0; $i--) {
             </section>
 
             <!-- Recent Transactions Table -->
-            <section class="card" style="padding: 24px; direction: <?php echo ($lang === 'ur') ? 'rtl' : 'ltr'; ?>">
+            <section class="card" style="padding: 24px;">
                 <h3 style="margin-top: 0; margin-bottom: 20px; font-size: 16px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
                     📝 <?php echo $trans[$lang]['recent_tx']; ?>
                 </h3>
@@ -889,11 +827,11 @@ for ($i = 6; $i >= 0; $i--) {
                                     <?php 
                                     $status_badge = '';
                                     if ($tx['balance_amount'] <= 0) {
-                                        $status_badge = '<span class="badge badge-success">' . ($lang === 'ur' ? 'ادا شدہ' : 'Paid') . '</span>';
+                                        $status_badge = '<span class="badge badge-success">' . ($lang === 'ur' ? 'Paid' : 'Paid') . '</span>';
                                     } else if ($tx['paid_amount'] > 0) {
-                                        $status_badge = '<span class="badge badge-warning">' . ($lang === 'ur' ? 'کچھ باقی' : 'Partial') . '</span>';
+                                        $status_badge = '<span class="badge badge-warning">' . ($lang === 'ur' ? 'Kuch Baqi' : 'Partial') . '</span>';
                                     } else {
-                                        $status_badge = '<span class="badge badge-red">' . ($lang === 'ur' ? 'غیر ادا شدہ' : 'Unpaid') . '</span>';
+                                        $status_badge = '<span class="badge badge-red">' . ($lang === 'ur' ? 'Unpaid' : 'Unpaid') . '</span>';
                                     }
                                     ?>
                                     <tr>
@@ -909,10 +847,10 @@ for ($i = 6; $i >= 0; $i--) {
                                         </td>
                                         <td>
                                             <span class="badge <?php echo $tx['tx_type'] === 'Sale' ? 'badge-sale' : 'badge-purchase'; ?>">
-                                                <?php echo $tx['tx_type'] === 'Sale' ? ($lang === 'ur' ? 'سیل (بکری)' : 'Sale') : ($lang === 'ur' ? 'خرید (اسٹاک)' : 'Purchase'); ?>
+                                                <?php echo $tx['tx_type'] === 'Sale' ? ($lang === 'ur' ? 'Sale (Bikri)' : 'Sale') : ($lang === 'ur' ? 'Purchase (Stock)' : 'Purchase'); ?>
                                             </span>
                                         </td>
-                                        <td><?php echo htmlspecialchars($tx['party'] ?? ($tx['tx_type'] === 'Sale' ? ($lang === 'ur' ? 'کیش کسٹمر' : 'Cash Customer') : ($lang === 'ur' ? 'کیش سپلائر' : 'Cash Supplier'))); ?></td>
+                                        <td><?php echo htmlspecialchars($tx['party'] ?? ($tx['tx_type'] === 'Sale' ? ($lang === 'ur' ? 'Cash Customer' : 'Cash Customer') : ($lang === 'ur' ? 'Cash Supplier' : 'Cash Supplier'))); ?></td>
                                         <td><strong><?php echo number_format($tx['total'], 2); ?></strong> <small style="font-size: 11px;"><?php echo $trans[$lang]['currency']; ?></small></td>
                                         <td style="color: <?php echo $tx['balance_amount'] > 0 ? 'var(--danger)' : 'inherit'; ?>; font-weight: <?php echo $tx['balance_amount'] > 0 ? '700' : 'normal'; ?>">
                                             <?php echo number_format($tx['balance_amount'], 2); ?> <small style="font-size: 11px;"><?php echo $trans[$lang]['currency']; ?></small>
@@ -972,7 +910,7 @@ for ($i = 6; $i >= 0; $i--) {
                     labels: <?php echo json_encode($chart_dates); ?>,
                     datasets: [
                         {
-                            label: 'Sales (فروخت)',
+                            label: 'Sales (Bikri)',
                             data: <?php echo json_encode($chart_sales); ?>,
                             backgroundColor: 'rgba(237, 26, 59, 0.85)',
                             borderColor: '#ed1a3b',
@@ -980,7 +918,7 @@ for ($i = 6; $i >= 0; $i--) {
                             borderRadius: 4
                         },
                         {
-                            label: 'Purchases (خریداری)',
+                            label: 'Purchases (Khareedari)',
                             data: <?php echo json_encode($chart_purchases); ?>,
                             backgroundColor: 'rgba(59, 130, 246, 0.85)',
                             borderColor: '#3b82f6',

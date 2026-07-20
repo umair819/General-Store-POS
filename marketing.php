@@ -10,6 +10,14 @@ if (!isset($_SESSION['user_id'])) {
 $lang = $_COOKIE['lang'] ?? 'en';
 $theme = $_COOKIE['theme'] ?? 'light';
 
+$whatsapp_mode = 'link';
+if (file_exists(__DIR__ . '/db_config.json')) {
+    $config_json = json_decode(file_get_contents(__DIR__ . '/db_config.json'), true);
+    if (isset($config_json['whatsapp_mode'])) {
+        $whatsapp_mode = $config_json['whatsapp_mode'];
+    }
+}
+
 $trans = [
     'en' => [
         'title' => 'Advanced Marketing Tool',
@@ -44,36 +52,36 @@ $trans = [
         'safety_notice' => '💡 <b>Anti-Ban Safe Send:</b> Opening messages in sequential browser tabs is highly recommended. Headless background automation carries a high risk of WhatsApp numbers getting banned.',
     ],
     'ur' => [
-        'title' => 'ایڈوانسڈ مارکیٹنگ ٹول',
-        'menu_billing' => '🛒 بلنگ / سیلز',
-        'menu_inventory' => '📦 اسٹاک / انوینٹری',
-        'menu_customers' => '👥 کسٹمر کھاتہ',
-        'menu_purchases' => '🧾 خریداری',
-        'menu_marketing' => '📢 مارکیٹنگ ٹول',
-        'menu_settings' => '⚙️ سیٹنگز',
-        'logout' => '🚪 لاگ آؤٹ',
-        'dashboard' => 'ڈیش بورڈ جائزہ',
+        'title' => 'Advanced Marketing Tool',
+        'menu_billing' => '🛒 POS Billing',
+        'menu_inventory' => '📦 Stock/Inventory',
+        'menu_customers' => '👥 Customer Khata',
+        'menu_purchases' => '🧾 Purchases (Khareedari)',
+        'menu_marketing' => '📢 Marketing Tool',
+        'menu_settings' => '⚙️ Settings',
+        'logout' => '🚪 Logout',
+        'dashboard' => 'Dashboard Overview',
         
-        'campaign_selector' => 'مارکیٹنگ مہم منتخب کریں',
-        'camp_promo' => '📢 عام ڈسکاؤنٹ پروموشن',
-        'camp_udhaar' => '⚠️ ادھار واپسی ریمائنڈرز',
-        'camp_birthday' => '🎂 آج جن کی سالگرہ ہے',
-        'camp_anniversary' => '🎉 آج جن کی شادی کی سالگرہ ہے',
+        'campaign_selector' => 'Marketing Campaign select karein',
+        'camp_promo' => '📢 Bulk Promotion',
+        'camp_udhaar' => '⚠️ Udhaar Reminders',
+        'camp_birthday' => '🎂 Aaj jin ki Birthday hai',
+        'camp_anniversary' => '🎉 Aaj jin ki Anniversary hai',
         
-        'template_editor' => 'پیغام کا ٹیمپلیٹ ایڈٹ کریں',
-        'placeholders_info' => 'پیغام میں یہ الفاظ کسٹمر کے نام اور ادھار سے خود تبدیل ہو جائیں گے: <code>{name}</code>, <code>{balance}</code>, <code>{shop_name}</code>, <code>{shop_phone}</code>',
-        'load_contacts' => 'رابطہ فہرست لوڈ کریں',
+        'template_editor' => 'Message Template customize karein',
+        'placeholders_info' => 'Placeholders: <code>{name}</code>, <code>{balance}</code>, <code>{shop_name}</code>, <code>{shop_phone}</code>',
+        'load_contacts' => 'Campaign Contacts load karein',
         
-        'target_audience' => 'ٹارگٹ کسٹمرز کی فہرست',
-        'name' => 'نام',
-        'phone' => 'فون نمبر',
-        'balance' => 'بقایا ادھار',
-        'preview' => 'پیغام کا جائزہ',
-        'action' => 'ایکشن',
-        'send_btn' => 'واٹس ایپ بھیجیں',
-        'sent_status' => 'بھیج دیا',
-        'no_contacts' => 'منتخب کردہ مہم کے لیے کوئی کسٹمرز دستیاب نہیں ہیں۔',
-        'safety_notice' => '💡 <b>اینٹی بین وارننگ:</b> واٹس ایپ کے قوانین کے مطابق براؤزر کے ذریعے دستی مہم چلانا سب سے محفوظ طریقہ ہے۔ آٹومیٹک سافٹ ویئرز سے نمبر بلاک ہونے کا شدید خطرہ ہوتا ہے۔',
+        'target_audience' => 'Target Contacts Registry',
+        'name' => 'Name',
+        'phone' => 'Phone',
+        'balance' => 'Balance (Udhaar)',
+        'preview' => 'Message Preview',
+        'action' => 'Action',
+        'send_btn' => 'Send WhatsApp',
+        'sent_status' => 'Sent',
+        'no_contacts' => 'Selected campaign criteria ke mutabiq koi contact nahi mila.',
+        'safety_notice' => '💡 <b>Anti-Ban Safe Send:</b> Messages ko sequential browser tabs mein open karna highly recommended hai. Headless background automation se WhatsApp number ban hone ka zyada risk hota hai.',
     ]
 ];
 ?>
@@ -110,38 +118,14 @@ $trans = [
 
         .preview-box { max-width: 300px; max-height: 80px; overflow-y: auto; font-size: 12px; background: var(--bg-input); padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); white-space: pre-wrap; font-family: inherit; }
 
-        /* RTL Handling overrides */
-        .lang-urdu .sidebar { border-right: none; border-left: 1px solid var(--border-color); }
-        .lang-urdu .menu-link:hover, .lang-urdu .menu-link.active { border-left: none; border-right: 4px solid var(--accent); padding-left: 20px; padding-right: 16px; }
-        .lang-urdu .data-table { text-align: right; }
+
     </style>
 </head>
 <body class="<?php echo ($lang === 'ur') ? 'lang-urdu' : ''; ?>">
 
     <div class="layout-wrapper">
         
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <img src="TijaratPro.png" alt="TijaratPro" style="width: 28px; height: 28px; border-radius: 6px; vertical-align: middle; margin-right: 6px;"> <?php echo ($lang === 'ur') ? 'تجارت پرو' : 'TijaratPro'; ?>
-            </div>
-            
-            <ul class="sidebar-menu">
-                <li><a href="index.php" class="menu-link">🏠 <?php echo $trans[$lang]['dashboard']; ?></a></li>
-                <li><a href="billing.php" class="menu-link">🛒 <?php echo $trans[$lang]['menu_billing']; ?></a></li>
-                <li><a href="products.php" class="menu-link">📦 <?php echo $trans[$lang]['menu_inventory']; ?></a></li>
-                <li><a href="customers.php" class="menu-link">👥 <?php echo $trans[$lang]['menu_customers']; ?></a></li>
-                <li><a href="purchases.php" class="menu-link">🧾 <?php echo $trans[$lang]['menu_purchases']; ?></a></li>
-                <li><a href="marketing.php" class="menu-link active">📢 <?php echo $trans[$lang]['menu_marketing']; ?></a></li>
-                <li><a href="settings.php" class="menu-link">⚙️ <?php echo $trans[$lang]['menu_settings']; ?></a></li>
-            </ul>
-
-            <div style="margin-top: auto;">
-                <a href="index.php?action=logout" class="menu-link" style="color: var(--danger); border-left: none !important; border-right: none !important;">
-                    <?php echo $trans[$lang]['logout']; ?>
-                </a>
-            </div>
-        </aside>
+        <?php include __DIR__ . '/sidebar.php'; ?>
 
         <!-- Main Display Panel -->
         <main class="content-panel">
@@ -167,16 +151,16 @@ $trans = [
                         <h3>🎯 <?php echo $trans[$lang]['campaign_selector']; ?></h3>
                         
                         <div class="card-menu-item active" id="btnPromo" onclick="selectCampaign('promotion')">
-                            📢 <?php echo $trans[$lang]['camp_promo']; ?>
+                            <?php echo $trans[$lang]['camp_promo']; ?>
                         </div>
                         <div class="card-menu-item" id="btnUdhaar" onclick="selectCampaign('udhaar_reminder')">
-                            ⚠️ <?php echo $trans[$lang]['camp_udhaar']; ?>
+                            <?php echo $trans[$lang]['camp_udhaar']; ?>
                         </div>
                         <div class="card-menu-item" id="btnBirthday" onclick="selectCampaign('birthday_wishes')">
-                            🎂 <?php echo $trans[$lang]['camp_birthday']; ?>
+                            <?php echo $trans[$lang]['camp_birthday']; ?>
                         </div>
                         <div class="card-menu-item" id="btnAnniversary" onclick="selectCampaign('anniversary_wishes')">
-                            🎉 <?php echo $trans[$lang]['camp_anniversary']; ?>
+                            <?php echo $trans[$lang]['camp_anniversary']; ?>
                         </div>
                     </section>
 
@@ -319,7 +303,7 @@ $trans = [
             });
         }
 
-        function sendSingleMessage(index) {
+        async function sendSingleMessage(index) {
             const c = campaignContacts[index];
             const template = document.getElementById('templateText').value;
             const message = compileTemplate(template, c);
@@ -334,16 +318,53 @@ $trans = [
                 phone = phone.substring(2);
             }
             
-            const encodedText = encodeURIComponent(message);
-            const waUrl = `https://web.whatsapp.com/send?phone=${phone}&text=${encodedText}`;
-            
-            window.open(waUrl, '_blank');
-
-            // Visual confirmation indicator
+            const whatsappMode = "<?php echo $whatsapp_mode; ?>";
             const row = document.getElementById(`camp-row-${index}`);
-            if (row) {
-                const btnCell = row.cells[4];
-                btnCell.innerHTML = `<span style="color: var(--success); font-weight: 600;">✅ ${trans.sent_status}</span>`;
+            let btnCell = null;
+            if (row) btnCell = row.cells[4];
+            
+            if (whatsappMode === 'local_api') {
+                if (btnCell) {
+                    btnCell.innerHTML = `<span style="color: var(--warning); font-weight: 600;">Sending...</span>`;
+                }
+                
+                try {
+                    const res = await fetch('http://127.0.0.1:9001/send-message', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone: phone, message: message })
+                    });
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    const data = await res.json();
+                    
+                    if (data.success) {
+                        if (btnCell) {
+                            btnCell.innerHTML = `<span style="color: var(--success); font-weight: 600;">✅ ${trans.sent_status}</span>`;
+                        }
+                    } else {
+                        throw new Error(data.error || 'Server error');
+                    }
+                } catch (err) {
+                    console.error('Failed to send via local background service:', err);
+                    if (btnCell) {
+                        btnCell.innerHTML = `<button class="btn btn-primary" style="padding: 6px 14px; font-size: 11px; background-color: var(--danger);" onclick="sendSingleMessage(${index})">Retry</button>`;
+                    }
+                    if (confirm('Background WhatsApp service is disconnected or returned an error. Click OK to fallback and send via WhatsApp Web browser tab instead.')) {
+                        const encodedText = encodeURIComponent(message);
+                        const waUrl = `https://web.whatsapp.com/send?phone=${phone}&text=${encodedText}`;
+                        window.open(waUrl, '_blank');
+                        if (btnCell) {
+                            btnCell.innerHTML = `<span style="color: var(--success); font-weight: 600;">✅ ${trans.sent_status}</span>`;
+                        }
+                    }
+                }
+            } else {
+                const encodedText = encodeURIComponent(message);
+                const waUrl = `https://web.whatsapp.com/send?phone=${phone}&text=${encodedText}`;
+                window.open(waUrl, '_blank');
+                if (btnCell) {
+                    btnCell.innerHTML = `<span style="color: var(--success); font-weight: 600;">✅ ${trans.sent_status}</span>`;
+                }
             }
         }
 

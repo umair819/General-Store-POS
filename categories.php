@@ -37,29 +37,29 @@ $trans = [
         'confirm_delete' => 'Are you sure you want to delete this category?',
     ],
     'ur' => [
-        'title' => 'تجارت انوینٹری - کیٹیگریز',
-        'dashboard' => 'ڈیش بورڈ جائزہ',
+        'title' => 'Tijarat Inventory - Categories',
+        'dashboard' => 'Dashboard Overview',
         'menu_billing' => '🛒 Tijarat POS',
-        'menu_inventory' => '📦 اسٹاک اور انوینٹری',
-        'menu_customers' => '👥 Tijarat Ledger (کھاتہ)',
-        'menu_purchases' => '🧾 خریداری',
-        'menu_reports' => '📈 سیلز رپورٹ',
-        'menu_settings' => '⚙️ سیٹنگز',
-        'menu_marketing' => '📢 مارکیٹنگ ٹول',
-        'logout' => '🚪 لاگ آؤٹ',
-        'heading' => '🗂️ کیٹیگریز کا انتظام',
-        'add_new' => '➕ نئی کیٹیگری',
-        'tbl_id' => 'آئی ڈی',
-        'tbl_name' => 'کیٹیگری کا نام',
-        'tbl_desc' => 'تفصیل',
-        'tbl_actions' => 'ایکشنز',
-        'btn_edit' => 'ترمیم',
-        'btn_delete' => 'خارج کریں',
-        'save' => 'محفوظ کریں',
-        'cancel' => 'منسوخ',
-        'edit_category' => 'کیٹیگری تبدیل کریں',
-        'new_category' => 'نئی کیٹیگری',
-        'confirm_delete' => 'کیا آپ واقعی اس کیٹیگری کو خارج کرنا چاہتے ہیں؟',
+        'menu_inventory' => '📦 Stock & Inventory',
+        'menu_customers' => '👥 Customers & Khata (Udhaar)',
+        'menu_purchases' => '🧾 Purchases (Khareedari)',
+        'menu_reports' => '📈 Sales Reports',
+        'menu_settings' => '⚙️ Settings',
+        'menu_marketing' => '📢 Marketing Tool',
+        'logout' => '🚪 Logout',
+        'heading' => '🗂️ Categories Management',
+        'add_new' => '➕ Add Category',
+        'tbl_id' => 'ID',
+        'tbl_name' => 'Category Name',
+        'tbl_desc' => 'Description',
+        'tbl_actions' => 'Actions',
+        'btn_edit' => 'Edit',
+        'btn_delete' => 'Delete',
+        'save' => 'Save',
+        'cancel' => 'Cancel',
+        'edit_category' => 'Category Edit Karein',
+        'new_category' => 'Nayi Category',
+        'confirm_delete' => 'Kya aap sach mein is category ko delete karna chahte hain?',
     ]
 ];
 ?>
@@ -96,38 +96,14 @@ $trans = [
         .modal.active .modal-card { transform: scale(1); }
         .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
 
-        /* RTL Layout overrides */
-        .lang-urdu .sidebar { border-right: none; border-left: 1px solid var(--border-color); }
-        .lang-urdu .menu-link:hover, .lang-urdu .menu-link.active { border-left: none; border-right: 4px solid var(--accent); padding-left: 20px; padding-right: 16px; }
-        .lang-urdu .data-table { text-align: right; }
+
     </style>
 </head>
 <body class="<?php echo ($lang === 'ur') ? 'lang-urdu' : ''; ?>">
 
     <div class="layout-wrapper">
         
-        <!-- Sidebar Navigation Drawer -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <img src="TijaratPro.png" alt="TijaratPro" style="width: 28px; height: 28px; border-radius: 6px; vertical-align: middle; margin-right: 6px;"> <?php echo ($lang === 'ur') ? 'تجارت پرو' : 'TijaratPro'; ?>
-            </div>
-            
-            <ul class="sidebar-menu">
-                <li><a href="index.php" class="menu-link">🏠 <?php echo $trans[$lang]['dashboard']; ?></a></li>
-                <li><a href="billing.php" class="menu-link">🛒 <?php echo $trans[$lang]['menu_billing']; ?></a></li>
-                <li><a href="products.php" class="menu-link">📦 <?php echo $trans[$lang]['menu_inventory']; ?></a></li>
-                <li><a href="customers.php" class="menu-link">👥 <?php echo $trans[$lang]['menu_customers']; ?></a></li>
-                <li><a href="purchases.php" class="menu-link">🧾 <?php echo $trans[$lang]['menu_purchases']; ?></a></li>
-                <li><a href="marketing.php" class="menu-link">📢 <?php echo $trans[$lang]['menu_marketing']; ?></a></li>
-                <li><a href="settings.php" class="menu-link">⚙️ <?php echo $trans[$lang]['menu_settings']; ?></a></li>
-            </ul>
-
-            <div style="margin-top: auto;">
-                <a href="index.php?action=logout" class="menu-link" style="color: var(--danger); border-left: none !important; border-right: none !important;">
-                    <?php echo $trans[$lang]['logout']; ?>
-                </a>
-            </div>
-        </aside>
+        <?php include __DIR__ . '/sidebar.php'; ?>
 
         <!-- Main Display Panel -->
         <main class="content-panel">

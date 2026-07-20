@@ -45,37 +45,37 @@ $trans = [
         'no_category' => 'Uncategorized',
     ],
     'ur' => [
-        'title' => 'تجارت انوینٹری - پروڈکٹس',
-        'dashboard' => 'ڈیش بورڈ جائزہ',
+        'title' => 'Tijarat Inventory - Products',
+        'dashboard' => 'Dashboard Overview',
         'menu_billing' => '🛒 Tijarat POS',
-        'menu_inventory' => '📦 اسٹاک اور انوینٹری',
-        'menu_customers' => '👥 Tijarat Ledger (کھاتہ)',
-        'menu_purchases' => '🧾 خریداری',
-        'menu_reports' => '📈 سیلز رپورٹ',
-        'menu_settings' => '⚙️ سیٹنگز',
-        'menu_marketing' => '📢 مارکیٹنگ ٹول',
-        'logout' => '🚪 لاگ آؤٹ',
-        'heading' => '📦 پروڈکٹس کا انتظام',
-        'add_new' => '➕ نئی پروڈکٹ',
-        'tbl_barcode' => 'بارکوڈ / کوڈ',
-        'tbl_name' => 'پروڈکٹ کا نام',
-        'tbl_category' => 'کیٹیگری',
-        'tbl_purchase' => 'خریداری کی قیمت',
-        'tbl_sale' => 'فروخت کی قیمت',
-        'tbl_unit' => 'یونٹ',
-        'tbl_stock' => 'اسٹاک',
-        'tbl_min_stock' => 'کم سے کم الرٹ حد',
-        'tbl_expiry' => 'تاریخ ختم شدگی (Expiry)',
-        'tbl_actions' => 'ایکشنز',
-        'btn_edit' => 'ترمیم',
-        'btn_delete' => 'خارج کریں',
-        'save' => 'محفوظ کریں',
-        'cancel' => 'منسوخ',
-        'edit_product' => 'پروڈکٹ تبدیل کریں',
-        'new_product' => 'نئی پروڈکٹ',
-        'confirm_delete' => 'کیا آپ واقعی اس پروڈکٹ کو خارج کرنا چاہتے ہیں؟',
-        'select_category' => 'کیٹیگری منتخب کریں',
-        'no_category' => 'بغیر کیٹیگری',
+        'menu_inventory' => '📦 Stock & Inventory',
+        'menu_customers' => '👥 Customers & Khata (Udhaar)',
+        'menu_purchases' => '🧾 Purchases (Khareedari)',
+        'menu_reports' => '📈 Sales Reports',
+        'menu_settings' => '⚙️ Settings',
+        'menu_marketing' => '📢 Marketing Tool',
+        'logout' => '🚪 Logout',
+        'heading' => '📦 Products Management',
+        'add_new' => '➕ Add Product',
+        'tbl_barcode' => 'Barcode / Code',
+        'tbl_name' => 'Product Name',
+        'tbl_category' => 'Category',
+        'tbl_purchase' => 'Purchase Price',
+        'tbl_sale' => 'Sale Price',
+        'tbl_unit' => 'Unit',
+        'tbl_stock' => 'Stock',
+        'tbl_min_stock' => 'Min Alert Limit',
+        'tbl_expiry' => 'Expiry Date',
+        'tbl_actions' => 'Actions',
+        'btn_edit' => 'Edit',
+        'btn_delete' => 'Delete',
+        'save' => 'Save',
+        'cancel' => 'Cancel',
+        'edit_product' => 'Product Edit Karein',
+        'new_product' => 'Nayi Product',
+        'confirm_delete' => 'Kya aap sach mein is product ko delete karna chahte hain?',
+        'select_category' => 'Category select karein',
+        'no_category' => 'Uncategorized',
     ]
 ];
 ?>
@@ -118,38 +118,14 @@ $trans = [
         .badge-low-stock { background-color: rgba(245, 158, 11, 0.1); color: var(--warning); border: 1px solid var(--warning); padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 12px; }
         .badge-normal-stock { background-color: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid var(--success); padding: 4px 8px; border-radius: 4px; font-weight: 600; font-size: 12px; }
 
-        /* RTL Layout overrides */
-        .lang-urdu .sidebar { border-right: none; border-left: 1px solid var(--border-color); }
-        .lang-urdu .menu-link:hover, .lang-urdu .menu-link.active { border-left: none; border-right: 4px solid var(--accent); padding-left: 20px; padding-right: 16px; }
-        .lang-urdu .data-table { text-align: right; }
+
     </style>
 </head>
 <body class="<?php echo ($lang === 'ur') ? 'lang-urdu' : ''; ?>">
 
     <div class="layout-wrapper">
         
-        <!-- Sidebar Navigation Drawer -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <img src="TijaratPro.png" alt="TijaratPro" style="width: 28px; height: 28px; border-radius: 6px; vertical-align: middle; margin-right: 6px;"> <?php echo ($lang === 'ur') ? 'تجارت پرو' : 'TijaratPro'; ?>
-            </div>
-            
-            <ul class="sidebar-menu">
-                <li><a href="index.php" class="menu-link">🏠 <?php echo $trans[$lang]['dashboard']; ?></a></li>
-                <li><a href="billing.php" class="menu-link">🛒 <?php echo $trans[$lang]['menu_billing']; ?></a></li>
-                <li><a href="products.php" class="menu-link active">📦 <?php echo $trans[$lang]['menu_inventory']; ?></a></li>
-                <li><a href="customers.php" class="menu-link">👥 <?php echo $trans[$lang]['menu_customers']; ?></a></li>
-                <li><a href="purchases.php" class="menu-link">🧾 <?php echo $trans[$lang]['menu_purchases']; ?></a></li>
-                <li><a href="marketing.php" class="menu-link">📢 <?php echo $trans[$lang]['menu_marketing']; ?></a></li>
-                <li><a href="settings.php" class="menu-link">⚙️ <?php echo $trans[$lang]['menu_settings']; ?></a></li>
-            </ul>
-
-            <div style="margin-top: auto;">
-                <a href="index.php?action=logout" class="menu-link" style="color: var(--danger); border-left: none !important; border-right: none !important;">
-                    <?php echo $trans[$lang]['logout']; ?>
-                </a>
-            </div>
-        </aside>
+        <?php include __DIR__ . '/sidebar.php'; ?>
 
         <!-- Main Display Panel -->
         <main class="content-panel">

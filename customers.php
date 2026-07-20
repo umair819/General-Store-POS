@@ -10,6 +10,14 @@ if (!isset($_SESSION['user_id'])) {
 $lang = $_COOKIE['lang'] ?? 'en';
 $theme = $_COOKIE['theme'] ?? 'light';
 
+$whatsapp_mode = 'link';
+if (file_exists(__DIR__ . '/db_config.json')) {
+    $config_json = json_decode(file_get_contents(__DIR__ . '/db_config.json'), true);
+    if (isset($config_json['whatsapp_mode'])) {
+        $whatsapp_mode = $config_json['whatsapp_mode'];
+    }
+}
+
 $trans = [
     'en' => [
         'title' => 'Customer Khata (Udhaar)',
@@ -55,47 +63,47 @@ $trans = [
         'empty_ledger' => 'No transactions recorded for this customer.',
     ],
     'ur' => [
-        'title' => 'کسٹمر کھاتہ (ادھار)',
-        'menu_billing' => '🛒 بلنگ / سیلز',
-        'menu_inventory' => '📦 اسٹاک / انوینٹری',
-        'menu_customers' => '👥 کسٹمر کھاتہ',
-        'menu_purchases' => '🧾 خریداری',
-        'menu_reports' => '📈 سیلز رپورٹ',
-        'menu_settings' => '⚙️ سیٹنگز',
-        'menu_marketing' => '📢 مارکیٹنگ ٹول',
-        'logout' => '🚪 لاگ آؤٹ',
-        'dashboard' => 'ڈیش بورڈ جائزہ',
-        'add_customer' => 'نیا کسٹمر شامل کریں',
-        'search_placeholder' => 'نام یا فون نمبر سے تلاش کریں...',
-        'name' => 'نام',
-        'phone' => 'فون نمبر',
-        'address' => 'پتہ',
-        'balance' => 'بقایا ادھار (روپے)',
-        'birthdate' => 'تاریخِ پیدائش',
-        'anniversary' => 'سالگرہ کی تاریخ',
-        'actions' => 'اختیارات',
-        'view_ledger' => 'کھاتہ اور ہسٹری',
-        'collect_payment' => 'ادائیگی وصول کریں',
-        'send_reminder' => 'واٹس ایپ ریمائنڈر',
-        'save' => 'محفوظ کریں',
-        'edit_customer' => 'تفصیلات تبدیل کریں',
-        'delete_confirm' => 'کیا آپ واقعی اس کسٹمر کو حذف کرنا چاہتے ہیں؟',
-        'no_customers' => 'کوئی کسٹمر نہیں ملا۔',
-        'payment_amount' => 'وصول رقم (روپے)',
-        'payment_method' => 'ادائیگی کا طریقہ',
-        'note' => 'تفصیل / نوٹ',
-        'record_payment' => 'رقم جمع کریں',
-        'ledger_title' => 'کسٹمر لیجر اسٹیٹمنٹ',
-        'date' => 'تاریخ اور وقت',
-        'reference' => 'حوالہ نمبر',
-        'debit' => 'ڈیبٹ (خریداری)',
-        'credit' => 'کریڈٹ (وصولی)',
-        'running_balance' => 'بقایا بیلنس',
-        'close' => 'بند کریں',
-        'print_ledger' => 'پرنٹ کھاتہ',
-        'whatsapp_preview' => 'واٹس ایپ پیغام کا جائزہ',
-        'send_via_wa' => 'واٹس ایپ پر بھیجیں',
-        'empty_ledger' => 'اس کسٹمر کا کوئی ریکارڈ موجود نہیں ہے۔',
+        'title' => 'Customer Khata (Udhaar)',
+        'menu_billing' => '🛒 POS Billing',
+        'menu_inventory' => '📦 Stock/Inventory',
+        'menu_customers' => '👥 Customer Khata',
+        'menu_purchases' => '🧾 Purchases (Khareedari)',
+        'menu_reports' => '📈 Sales Reports',
+        'menu_settings' => '⚙️ Settings',
+        'menu_marketing' => '📢 Marketing Tool',
+        'logout' => '🚪 Logout',
+        'dashboard' => 'Dashboard Overview',
+        'add_customer' => 'Naya Customer Add Karein',
+        'search_placeholder' => 'Name ya Phone number se search karein...',
+        'name' => 'Name',
+        'phone' => 'Phone Number',
+        'address' => 'Address',
+        'balance' => 'Outstanding Balance (Udhaar)',
+        'birthdate' => 'Birthdate',
+        'anniversary' => 'Anniversary',
+        'actions' => 'Actions',
+        'view_ledger' => 'Ledger / Statement',
+        'collect_payment' => 'Payment Collect Karein',
+        'send_reminder' => 'Send WhatsApp Reminder',
+        'save' => 'Customer Save Karein',
+        'edit_customer' => 'Customer Edit Karein',
+        'delete_confirm' => 'Kya aap sach mein is customer ko delete karna chahte hain?',
+        'no_customers' => 'Koi customer nahi mila.',
+        'payment_amount' => 'Payment Amount (PKR)',
+        'payment_method' => 'Payment Method',
+        'note' => 'Note / Memo',
+        'record_payment' => 'Payment Record Karein',
+        'ledger_title' => 'Customer Ledger Statement',
+        'date' => 'Date & Time',
+        'reference' => 'Reference No.',
+        'debit' => 'Debit (Sale)',
+        'credit' => 'Credit (Paid)',
+        'running_balance' => 'Running Balance',
+        'close' => 'Close',
+        'print_ledger' => 'Print Statement',
+        'whatsapp_preview' => 'WhatsApp Reminder Preview',
+        'send_via_wa' => 'Send via WhatsApp Web',
+        'empty_ledger' => 'Is customer ka koi transaction record nahi hai.',
     ]
 ];
 ?>
@@ -148,40 +156,14 @@ $trans = [
         .ledger-summary-lbl { font-size: 12px; color: var(--text-muted); font-weight: 500; }
         .ledger-summary-val { font-size: 18px; font-weight: 700; font-family: var(--font-heading); }
 
-        /* RTL Handling for Urdu Layout */
-        .lang-urdu .sidebar { border-right: none; border-left: 1px solid var(--border-color); }
-        .lang-urdu .menu-link:hover, .lang-urdu .menu-link.active { border-left: none; border-right: 4px solid var(--accent); padding-left: 20px; padding-right: 16px; }
-        .lang-urdu .search-input { padding-left: 16px; padding-right: 40px; }
-        .lang-urdu .search-icon { left: auto; right: 16px; }
-        .lang-urdu .data-table { text-align: right; }
+
     </style>
 </head>
 <body class="<?php echo ($lang === 'ur') ? 'lang-urdu' : ''; ?>">
 
     <div class="layout-wrapper">
         
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <img src="TijaratPro.png" alt="TijaratPro" style="width: 28px; height: 28px; border-radius: 6px; vertical-align: middle; margin-right: 6px;"> <?php echo ($lang === 'ur') ? 'تجارت پرو' : 'TijaratPro'; ?>
-            </div>
-            
-            <ul class="sidebar-menu">
-                <li><a href="index.php" class="menu-link">🏠 <?php echo $trans[$lang]['dashboard']; ?></a></li>
-                <li><a href="billing.php" class="menu-link">🛒 <?php echo $trans[$lang]['menu_billing']; ?></a></li>
-                <li><a href="products.php" class="menu-link">📦 <?php echo $trans[$lang]['menu_inventory']; ?></a></li>
-                <li><a href="customers.php" class="menu-link active">👥 <?php echo $trans[$lang]['menu_customers']; ?></a></li>
-                <li><a href="purchases.php" class="menu-link">🧾 <?php echo $trans[$lang]['menu_purchases']; ?></a></li>
-                <li><a href="marketing.php" class="menu-link">📢 <?php echo $trans[$lang]['menu_marketing']; ?></a></li>
-                <li><a href="settings.php" class="menu-link">⚙️ <?php echo $trans[$lang]['menu_settings']; ?></a></li>
-            </ul>
-
-            <div style="margin-top: auto;">
-                <a href="index.php?action=logout" class="menu-link" style="color: var(--danger); border-left: none !important; border-right: none !important;">
-                    <?php echo $trans[$lang]['logout']; ?>
-                </a>
-            </div>
-        </aside>
+        <?php include __DIR__ . '/sidebar.php'; ?>
 
         <!-- Main Display Panel -->
         <main class="content-panel">
@@ -721,7 +703,7 @@ $trans = [
             document.getElementById('whatsappModal').classList.remove('active');
         }
 
-        function dispatchWhatsapp() {
+        async function dispatchWhatsapp() {
             if (!activeWaCustomer) return;
             
             let phone = activeWaCustomer.phone.trim();
@@ -736,11 +718,47 @@ $trans = [
             }
             
             const message = document.getElementById('waMessageText').value;
-            const encodedText = encodeURIComponent(message);
-            const waUrl = `https://web.whatsapp.com/send?phone=${phone}&text=${encodedText}`;
+            const whatsappMode = "<?php echo $whatsapp_mode; ?>";
             
-            window.open(waUrl, '_blank');
-            closeWhatsappModal();
+            if (whatsappMode === 'local_api') {
+                const sendBtn = document.querySelector('#whatsappModal .btn-success');
+                const originalText = sendBtn.innerHTML;
+                sendBtn.disabled = true;
+                sendBtn.innerHTML = 'Sending...';
+                
+                try {
+                    const res = await fetch('http://127.0.0.1:9001/send-message', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone: phone, message: message })
+                    });
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    const data = await res.json();
+                    
+                    if (data.success) {
+                        alert('Message sent successfully in the background!');
+                        closeWhatsappModal();
+                    } else {
+                        throw new Error(data.error || 'Server error');
+                    }
+                } catch (err) {
+                    console.error('Failed to send via local background service:', err);
+                    if (confirm('Background WhatsApp service is disconnected or returned an error. Click OK to fallback and send via WhatsApp Web browser tab instead.')) {
+                        const encodedText = encodeURIComponent(message);
+                        const waUrl = `https://web.whatsapp.com/send?phone=${phone}&text=${encodedText}`;
+                        window.open(waUrl, '_blank');
+                        closeWhatsappModal();
+                    }
+                } finally {
+                    sendBtn.disabled = false;
+                    sendBtn.innerHTML = originalText;
+                }
+            } else {
+                const encodedText = encodeURIComponent(message);
+                const waUrl = `https://web.whatsapp.com/send?phone=${phone}&text=${encodedText}`;
+                window.open(waUrl, '_blank');
+                closeWhatsappModal();
+            }
         }
 
         // Helpers

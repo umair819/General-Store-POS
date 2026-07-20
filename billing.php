@@ -62,38 +62,38 @@ $trans = [
         'col_total' => 'Total',
     ],
     'ur' => [
-        'title' => 'Tijarat POS - بلنگ اسکرین',
-        'dashboard' => 'ڈیش بورڈ جائزہ',
+        'title' => 'Tijarat POS - Billing Screen',
+        'dashboard' => 'Dashboard Overview',
         'menu_billing' => '🛒 Tijarat POS',
-        'menu_inventory' => '📦 اسٹاک اور انوینٹری',
-        'menu_customers' => '👥 Tijarat Ledger (کھاتہ)',
-        'menu_purchases' => '🧾 خریداری',
-        'menu_reports' => '📈 سیلز رپورٹ',
-        'menu_settings' => '⚙️ سیٹنگز',
-        'menu_marketing' => '📢 مارکیٹنگ ٹول',
-        'logout' => '🚪 لاگ آؤٹ',
-        'search_placeholder' => '🔍 پروڈکٹ کا نام یا بارکوڈ تلاش کریں (F2)',
-        'walk_in' => 'عام گاہک (Walk-in)',
-        'select_customer' => '👤 گاہک / کھاتہ منتخب کریں',
-        'cart_empty' => 'کارٹ خالی ہے۔ بلنگ شروع کرنے کے لیے پروڈکٹس شامل کریں۔',
-        'subtotal' => 'کل رقم (Subtotal)',
-        'discount' => 'رعایت (Discount)',
-        'payable' => 'قابل ادا رقم (Payable)',
-        'paid' => 'وصول شدہ رقم',
-        'change' => 'باقیہ رقم (Change)',
-        'payment_method' => 'طریقہ ادائیگی',
-        'btn_hold' => '⏸️ بل روکیں (Hold)',
-        'btn_resume' => '▶️ روکے ہوئے بل',
-        'btn_clear' => '✖ کارٹ صاف کریں (F4)',
-        'btn_checkout' => '⚡ بل بنائیں اور پرنٹ کریں (F8)',
-        'shortcuts' => 'شارٹ کٹس: F2 سرچ | F8 بل ادائیگی | F4 کارٹ صاف | F9 روکے گئے بل',
-        'invoice' => 'بل کی رسید',
-        'print' => 'پرنٹ کریں',
-        'close' => 'بند کریں',
-        'col_item' => 'پروڈکٹ',
-        'col_price' => 'قیمت',
-        'col_qty' => 'تعداد',
-        'col_total' => 'ٹوٹل',
+        'menu_inventory' => '📦 Stock & Inventory',
+        'menu_customers' => '👥 Customers & Khata (Udhaar)',
+        'menu_purchases' => '🧾 Purchases (Khareedari)',
+        'menu_reports' => '📈 Sales Reports',
+        'menu_settings' => '⚙️ Settings',
+        'menu_marketing' => '📢 Marketing Tool',
+        'logout' => '🚪 Logout',
+        'search_placeholder' => '🔍 Product ka naam ya Barcode search karein (F2)',
+        'walk_in' => 'Walk-in Customer',
+        'select_customer' => '👤 Customer / Khata select karein',
+        'cart_empty' => 'Cart khali hai. Billing start karne ke liye products add karein.',
+        'subtotal' => 'Subtotal',
+        'discount' => 'Total Discount',
+        'payable' => 'Total Payable',
+        'paid' => 'Amount Paid',
+        'change' => 'Change Due',
+        'payment_method' => 'Payment Method',
+        'btn_hold' => '⏸️ Bill Hold Karein',
+        'btn_resume' => '▶️ Held Bills',
+        'btn_clear' => '✖ Cart Clear Karein (F4)',
+        'btn_checkout' => '⚡ Pay & Print Invoice (F8)',
+        'shortcuts' => 'Keyboard Shortcuts: F2 Search | F8 Pay | F4 Clear | F9 Held Bills',
+        'invoice' => 'Invoice Receipt',
+        'print' => 'Print',
+        'close' => 'Close',
+        'col_item' => 'Item',
+        'col_price' => 'Price',
+        'col_qty' => 'Qty',
+        'col_total' => 'Total',
     ]
 ];
 ?>
@@ -125,10 +125,10 @@ $trans = [
         .catalog-results { flex-grow: 1; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding-bottom: 20px; }
         .product-catalog-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 14px; cursor: pointer; transition: var(--transition-smooth); display: flex; flex-direction: column; gap: 6px; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; }
         .product-catalog-card:hover { border-color: var(--accent); transform: scale(1.03); box-shadow: var(--shadow-md); }
-        .product-catalog-card .name { font-weight: 600; font-size: 14px; color: var(--text-main); }
+        .product-catalog-card .name { font-weight: 600; font-size: 13.5px; color: var(--text-main); padding-right: 65px; line-height: 1.35; min-height: 38px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .product-catalog-card .barcode { font-size: 11px; color: var(--text-muted); font-family: monospace; }
         .product-catalog-card .price { font-size: 16px; font-weight: 700; color: var(--accent); font-family: var(--font-heading); margin-top: auto; }
-        .product-catalog-card .stock-badge { position: absolute; top: 8px; right: 8px; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; }
+        .product-catalog-card .stock-badge { position: absolute; top: 10px; right: 10px; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 4px; z-index: 2; }
         
         /* Cart items table list */
         .cart-items-wrapper { flex-grow: 1; overflow-y: auto; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--bg-app); margin-bottom: 20px; min-height: 180px; }
@@ -163,39 +163,14 @@ $trans = [
         .thermal-invoice .invoice-table th, .thermal-invoice .invoice-table td { text-align: left; padding: 2px 0; }
         .thermal-invoice .invoice-table .right, .thermal-invoice .right { text-align: right; }
 
-        /* RTL Layout overrides */
-        .lang-urdu .sidebar { border-right: none; border-left: 1px solid var(--border-color); }
-        .lang-urdu .menu-link:hover, .lang-urdu .menu-link.active { border-left: none; border-right: 4px solid var(--accent); padding-left: 20px; padding-right: 16px; }
-        .lang-urdu .cart-table { text-align: right; }
-        .lang-urdu .cart-table th { text-align: right; }
+
     </style>
 </head>
 <body class="<?php echo ($lang === 'ur') ? 'lang-urdu' : ''; ?>">
 
     <div class="layout-wrapper">
         
-        <!-- Sidebar Navigation Drawer -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <img src="TijaratPro.png" alt="TijaratPro" style="width: 28px; height: 28px; border-radius: 6px; vertical-align: middle; margin-right: 6px;"> <?php echo ($lang === 'ur') ? 'تجارت پرو' : 'TijaratPro'; ?>
-            </div>
-            
-            <ul class="sidebar-menu">
-                <li><a href="index.php" class="menu-link">🏠 <?php echo $trans[$lang]['dashboard']; ?></a></li>
-                <li><a href="billing.php" class="menu-link active">🛒 <?php echo $trans[$lang]['menu_billing']; ?></a></li>
-                <li><a href="products.php" class="menu-link">📦 <?php echo $trans[$lang]['menu_inventory']; ?></a></li>
-                <li><a href="customers.php" class="menu-link">👥 <?php echo $trans[$lang]['menu_customers']; ?></a></li>
-                <li><a href="purchases.php" class="menu-link">🧾 <?php echo $trans[$lang]['menu_purchases']; ?></a></li>
-                <li><a href="marketing.php" class="menu-link">📢 <?php echo $trans[$lang]['menu_marketing']; ?></a></li>
-                <li><a href="settings.php" class="menu-link">⚙️ <?php echo $trans[$lang]['menu_settings']; ?></a></li>
-            </ul>
-
-            <div style="margin-top: auto;">
-                <a href="index.php?action=logout" class="menu-link" style="color: var(--danger); border-left: none !important; border-right: none !important;">
-                    <?php echo $trans[$lang]['logout']; ?>
-                </a>
-            </div>
-        </aside>
+        <?php include __DIR__ . '/sidebar.php'; ?>
 
         <!-- Main Display Panel -->
         <main class="content-panel">
@@ -268,12 +243,12 @@ $trans = [
                         </div>
                         <div class="total-row grand-total-row">
                             <span><?php echo $trans[$lang]['payable']; ?></span>
-                            <span><span id="payableVal">0.00</span> <small style="font-size: 12px;"><?php echo ($lang === 'ur') ? 'روپے' : 'PKR'; ?></small></span>
+                            <span><span id="payableVal">0.00</span> <small style="font-size: 12px;"><?php echo ($lang === 'ur') ? 'Rs' : 'PKR'; ?></small></span>
                         </div>
                     </div>
 
                     <!-- Payment Tender & Method split grid -->
-                    <div class="checkout-form-grid" style="text-align: <?php echo ($lang === 'ur') ? 'right' : 'left'; ?>">
+                    <div class="checkout-form-grid" style="text-align: left">
                         <div class="form-group">
                             <label class="form-label"><?php echo $trans[$lang]['payment_method']; ?></label>
                             <select class="form-control" id="paymentMethod" onchange="handlePaymentMethodChange()">
@@ -347,9 +322,11 @@ $trans = [
     </div>
 
     <script>
+        const trans = <?php echo json_encode($trans[$lang]); ?>;
         let cart = [];
         let customers = [];
         let allProducts = [];
+        const stopNegativeStock = <?php echo ($global_config['stop_negative_stock'] === '1' ? 'true' : 'false'); ?>;
 
         // Clock Handler
         setInterval(() => {
@@ -463,6 +440,13 @@ $trans = [
         // Cart State Management
         function addToCart(product) {
             const existing = cart.find(item => item.id === product.id);
+            const currentCartQty = existing ? existing.qty : 0;
+            
+            if (stopNegativeStock && (currentCartQty + 1 > parseFloat(product.stock_qty))) {
+                alert(`Stock Limit Reached! Negative stock is disabled in Settings. Available stock: ${product.stock_qty} ${product.unit || 'units'}.`);
+                return;
+            }
+            
             if (existing) {
                 existing.qty += 1;
             } else {
@@ -471,7 +455,9 @@ $trans = [
                     name: product.name,
                     price: parseFloat(product.sale_price),
                     qty: 1,
-                    discount: 0
+                    discount: 0,
+                    stock_qty: parseFloat(product.stock_qty),
+                    unit: product.unit || 'units'
                 });
             }
             renderCart();
@@ -480,7 +466,14 @@ $trans = [
         function updateCartQty(id, qty) {
             const item = cart.find(item => item.id === id);
             if (item) {
-                item.qty = parseFloat(qty) || 0;
+                const targetQty = parseFloat(qty) || 0;
+                if (stopNegativeStock && (targetQty > item.stock_qty)) {
+                    alert(`Stock Limit Reached! Negative stock is disabled in Settings. Available stock: ${item.stock_qty} ${item.unit}.`);
+                    renderCart();
+                    return;
+                }
+                
+                item.qty = targetQty;
                 if (item.qty <= 0) {
                     removeFromCart(id);
                 } else {

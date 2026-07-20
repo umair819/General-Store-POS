@@ -13,6 +13,7 @@ app.commandLine.appendSwitch('ignore-certificate-errors');
 app.commandLine.appendSwitch('ignore-ssl-errors', 'true');
 
 let phpServerProcess = null;
+let whatsappProcess = null;
 let mainWindow = null;
 
 // Find a free port starting from a default port
@@ -149,6 +150,33 @@ function startPhpServer(port) {
   });
 }
 
+// Launch the background WhatsApp (Baileys) Node service
+function startWhatsappService() {
+  return new Promise((resolve) => {
+    console.log('🚀 Launching background WhatsApp service daemon...');
+    whatsappProcess = spawn('node', [path.join(__dirname, 'whatsapp_service.js')], {
+      cwd: __dirname,
+      stdio: 'pipe'
+    });
+
+    whatsappProcess.stdout.on('data', (data) => {
+      console.log(`[WHATSAPP STDOUT]: ${data}`);
+    });
+
+    whatsappProcess.stderr.on('data', (data) => {
+      console.log(`[WHATSAPP STDERR]: ${data}`);
+    });
+
+    whatsappProcess.on('error', (err) => {
+      console.error('❌ Failed to start WhatsApp background service:', err);
+    });
+
+    setTimeout(() => {
+      resolve();
+    }, 600);
+  });
+}
+
 function createWindow(port) {
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -185,6 +213,7 @@ app.whenReady().then(async () => {
 
     const port = await getFreePort(8000);
     await startPhpServer(port);
+    await startWhatsappService();
     createWindow(port);
   } catch (err) {
     const { dialog } = require('electron');
@@ -202,12 +231,22 @@ function killPhpServer() {
   }
 }
 
+function killWhatsappService() {
+  if (whatsappProcess) {
+    console.log('🛑 Terminating background WhatsApp service process...');
+    whatsappProcess.kill('SIGTERM');
+    whatsappProcess = null;
+  }
+}
+
 app.on('will-quit', () => {
   killPhpServer();
+  killWhatsappService();
 });
 
 app.on('window-all-closed', () => {
   killPhpServer();
+  killWhatsappService();
   if (process.platform !== 'darwin') {
     app.quit();
   }

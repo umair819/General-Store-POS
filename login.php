@@ -10,7 +10,7 @@ $theme = $_COOKIE['theme'] ?? 'light';
 
 $trans = [
     'en' => ['title' => 'TijaratPro', 'subtitle' => 'Dukaan se godown tak, poora hisaab aik jagah.', 'login' => 'Login', 'username' => 'Username', 'password' => 'Password', 'enter_pin' => 'Enter Quick Login PIN', 'use_pass' => 'Use Username & Password', 'use_pin' => 'Use Quick PIN Login', 'invalid' => 'Invalid username/password or PIN.', 'pin_placeholder' => 'Enter 4-Digit PIN', 'powered_by' => 'Powered by TechBrain', 'premium_portal' => 'Premium General Store Portal'],
-    'ur' => ['title' => 'تجارت پرو', 'subtitle' => 'دکان سے گودام تک، پورا حساب ایک جگہ۔', 'login' => 'لاگ ان کریں', 'username' => 'صارف کا نام (Username)', 'password' => 'پاس ورڈ (Password)', 'enter_pin' => 'فوری لاگ ان پن (PIN) درج کریں', 'use_pass' => 'صارف کا نام اور پاس ورڈ استعمال کریں', 'use_pin' => 'فوری پن لاگ ان استعمال کریں', 'invalid' => 'صارف کا نام/پاس ورڈ یا پن غلط ہے۔', 'pin_placeholder' => '4 ہندسوں کا پن درج کریں', 'powered_by' => 'سافٹ ویئر بذریعہ ٹیک برین', 'premium_portal' => 'پریمیم جنرل اسٹور پورٹل']
+    'ur' => ['title' => 'TijaratPro', 'subtitle' => 'Dukaan se godown tak, poora hisaab aik jagah.', 'login' => 'Login Karein', 'username' => 'Username', 'password' => 'Password', 'enter_pin' => 'Quick Login PIN enter karein', 'use_pass' => 'Username & Password use karein', 'use_pin' => 'Quick PIN Login use karein', 'invalid' => 'Username/Password ya PIN galat hai.', 'pin_placeholder' => '4-Digit PIN enter karein', 'powered_by' => 'Powered by TechBrain', 'premium_portal' => 'Premium General Store Portal']
 ];
 
 $config_file = __DIR__ . '/db_config.json';
@@ -136,7 +136,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <div class="absolute top-[20%] right-[-20%] w-[60%] h-[60%] bg-amber-500/5 rounded-full blur-[100px]"></div>
         </div>
 
-        <div class="w-full max-w-[400px] z-10 fade-in relative">
+        <div class="w-full max-w-[420px] z-10 fade-in relative">
+          <div class="bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] rounded-[28px] p-10 shadow-2xl shadow-black/30">
 
             <?php if ($license_status === 'invalid'): ?>
             <div class="mb-6 bg-rose-500/10 border border-rose-500/25 p-4 rounded-2xl text-rose-300 text-[11px] font-bold flex items-center justify-between gap-3">
@@ -223,6 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <div class="mt-8 text-center border-t border-slate-800/40 pt-6">
                 <p class="text-[9px] text-slate-600 font-black uppercase tracking-widest"><?php echo $trans[$lang]['powered_by']; ?></p>
             </div>
+          </div><!-- glass card end -->
         </div>
     </div>
 

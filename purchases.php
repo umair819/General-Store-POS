@@ -84,68 +84,68 @@ $trans = [
         'apply_invoice' => 'Apply to Invoice Form',
     ],
     'ur' => [
-        'title' => 'خریداری اور سپلائرز کی تفصیل',
-        'menu_billing' => '🛒 بلنگ / سیلز',
-        'menu_inventory' => '📦 اسٹاک / انوینٹری',
-        'menu_customers' => '👥 کسٹمر کھاتہ',
-        'menu_purchases' => '🧾 خریداری',
-        'menu_marketing' => '📢 مارکیٹنگ ٹول',
-        'menu_settings' => '⚙️ سیٹنگز',
-        'logout' => '🚪 لاگ آؤٹ',
-        'dashboard' => 'ڈیش بورڈ جائزہ',
+        'title' => 'Purchases & Supplier Management',
+        'menu_billing' => '🛒 POS Billing',
+        'menu_inventory' => '📦 Stock/Inventory',
+        'menu_customers' => '👥 Customer Khata',
+        'menu_purchases' => '🧾 Purchases (Khareedari)',
+        'menu_marketing' => '📢 Marketing Tool',
+        'menu_settings' => '⚙️ Settings',
+        'logout' => '🚪 Logout',
+        'dashboard' => 'Dashboard Overview',
         
-        'tab_purchases' => 'خریداری کا ریکارڈ',
-        'tab_suppliers' => 'سپلائرز کی فہرست',
-        'btn_new_purchase' => 'نیا اسٹاک خریدیں',
-        'btn_add_supplier' => 'نیا سپلائر شامل کریں',
+        'tab_purchases' => 'Purchases Log',
+        'tab_suppliers' => 'Suppliers Registry',
+        'btn_new_purchase' => 'New Stock Purchase',
+        'btn_add_supplier' => 'Add Supplier',
         
-        'search_suppliers' => 'سپلائر تلاش کریں...',
-        'search_purchases' => 'خریداری کا بل تلاش کریں...',
+        'search_suppliers' => 'Search suppliers...',
+        'search_purchases' => 'Search purchases...',
         
-        'supp_name' => 'کمپنی / سپلائر کا نام',
-        'supp_contact' => 'رابطہ کار کا نام',
-        'supp_phone' => 'فون نمبر',
-        'supp_address' => 'پتہ',
-        'supp_balance' => 'بقایا رقم (جو ہم نے دینی ہے)',
-        'actions' => 'اختیارات',
+        'supp_name' => 'Supplier / Company Name',
+        'supp_contact' => 'Contact Person',
+        'supp_phone' => 'Phone',
+        'supp_address' => 'Address',
+        'supp_balance' => 'Outstanding Balance (We Owe)',
+        'actions' => 'Actions',
         
-        'pur_no' => 'خریداری بل نمبر',
-        'pur_supplier' => 'سپلائر',
-        'pur_total' => 'کل بل',
-        'pur_paid' => 'ادا کردہ رقم',
-        'pur_balance' => 'بقایا رقم',
-        'pur_date' => 'تاریخ',
+        'pur_no' => 'Purchase Bill No.',
+        'pur_supplier' => 'Supplier',
+        'pur_total' => 'Total Bill',
+        'pur_paid' => 'Paid Amount',
+        'pur_balance' => 'Balance Due',
+        'pur_date' => 'Date',
         
-        'save' => 'محفوظ کریں',
-        'edit_supplier' => 'سپلائر کی تفصیل تبدیل کریں',
-        'close' => 'بند کریں',
-        'delete_confirm' => 'کیا آپ واقعی اس سپلائر کو حذف کرنا چاہتے ہیں؟',
+        'save' => 'Save Supplier',
+        'edit_supplier' => 'Edit Supplier Details',
+        'close' => 'Close',
+        'delete_confirm' => 'Are you sure you want to delete this supplier?',
         
-        'new_purchase_title' => 'خریداری اور اسٹاک ان کا اندراج',
-        'select_supplier' => 'سپلائر منتخب کریں',
-        'walk_in' => '-- عام سپلائر --',
-        'add_item' => 'پروڈکٹ شامل کریں',
-        'product' => 'پروڈکٹ کا نام',
-        'qty' => 'تعداد',
-        'price' => 'قیمتِ خریداری',
-        'expiry' => 'تاریخِ میعاد (اختیاری)',
-        'subtotal' => 'رقم',
-        'discount' => 'ڈسکاؤنٹ',
-        'total' => 'کل رقم',
-        'paid' => 'ادا کردہ رقم',
-        'balance' => 'بقایا رقم (ادھار)',
-        'save_purchase' => 'خریداری محفوظ کریں اور اسٹاک بڑھائیں',
+        'new_purchase_title' => 'Record Stock Purchase Invoice',
+        'select_supplier' => 'Select Supplier',
+        'walk_in' => '-- Walk-in Supplier --',
+        'add_item' => 'Add Product',
+        'product' => 'Product Name',
+        'qty' => 'Quantity',
+        'price' => 'Purchase Price',
+        'expiry' => 'Expiry Date (optional)',
+        'subtotal' => 'Subtotal',
+        'discount' => 'Discount',
+        'total' => 'Total',
+        'paid' => 'Amount Paid',
+        'balance' => 'Balance Due (Credit)',
+        'save_purchase' => 'Save Purchase & Update Stock',
         
-        'ai_ocr_btn' => '🤖 آرٹیفیشل انٹیلیجنس (Gemini AI) بل اسکینر',
-        'ocr_title' => 'جیمنی اے آئی بل اسکینر',
-        'ocr_drag_text' => 'خریداری بل کی تصویر یہاں کھینچ کر لائیں یا اپ لوڈ کریں',
-        'ocr_allowed' => 'سپورٹڈ فائلز: PNG, JPG, JPEG',
-        'ocr_processing' => 'بل سے تفصیلات نکالی جا رہی ہیں... براہ کرم انتظار کریں۔',
-        'ocr_match_title' => 'اسکین شدہ آئٹمز کو اپنی پروڈکٹس سے جوڑیں',
-        'ocr_scanned_item' => 'اسکین شدہ آئٹم',
-        'ocr_matching_product' => 'موجودہ پروڈکٹ سے لنک کریں',
-        'ocr_new_product' => '[ نئی پروڈکٹ بنائیں ]',
-        'apply_invoice' => 'بل فارم میں ڈیٹا منتقل کریں',
+        'ai_ocr_btn' => '🤖 Scan Bill using Gemini AI',
+        'ocr_title' => 'Gemini AI OCR Bill Scanner',
+        'ocr_drag_text' => 'Drag and drop your invoice image here or click to select',
+        'ocr_allowed' => 'Supported formats: PNG, JPG, JPEG',
+        'ocr_processing' => 'Extracting invoice details using Gemini AI...',
+        'ocr_match_title' => 'Link Scanned Items to Product Catalog',
+        'ocr_scanned_item' => 'Scanned Item',
+        'ocr_matching_product' => 'Matched Product in Catalog',
+        'ocr_new_product' => '[ Create as New Product ]',
+        'apply_invoice' => 'Apply to Invoice Form',
     ]
 ];
 ?>
@@ -218,40 +218,14 @@ $trans = [
         .ocr-match-table th, .ocr-match-table td { border: 1px solid var(--border-color); padding: 10px; font-size: 13px; text-align: left; }
         .ocr-match-table th { background: var(--bg-input); }
 
-        /* RTL Handling overrides */
-        .lang-urdu .sidebar { border-right: none; border-left: 1px solid var(--border-color); }
-        .lang-urdu .menu-link:hover, .lang-urdu .menu-link.active { border-left: none; border-right: 4px solid var(--accent); padding-left: 20px; padding-right: 16px; }
-        .lang-urdu .search-input { padding-left: 16px; padding-right: 40px; }
-        .lang-urdu .search-icon { left: auto; right: 16px; }
-        .lang-urdu .data-table, .lang-urdu .ocr-match-table th, .lang-urdu .ocr-match-table td { text-align: right; }
+
     </style>
 </head>
 <body class="<?php echo ($lang === 'ur') ? 'lang-urdu' : ''; ?>">
 
     <div class="layout-wrapper">
         
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <img src="TijaratPro.png" alt="TijaratPro" style="width: 28px; height: 28px; border-radius: 6px; vertical-align: middle; margin-right: 6px;"> <?php echo ($lang === 'ur') ? 'تجارت پرو' : 'TijaratPro'; ?>
-            </div>
-            
-            <ul class="sidebar-menu">
-                <li><a href="index.php" class="menu-link">🏠 <?php echo $trans[$lang]['dashboard']; ?></a></li>
-                <li><a href="billing.php" class="menu-link">🛒 <?php echo $trans[$lang]['menu_billing']; ?></a></li>
-                <li><a href="products.php" class="menu-link">📦 <?php echo $trans[$lang]['menu_inventory']; ?></a></li>
-                <li><a href="customers.php" class="menu-link">👥 <?php echo $trans[$lang]['menu_customers']; ?></a></li>
-                <li><a href="purchases.php" class="menu-link active">🧾 <?php echo $trans[$lang]['menu_purchases']; ?></a></li>
-                <li><a href="marketing.php" class="menu-link">📢 <?php echo $trans[$lang]['menu_marketing']; ?></a></li>
-                <li><a href="settings.php" class="menu-link">⚙️ <?php echo $trans[$lang]['menu_settings']; ?></a></li>
-            </ul>
-
-            <div style="margin-top: auto;">
-                <a href="index.php?action=logout" class="menu-link" style="color: var(--danger); border-left: none !important; border-right: none !important;">
-                    <?php echo $trans[$lang]['logout']; ?>
-                </a>
-            </div>
-        </aside>
+        <?php include __DIR__ . '/sidebar.php'; ?>
 
         <!-- Main Display Panel -->
         <main class="content-panel">

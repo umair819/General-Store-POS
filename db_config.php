@@ -5,18 +5,31 @@
 $db_config_file = __DIR__ . '/db_config.json';
 $db_name = 'general_store.db';
 
+$global_config = [
+    'shop_name' => 'TijaratPro',
+    'shop_phone' => '03001234567',
+    'shop_address' => 'Saddar, Karachi, Pakistan',
+    'shop_currency' => 'PKR',
+    'gemini_api_key' => '',
+    'whatsapp_mode' => 'link',
+    'receipt_template' => 'default',
+    'tax_number' => '',
+    'tax_enabled' => '0',
+    'stop_negative_stock' => '0',
+    'enable_passcode' => '0',
+    'decimal_places' => 2,
+    'font_scale' => 100,
+];
+
 if (file_exists($db_config_file)) {
     $db_config_data = json_decode(file_get_contents($db_config_file), true);
     if ($db_config_data) {
         $db_name = $db_config_data['db_name'] ?? 'general_store.db';
+        $global_config = array_merge($global_config, $db_config_data);
     }
 } else {
     // Auto-create default configuration file
-    $default_config = [
-        'db_type' => 'sqlite',
-        'db_name' => 'general_store.db'
-    ];
-    file_put_contents($db_config_file, json_encode($default_config, JSON_PRETTY_PRINT));
+    file_put_contents($db_config_file, json_encode($global_config, JSON_PRETTY_PRINT));
 }
 
 $db_path = __DIR__ . '/' . $db_name;

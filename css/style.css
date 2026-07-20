@@ -1,6 +1,6 @@
 /* CSS Design System - TijaratPro */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
     /* Color Palette - Vibrant Indigo & Crimson Accent (Premium Modern Feel) */
@@ -29,7 +29,7 @@
     
     /* Typography */
     --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
     
     /* Radius */
     --radius-sm: 6px;
@@ -302,7 +302,6 @@ h1, h2, h3, h4, h5, h6 {
 /* Urdu Font styling if Urdu is toggled */
 .lang-urdu {
     font-family: 'Outfit', 'Noto Naskh Urdu', sans-serif;
-    direction: rtl;
 }
 
 /* Theme and Language Toggles */
@@ -331,3 +330,177 @@ h1, h2, h3, h4, h5, h6 {
     border-color: var(--accent);
     color: var(--accent);
 }
+
+/* Premium Dark Sidebar Layout System */
+.sidebar {
+    width: 280px;
+    background-color: #0f172a !important; /* Dark Slate theme */
+    border-right: 1px solid #1e293b !important;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition-smooth);
+}
+
+.sidebar-brand {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff !important;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 12px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Hide scrollbar for sidebar catalog */
+.sidebar-menu::-webkit-scrollbar {
+    width: 4px;
+}
+.sidebar-menu::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+
+.menu-group-header {
+    color: #475569;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    padding-left: 12px;
+    font-family: var(--font-heading);
+}
+
+.menu-link, .menu-accordion-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    color: #94a3b8 !important;
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: 14.5px;
+    border-radius: 8px;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+}
+
+.menu-link-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-link:hover, .menu-accordion-btn:hover {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+}
+
+.menu-link.active, .menu-accordion-btn.active-group {
+    background-color: var(--bg-input) !important;
+    color: var(--accent) !important;
+    font-weight: 600;
+}
+
+/* Highlight specific link active states inside submenus */
+.menu-link.active-sub {
+    background-color: var(--accent) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+.menu-submenu {
+    list-style: none;
+    padding-left: 16px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 4px;
+    border-left: 1px dashed #334155;
+    margin-left: 22px;
+}
+
+.menu-submenu.active {
+    display: flex;
+}
+
+.menu-submenu .menu-link {
+    font-size: 13.5px;
+    padding: 10px 14px;
+    border-radius: 6px;
+}
+
+.menu-caret {
+    font-size: 10px;
+    transition: transform 0.2s ease;
+}
+
+.menu-accordion-btn.active .menu-caret {
+    transform: rotate(90deg);
+}
+
+/* Premium Shared Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    margin-top: 15px;
+}
+
+.table th, .table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.table th {
+    background-color: var(--bg-input);
+    font-weight: 600;
+    font-family: var(--font-heading);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.table td {
+    color: var(--text-main);
+    white-space: nowrap;
+}
+
+/* Permit first column to wrap naturally if it's text (product name, description, etc) */
+.table td:first-child {
+    white-space: normal;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tr:hover td {
+    background-color: var(--bg-input);
+}
+
+
