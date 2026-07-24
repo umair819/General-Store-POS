@@ -267,10 +267,10 @@ for ($i = 6; $i >= 0; $i--) {
             box-shadow: var(--shadow-md);
             filter: brightness(1.1);
         }
-        .btn-sale { background-color: var(--accent); }
-        .btn-purchase { background-color: #0f766e; }
-        .btn-payment { background-color: #2563eb; }
-        .btn-product { background-color: #374151; }
+        .btn-sale { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #020617 !important; font-weight: 700; box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25); }
+        .btn-purchase { background-color: #1e293b; color: #f8fafc !important; border: 1px solid #334155; }
+        .btn-payment { background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: #ffffff !important; font-weight: 600; }
+        .btn-product { background-color: #0f172a; color: #f8fafc !important; border: 1px solid #334155; }
 
         .dashboard-sections {
             display: grid;
@@ -621,15 +621,20 @@ for ($i = 6; $i >= 0; $i--) {
         <!-- Main Display Panel -->
         <main class="content-panel">
             
+            <?php 
+            $currentUserName = $_SESSION['name'] ?? $_SESSION['username'] ?? 'Admin';
+            $currentUserRole = $_SESSION['role'] ?? 'Admin';
+            $avatarInitial = !empty($currentUserName) ? strtoupper(substr($currentUserName, 0, 1)) : 'A';
+            ?>
             <!-- Top Navigation and System Controls -->
             <header class="header-nav">
                 <div class="user-profile">
                     <div class="user-avatar">
-                        <?php echo strtoupper(substr($_SESSION['name'], 0, 1)); ?>
+                        <?php echo htmlspecialchars($avatarInitial); ?>
                     </div>
                     <div class="user-details" style="text-align: <?php echo ($lang === 'ur') ? 'right' : 'left'; ?>">
-                        <span class="user-name"><?php echo $trans[$lang]['welcome']; ?>, <?php echo $_SESSION['name']; ?></span>
-                        <span class="user-role"><?php echo $_SESSION['role']; ?></span>
+                        <span class="user-name"><?php echo $trans[$lang]['welcome']; ?>, <?php echo htmlspecialchars($currentUserName); ?></span>
+                        <span class="user-role"><?php echo htmlspecialchars(ucfirst($currentUserRole)); ?></span>
                     </div>
                 </div>
 
@@ -912,16 +917,16 @@ for ($i = 6; $i >= 0; $i--) {
                         {
                             label: 'Sales (Bikri)',
                             data: <?php echo json_encode($chart_sales); ?>,
-                            backgroundColor: 'rgba(237, 26, 59, 0.85)',
-                            borderColor: '#ed1a3b',
+                            backgroundColor: 'rgba(245, 158, 11, 0.85)',
+                            borderColor: '#f59e0b',
                             borderWidth: 1,
                             borderRadius: 4
                         },
                         {
                             label: 'Purchases (Khareedari)',
                             data: <?php echo json_encode($chart_purchases); ?>,
-                            backgroundColor: 'rgba(59, 130, 246, 0.85)',
-                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(71, 85, 105, 0.85)',
+                            borderColor: '#475569',
                             borderWidth: 1,
                             borderRadius: 4
                         }

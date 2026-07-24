@@ -753,7 +753,7 @@ $trans = [
                     <b>Bill No:</b> ${invoice_no}<br>
                     <b>Date:</b> ${date}<br>
                     <b>Customer:</b> ${custName}<br>
-                    <b>Cashier:</b> ${"<?php echo $_SESSION['name']; ?>"}<br>
+                    <b>Cashier:</b> ${"<?php echo htmlspecialchars($_SESSION['name'] ?? $_SESSION['username'] ?? 'Admin'); ?>"}<br>
                 </div>
                 <div class="divider"></div>
                 <table class="invoice-table">

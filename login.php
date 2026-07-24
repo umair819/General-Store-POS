@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     if (!empty($username) && !empty($password)) {
         $hashed = hash('sha256', $password);
         $user = dbQueryFirst("SELECT * FROM users WHERE username = ? AND password = ?", [$username, $hashed]);
-        if ($user) { $_SESSION['user_id'] = $user['id']; $_SESSION['username'] = $user['username']; $_SESSION['role'] = $user['role']; $_SESSION['name'] = $user['name']; header('Location: index.php'); exit; }
+        if ($user) { $_SESSION['user_id'] = $user['id']; $_SESSION['username'] = $user['username']; $_SESSION['role'] = $user['role']; $_SESSION['name'] = $user['name'] ?? $user['username'] ?? 'Admin'; header('Location: index.php'); exit; }
         else { $error = $trans[$lang]['invalid']; }
     }
 }
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $pin = trim($_POST['pin'] ?? '');
     if (!empty($pin)) {
         $user = dbQueryFirst("SELECT * FROM users WHERE pin = ?", [$pin]);
-        if ($user) { $_SESSION['user_id'] = $user['id']; $_SESSION['username'] = $user['username']; $_SESSION['role'] = $user['role']; $_SESSION['name'] = $user['name']; header('Location: index.php'); exit; }
+        if ($user) { $_SESSION['user_id'] = $user['id']; $_SESSION['username'] = $user['username']; $_SESSION['role'] = $user['role']; $_SESSION['name'] = $user['name'] ?? $user['username'] ?? 'Admin'; header('Location: index.php'); exit; }
         else { $error = $trans[$lang]['invalid']; }
     }
 }

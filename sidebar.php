@@ -1,183 +1,117 @@
 <?php
 $active_page = basename($_SERVER['PHP_SELF']);
-?>
-<style>
-    :root {
-        font-size: <?php echo intval($global_config['font_scale'] ?? 100); ?>% !important;
-    }
-</style>
-<?php
-
-// Set group active classes based on active subpages
-$group_transactions_active = ($active_page === 'billing.php' || $active_page === 'purchases.php') ? 'active active-group' : '';
-$group_inventory_active = ($active_page === 'products.php' || $active_page === 'categories.php' || $active_page === 'inventory.php') ? 'active active-group' : '';
-$group_marketing_active = ($active_page === 'marketing.php' || $active_page === 'whatsapp.php') ? 'active active-group' : '';
-
-// Helper to check language and translations
 $sidebar_lang = $_COOKIE['lang'] ?? 'en';
-$sidebar_trans = [
-    'en' => [
-        'trans_header' => 'Transactions',
-        'menu_billing' => '🛒 POS Billing',
-        'menu_purchases' => '🧾 Purchase Invoice',
-        'stock_header' => 'Inventory & Catalog',
-        'menu_inventory' => '📦 Products / Items',
-        'menu_categories' => '📁 Product Categories',
-        'menu_adjust' => '🔄 Adjust Stock Levels',
-        'khata_header' => 'Contacts & Khata',
-        'menu_customers' => '👥 Customers (Udhaar)',
-        'reports_header' => 'Business Reports',
-        'menu_reports' => '📊 Reports Dashboard',
-        'marketing_header' => 'Marketing & Tools',
-        'menu_whatsapp' => '📱 WhatsApp Connection',
-        'menu_marketing' => '📢 Message Campaigns',
-        'setup_header' => 'Setup Configuration',
-        'menu_settings' => '⚙️ Settings Panel',
-        'logout' => '🚪 Log Out Session'
-    ],
-    'ur' => [
-        'trans_header' => 'Transactions',
-        'menu_billing' => '🛒 POS Billing',
-        'menu_purchases' => '🧾 Purchase Invoice',
-        'stock_header' => 'Inventory & Catalog',
-        'menu_inventory' => '📦 Products / Items',
-        'menu_categories' => '📁 Product Categories',
-        'menu_adjust' => '🔄 Adjust Stock Levels',
-        'khata_header' => 'Contacts & Khata',
-        'menu_customers' => '👥 Customers (Udhaar)',
-        'reports_header' => 'Business Reports',
-        'menu_reports' => '📊 Reports Dashboard',
-        'marketing_header' => 'Marketing & Tools',
-        'menu_whatsapp' => '📱 WhatsApp Connection',
-        'menu_marketing' => '📢 Message Campaigns',
-        'setup_header' => 'Setup Configuration',
-        'menu_settings' => '⚙️ Settings Panel',
-        'logout' => '🚪 Log Out Session'
-    ]
-];
+$currentUserName = $_SESSION['name'] ?? $_SESSION['username'] ?? 'Admin';
+$currentUserRole = $_SESSION['role'] ?? 'Administrator';
+$avatarInitial = !empty($currentUserName) ? strtoupper(substr($currentUserName, 0, 1)) : 'A';
 ?>
-<aside class="sidebar">
-    <div class="sidebar-brand">
-        <img src="TijaratPro.png" alt="TijaratPro" style="width: 28px; height: 28px; border-radius: 6px; vertical-align: middle; margin-right: 6px;"> Tijarat Pro
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<aside class="sidebar" id="mainSidebar">
+    <!-- Brand Header Logo -->
+    <div class="sidebar-brand-wrapper">
+        <a href="index.php" class="sidebar-brand">
+            <div class="sidebar-brand-icon">
+                <i class="fa-solid fa-shop"></i>
+            </div>
+            <div class="sidebar-brand-text">Tijarat<span>Pro</span></div>
+        </a>
     </div>
     
+    <!-- Flat Menu Navigation (Sleek Buttons, No Extra Group Headers) -->
     <ul class="sidebar-menu">
-        <!-- Dashboard Link -->
         <li>
             <a href="index.php" class="menu-link <?php echo ($active_page === 'index.php') ? 'active' : ''; ?>">
-                <span class="menu-link-content">🏠 Dashboard Overview</span>
+                <i class="fa-solid fa-gauge"></i> <span>Dashboard</span>
             </a>
         </li>
-
-        <!-- Group: Transactions -->
-        <div class="menu-group-header"><?php echo $sidebar_trans[$sidebar_lang]['trans_header']; ?></div>
         <li>
-            <button class="menu-accordion-btn <?php echo $group_transactions_active; ?>" onclick="toggleAccordion('acc-transactions', this)">
-                <span class="menu-link-content">💼 Transactions</span>
-                <span class="menu-caret">▶</span>
-            </button>
-            <ul class="menu-submenu" id="acc-transactions">
-                <li><a href="billing.php" class="menu-link <?php echo ($active_page === 'billing.php') ? 'active-sub' : ''; ?>"><?php echo $sidebar_trans[$sidebar_lang]['menu_billing']; ?></a></li>
-                <li><a href="purchases.php" class="menu-link <?php echo ($active_page === 'purchases.php') ? 'active-sub' : ''; ?>"><?php echo $sidebar_trans[$sidebar_lang]['menu_purchases']; ?></a></li>
-            </ul>
+            <a href="billing.php" class="menu-link <?php echo ($active_page === 'billing.php') ? 'active' : ''; ?>">
+                <i class="fa-solid fa-receipt"></i> <span>POS Billing</span>
+            </a>
         </li>
-
-        <!-- Group: Inventory & Catalog -->
-        <div class="menu-group-header"><?php echo $sidebar_trans[$sidebar_lang]['stock_header']; ?></div>
         <li>
-            <button class="menu-accordion-btn <?php echo $group_inventory_active; ?>" onclick="toggleAccordion('acc-inventory', this)">
-                <span class="menu-link-content">📦 Stock Catalog</span>
-                <span class="menu-caret">▶</span>
-            </button>
-            <ul class="menu-submenu" id="acc-inventory">
-                <li><a href="products.php" class="menu-link <?php echo ($active_page === 'products.php') ? 'active-sub' : ''; ?>"><?php echo $sidebar_trans[$sidebar_lang]['menu_inventory']; ?></a></li>
-                <li><a href="categories.php" class="menu-link <?php echo ($active_page === 'categories.php') ? 'active-sub' : ''; ?>"><?php echo $sidebar_trans[$sidebar_lang]['menu_categories']; ?></a></li>
-                <li><a href="inventory.php" class="menu-link <?php echo ($active_page === 'inventory.php') ? 'active-sub' : ''; ?>"><?php echo $sidebar_trans[$sidebar_lang]['menu_adjust']; ?></a></li>
-            </ul>
+            <a href="purchases.php" class="menu-link <?php echo ($active_page === 'purchases.php') ? 'active' : ''; ?>">
+                <i class="fa-solid fa-file-invoice"></i> <span>Purchase Invoice</span>
+            </a>
         </li>
-
-        <!-- Group: Contacts & Khata -->
-        <div class="menu-group-header"><?php echo $sidebar_trans[$sidebar_lang]['khata_header']; ?></div>
+        <li>
+            <a href="products.php" class="menu-link <?php echo ($active_page === 'products.php') ? 'active' : ''; ?>">
+                <i class="fa-solid fa-boxes-stacked"></i> <span>Products & Catalog</span>
+            </a>
+        </li>
+        <li>
+            <a href="categories.php" class="menu-link <?php echo ($active_page === 'categories.php') ? 'active' : ''; ?>">
+                <i class="fa-solid fa-folder-tree"></i> <span>Product Categories</span>
+            </a>
+        </li>
+        <li>
+            <a href="inventory.php" class="menu-link <?php echo ($active_page === 'inventory.php') ? 'active' : ''; ?>">
+                <i class="fa-solid fa-rotate"></i> <span>Stock Adjustments</span>
+            </a>
+        </li>
         <li>
             <a href="customers.php" class="menu-link <?php echo ($active_page === 'customers.php') ? 'active' : ''; ?>">
-                <span class="menu-link-content"><?php echo $sidebar_trans[$sidebar_lang]['menu_customers']; ?></span>
+                <i class="fa-solid fa-users"></i> <span>Customers (Udhaar)</span>
             </a>
         </li>
-
-        <!-- Group: Reports -->
-        <div class="menu-group-header"><?php echo $sidebar_trans[$sidebar_lang]['reports_header']; ?></div>
         <li>
             <a href="reports.php" class="menu-link <?php echo ($active_page === 'reports.php') ? 'active' : ''; ?>">
-                <span class="menu-link-content"><?php echo $sidebar_trans[$sidebar_lang]['menu_reports']; ?></span>
+                <i class="fa-solid fa-chart-pie"></i> <span>Business Reports</span>
             </a>
         </li>
-
-        <!-- Group: Marketing & Tools -->
-        <div class="menu-group-header"><?php echo $sidebar_trans[$sidebar_lang]['marketing_header']; ?></div>
         <li>
-            <button class="menu-accordion-btn <?php echo $group_marketing_active; ?>" onclick="toggleAccordion('acc-marketing', this)">
-                <span class="menu-link-content">📢 Marketing Tools</span>
-                <span class="menu-caret">▶</span>
-            </button>
-            <ul class="menu-submenu" id="acc-marketing">
-                <li><a href="whatsapp.php" class="menu-link <?php echo ($active_page === 'whatsapp.php') ? 'active-sub' : ''; ?>"><?php echo $sidebar_trans[$sidebar_lang]['menu_whatsapp']; ?></a></li>
-                <li><a href="marketing.php" class="menu-link <?php echo ($active_page === 'marketing.php') ? 'active-sub' : ''; ?>"><?php echo $sidebar_trans[$sidebar_lang]['menu_marketing']; ?></a></li>
-            </ul>
+            <a href="whatsapp.php" class="menu-link <?php echo ($active_page === 'whatsapp.php') ? 'active' : ''; ?>">
+                <i class="fa-brands fa-whatsapp"></i> <span>WhatsApp Bot</span>
+            </a>
         </li>
-
-        <!-- Group: Configuration -->
-        <div class="menu-group-header"><?php echo $sidebar_trans[$sidebar_lang]['setup_header']; ?></div>
         <li>
-            <a href="settings.php" class="menu-link <?php echo ($active_page === 'settings.php') ? 'active' : ''; ?>">
-                <span class="menu-link-content"><?php echo $sidebar_trans[$sidebar_lang]['menu_settings']; ?></span>
+            <a href="marketing.php" class="menu-link <?php echo ($active_page === 'marketing.php') ? 'active' : ''; ?>">
+                <i class="fa-solid fa-bullhorn"></i> <span>Marketing Tools</span>
             </a>
         </li>
     </ul>
 
-    <div style="margin-top: auto; padding-top: 15px; border-top: 1px solid #1e293b;">
-        <a href="index.php?action=logout" class="menu-link" style="color: var(--danger) !important; padding: 10px 16px;">
-            <span class="menu-link-content"><?php echo $sidebar_trans[$sidebar_lang]['logout']; ?></span>
+    <!-- User Profile Card (Travelista / TripSync Style) -->
+    <div class="sidebar-user-card">
+        <div class="sidebar-user-avatar">
+            <?php echo htmlspecialchars($avatarInitial); ?>
+        </div>
+        <div class="sidebar-user-info">
+            <div class="sidebar-user-name"><?php echo htmlspecialchars($currentUserName); ?></div>
+            <div class="sidebar-user-role"><?php echo htmlspecialchars(strtoupper($currentUserRole)); ?></div>
+        </div>
+    </div>
+
+    <!-- Bottom Action Buttons (TripSync Outline Pill Buttons) -->
+    <div class="sidebar-bottom-actions">
+        <button onclick="toggleSidebarCollapse()" class="sidebar-action-btn">
+            <i class="fa-solid fa-chevron-left sidebar-toggle-icon"></i> <span>Collapse Sidebar</span>
+        </button>
+        <button onclick="toggleTheme()" class="sidebar-action-btn">
+            <i class="fa-solid fa-moon"></i> <span>Dark Mode</span>
+        </button>
+        <a href="settings.php" class="sidebar-action-btn <?php echo ($active_page === 'settings.php') ? 'active-action' : ''; ?>">
+            <i class="fa-solid fa-gear"></i> <span>Settings</span>
+        </a>
+        <a href="index.php?action=logout" class="sidebar-action-btn logout-btn">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span>
         </a>
     </div>
 </aside>
 
 <script>
-    // Accordion Toggle Script with LocalStorage Persistence
-    function toggleAccordion(id, btn) {
-        const submenu = document.getElementById(id);
-        if (!submenu) return;
-        
-        const isOpen = submenu.classList.toggle('active');
-        btn.classList.toggle('active', isOpen);
-        
-        // Save state to localStorage
-        localStorage.setItem('sidebar_acc_' + id, isOpen ? 'open' : 'closed');
-    }
+function toggleSidebarCollapse() {
+    const sb = document.getElementById('mainSidebar');
+    if (!sb) return;
+    const isCollapsed = sb.classList.toggle('collapsed');
+    localStorage.setItem('tijarat_sidebar_collapsed', isCollapsed ? 'true' : 'false');
+}
 
-    // Restore accordion states on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        const accordions = ['acc-transactions', 'acc-inventory', 'acc-marketing'];
-        accordions.forEach(id => {
-            const submenu = document.getElementById(id);
-            const btn = submenu?.previousElementSibling;
-            if (!submenu || !btn) return;
-            
-            // Check if active page is inside this group to auto-expand
-            const hasActiveSub = submenu.querySelector('.active-sub') !== null;
-            const savedState = localStorage.getItem('sidebar_acc_' + id);
-            
-            if (hasActiveSub || savedState === 'open') {
-                submenu.classList.add('active');
-                btn.classList.add('active');
-                localStorage.setItem('sidebar_acc_' + id, 'open');
-            } else if (savedState === 'closed') {
-                submenu.classList.remove('active');
-                btn.classList.remove('active');
-            } else {
-                // Default collapsed
-                submenu.classList.remove('active');
-                btn.classList.remove('active');
-            }
-        });
-    });
+// Restore collapsed state on load
+document.addEventListener('DOMContentLoaded', () => {
+    const sb = document.getElementById('mainSidebar');
+    if (sb && localStorage.getItem('tijarat_sidebar_collapsed') === 'true') {
+        sb.classList.add('collapsed');
+    }
+});
 </script>
