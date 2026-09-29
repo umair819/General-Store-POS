@@ -1,29 +1,33 @@
-# 🏪 General Store / Kiryana POS System
-**Project Status:** 🟡 In Progress (Core Checkout, Khata, Purchases, WhatsApp Marketing, and Gemini AI OCR Completed)  
+# 🧴 Tijarat PRO — Perfume Retail Chain ERP System
+**Project Status:** 🟡 Phase 1 In Progress (Foundation & Database Migration)  
 **Priority:** ⭐⭐⭐⭐⭐ Very High  
-**Target Market:** Kiryana stores, general shops, departmental stores, utility stores across Pakistan  
-**Tech Stack:** PHP + SQLite + Electron + HTML/CSS/JS
+**Target Market:** Perfume retail chains, fragrance stores, attar shops across Pakistan  
+**Tech Stack:** PHP + MySQL (online) / SQLite (offline POS) + Electron + HTML/CSS/JS  
 
 ---
 
 ## 📋 Project Overview
 
-Pakistan mein 3 million se zyada kiryana/general stores hain. Inme se 95% abhi bhi 
-manually kaam karte hain ya simple register use karte hain. Ek bilkul simple, fast, 
-aur offline-capable POS system jo mobile/tablet pe bhi chale — yeh ek massive market hai.
-BiteDesk POS aur PharmaPOS ki technology ka combination use kar ke yeh jaldi ban sakta hai.
+A unified business software for perfume retail chains that combines:
+- **POS System** — In-store billing with barcode scanning
+- **E-commerce Store** — Online catalog, cart, checkout, order management
+- **WhatsApp Integration** — Order notifications, promotions, customer engagement
+- **Multi-Branch Chain Management** — Inventory transfers, consolidated reports
+- **Full ERP** — Suppliers, purchases, expenses, accounts, CRM, loyalty
+
+All managed from a single software platform.
 
 ---
 
-## ✅ Features To Develop (Kya Banana Hai)
+## ✅ Completed Features (Inherited from POS v1)
 
-### 1. 🔐 Login & User Management
+### 🔐 Login & User Management
 - [x] Admin / Owner login
 - [x] Cashier / Staff login (limited access)
 - [x] PIN-based quick login at POS screen
 - [x] Activity log (kon ne kya kiya)
 
-### 2. 🛒 POS / Billing Screen (Main Screen)
+### 🛒 POS / Billing Screen
 - [x] Dual-language support (Urdu / English quick toggle)
 - [x] Barcode scanner support (USB barcode reader)
 - [x] Quick item search by name or barcode
@@ -35,113 +39,245 @@ BiteDesk POS aur PharmaPOS ki technology ka combination use kar ke yeh jaldi ban
 - [x] Fast checkout with keyboard shortcuts
 - [x] Cash tendered & change calculation
 
-### 3. 💳 Payment Methods
+### 💳 Payment Methods
 - [x] Cash payment
 - [x] Easypaisa / JazzCash (manual confirm)
 - [x] Bank transfer / cheque
 - [x] Credit (Udhaar / Khata) — customer balance tracking
 - [x] Split payment (partial cash + partial Udhaar)
 
-### 4. 📦 Product / Item Management
+### 📦 Product Management
 - [x] Add products (Name, Category, Barcode, Purchase Price, Sale Price, Unit)
-- [x] Categories (Atta/Chawal, Drinks, Biscuits, Cleaning, etc.)
-- [x] Units: Kg, Gram, Packet, Dozen, Piece, Liter
-- [x] Multiple purchase units vs sale units (e.g., buy by carton, sell by piece)
+- [x] Categories management
+- [x] Multiple unit types
 - [x] Product photo (optional)
 - [x] Bulk product import via Excel/CSV
-- [x] Vyapar Backup Import Tool (Free 1-click migration of Products & Customers from Vyapar Excel/CSV exports)
+- [x] Vyapar Backup Import Tool
 
-### 5. 📊 Inventory / Stock Management
+### 📊 Inventory / Stock Management
 - [x] Current stock levels per item
 - [x] Low stock alert (set minimum threshold)
-- [x] Near-expiry stock alerts/notifications (for perishables)
+- [x] Near-expiry stock alerts
 - [x] Stock adjustment (damage, theft, correction)
-- [x] Stock in (purchase/restock entry)
-- [x] Expiry date tracking for perishables
+- [x] Expiry date tracking
 
-### 6. 🧾 Purchase Management
+### 🧾 Purchase Management
 - [x] Supplier/vendor list
 - [x] Purchase order creation
 - [x] Goods received entry
 - [x] Supplier payment tracking
 - [x] Supplier ledger (outstanding balance)
-- [x] 🤖 Gemini AI OCR Bill Scanner (Auto-extracts bill items, quantities, prices, and matches with catalog to update stock)
+- [x] 🤖 Gemini AI OCR Bill Scanner
 
-### 7. 👥 Customer & Khata (Udhaar) Management
+### 👥 Customer & Khata Management
 - [x] Customer list (Name, Phone, Address)
 - [x] Udhaar (credit) tracking per customer
-- [x] Payment collection from customer (Ledger Statement sheets)
-- [x] Customer statement print karo
+- [x] Payment collection from customer
+- [x] Customer statement print
 - [x] Send balance reminder via WhatsApp
 
-### 8. 🧾 Receipt & Invoice Printing
+### 🧾 Receipt & Invoice Printing
 - [x] 80mm thermal receipt printing
-- [ ] A4/A5 invoice printing
-- [ ] 10+ customizable receipt/invoice templates (different layouts, fonts, and colors)
 - [x] Shop name, logo, address on receipt
 - [x] Duplicate receipt reprint
 
-### 9. 📈 Reports & Analytics
+### 📈 Reports
 - [x] Daily sales report
-- [ ] Item-wise sales report (best sellers)
-- [ ] Category-wise sales
-- [ ] Profit & loss report (daily/monthly)
 - [x] Low stock report
 - [x] Udhaar/pending payments report
 - [x] Supplier outstanding report
 
-### 10. 📱 WhatsApp Integration
-- [ ] Daily sales summary to owner on WhatsApp
-- [x] Automated Udhaar/balance reminder scheduler to customers
-- [x] Near-expiry & low stock alert notifications to owner
-- [x] Receipt share to customer via WhatsApp (Text template)
-
-### 11. ⚙️ Settings
-- [x] Shop name, logo, address, phone
-- [x] Tax/GST settings (optional)
-- [x] Default currency (PKR)
-- [x] Receipt header/footer customization
-- [x] Backup & restore (Support own POS format backups)
-- [x] Advanced Restore & Migration Engine: Support direct upload & 1-click import of Vyapar (.vyb) backups and other market softwares
-- [ ] Multi-branch support (Phase 2)
-
-### 12. 🔒 Licensing
-- [ ] 15-day trial
-- [ ] License key system
-- [ ] Single PC / Network version
+### 📱 WhatsApp Integration
+- [x] Automated Udhaar/balance reminder scheduler
+- [x] Near-expiry & low stock alert notifications
+- [x] Receipt share via WhatsApp
+- [x] Marketing campaigns
 
 ---
 
-## 🛠️ Tech Stack Details
+## 🆕 New Features for Perfume Retail Chain ERP
+
+### Phase 1: Foundation & Database Migration ⏳
+- [x] MySQL schema with all new tables (28 tables)
+- [x] Dual-mode db_config.php (SQLite + MySQL)
+- [x] Cross-DB query helpers (dbConcat, dbDateFormat, dbNow)
+- [x] SQLite → MySQL migration script
+- [x] Updated api.php for cross-DB compatibility
+- [ ] Test MySQL connection and migration
+- [ ] Settings migration to key-value store
+
+### Phase 2: Perfume-Specific Product System 🔴
+- [ ] Brand management CRUD (with logo, country)
+- [ ] Fragrance family management (12 families pre-loaded)
+- [ ] Product variants (sizes: 10ml, 30ml, 50ml, 100ml, 200ml)
+- [ ] Enhanced product form (concentration, gender, description, notes)
+- [ ] SKU auto-generation
+- [ ] Tester management (opened bottles tracking)
+- [ ] Gift set / combo creation
+- [ ] Product image gallery
+
+### Phase 3: Multi-Branch Chain System 🔴
+- [ ] Branch management CRUD (name, location, manager)
+- [ ] Branch-wise inventory tracking
+- [ ] User-branch assignment
+- [ ] Inter-branch stock transfers (request → in_transit → received)
+- [ ] Branch-level access control (manager, cashier per branch)
+- [ ] Transfer history & reporting
+
+### Phase 4: Enhanced POS for Perfume Store 🔴
+- [ ] Updated POS UI with perfume product cards (brand logo, size, fragrance family)
+- [ ] Branch-aware billing (stock from branch_stock)
+- [ ] Loyalty points earn at POS
+- [ ] Loyalty points redeem at checkout
+- [ ] Tester checkout tracking
+- [ ] Gift set billing as single item
+- [ ] Sale channel tracking (pos/online/whatsapp)
+
+### Phase 5: E-commerce / Online Store 🔴
+- [ ] Public storefront design (modern, perfume-focused UI)
+- [ ] Product catalog with filters (brand, family, concentration, price, gender)
+- [ ] Product detail page (images, reviews, notes breakdown, similar products)
+- [ ] Shopping cart (persistent for logged-in, session for guests)
+- [ ] Customer registration / login (phone + OTP via WhatsApp)
+- [ ] Checkout flow (COD, Easypaisa, JazzCash, bank transfer)
+- [ ] Order placement & confirmation (WhatsApp notification)
+- [ ] Order management admin panel (status, fulfillment, shipping)
+- [ ] Customer account (order history, wishlist, loyalty points)
+- [ ] Coupons & discount codes
+- [ ] SEO-optimized product pages
+
+### Phase 6: Enhanced WhatsApp Module 🔴
+- [ ] Order confirmation via WhatsApp
+- [ ] Order status updates (shipped, delivered, etc.)
+- [ ] New arrival notifications
+- [ ] Promotional campaign builder with scheduling
+- [ ] Birthday/anniversary auto-offers with loyalty points
+- [ ] WhatsApp catalog integration
+- [ ] Daily sales summary to owner
+
+### Phase 7: Advanced Reports & Analytics 🔴
+- [ ] Brand-wise sales reports
+- [ ] Branch-wise comparison dashboard
+- [ ] Online vs offline analytics
+- [ ] Customer retention metrics
+- [ ] Profit & loss (branch + consolidated)
+- [ ] Inventory valuation report
+- [ ] Expense tracking & reporting
+- [ ] Best-selling perfumes chart
+- [ ] Category-wise sales breakdown
+
+### Phase 8: Polish, Security & Launch 🔴
+- [ ] License system implementation (PC ID, trial, activation)
+- [ ] User roles & permissions matrix
+- [ ] Performance optimization
+- [ ] MySQL backup & restore
+- [ ] Documentation
+- [ ] Deployment setup (VPS for e-commerce, Electron for POS)
+- [ ] Code protection (IonCube PHP / JS obfuscator)
+
+---
+
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Backend | PHP + SQLite (offline first) |
-| Database | SQLite 3 |
-| Frontend | HTML + CSS + JS (Outfit / Poppins typography) |
+| Backend | PHP 8+ |
+| Database | MySQL 8+ (online/chain) / SQLite 3 (offline POS) |
+| Frontend (Admin/POS) | HTML + CSS + JS (Outfit / Poppins typography) |
+| Frontend (E-commerce) | PHP + HTML/CSS/JS (public storefront) |
 | Barcode | USB barcode scanner (HID input) |
 | Printing | 80mm thermal (HTML preview / print) |
-| WhatsApp | Web URL redirection & hooks |
-| Packaging | Electron wrapper |
+| WhatsApp | Baileys (WhatsApp Web API) via Node.js service |
+| Packaging | Electron wrapper (desktop POS) |
+| Hosting | VPS (online store + API) |
 
 ---
 
-## 📁 Planned Folder Structure
+## 📁 Folder Structure
 
 ```
 Tijarat-PRO/
 ├── api.php                  # Central AJAX backend API
 ├── billing.php              # POS billing checkout interface
 ├── categories.php           # Categories registry CRUD
-├── customers.php            # Customer Khata & ledger payments
-├── purchases.php            # Stock purchases & Gemini AI OCR scanning
+├── customers.php            # Customer Khata & ledger
+├── purchases.php            # Stock purchases & Gemini AI OCR
 ├── marketing.php            # WhatsApp promotions campaigns
-├── products.php             # Inventory / Products CRUD
-├── settings.php             # Shop settings & restoration engine
+├── products.php             # Product catalog CRUD
+├── inventory.php            # Stock adjustments
+├── reports.php              # Business reports
+├── settings.php             # Shop settings & config
+├── whatsapp.php             # WhatsApp bot management
+├── sidebar.php              # Shared navigation sidebar
+├── login.php                # Authentication
+├── db_config.php            # Database configuration (dual-mode)
+├── db_config.json           # Config values (JSON store)
+├── schema.sql               # SQLite schema (original)
+├── schema_mysql.sql          # MySQL schema (new, 28 tables)
+├── migrate_to_mysql.php     # SQLite → MySQL migration tool
+├── license_manager.php      # License verification
 ├── main.js                  # Electron bootstrapper
-├── package.json             # Electron configuration
-└── PROJECT_PLAN.md          # Project plan roadmap
+├── package.json             # Electron + Node dependencies
+├── whatsapp_service.js      # Baileys WhatsApp service
+├── css/
+│   └── style.css            # Core stylesheet
+├── js/
+│   ├── chart.js             # Chart.js library
+│   ├── ipc-shim.js          # Electron IPC shim
+│   └── tailwind.js          # Tailwind standalone
+├── store/                    # 🆕 E-commerce storefront (Phase 5)
+│   ├── index.php            # Store homepage
+│   ├── catalog.php          # Product catalog
+│   ├── product.php          # Product detail page
+│   ├── cart.php             # Shopping cart
+│   ├── checkout.php         # Checkout flow
+│   ├── account.php          # Customer account
+│   ├── api.php              # Store API endpoints
+│   └── assets/              # Store CSS/JS/images
+└── PROJECT_PLAN.md          # This file
 ```
+
+---
+
+## 📊 Database Tables (28 Total)
+
+| # | Table | Purpose |
+|---|-------|---------|
+| 1 | users | Admin, managers, cashiers |
+| 2 | branches | Store chain branches |
+| 3 | brands | Perfume brands (Chanel, Dior, local) |
+| 4 | fragrance_families | Woody, Floral, Oriental, etc. |
+| 5 | categories | Product categories (Men's, Women's, Attar) |
+| 6 | products | Master product catalog |
+| 7 | product_variants | Size/volume variants |
+| 8 | branch_stock | Per-branch inventory |
+| 9 | stock_transfers | Inter-branch transfers |
+| 10 | stock_transfer_items | Transfer line items |
+| 11 | testers | Opened tester bottles |
+| 12 | customers | CRM + e-commerce customers |
+| 13 | customer_payments | Khata payments |
+| 14 | loyalty_transactions | Points earn/redeem history |
+| 15 | suppliers | Vendor list |
+| 16 | supplier_payments | Vendor payments |
+| 17 | purchases | Stock purchases |
+| 18 | purchase_items | Purchase line items |
+| 19 | sales | POS billing records |
+| 20 | sale_items | Sale line items |
+| 21 | orders | Online e-commerce orders |
+| 22 | order_items | Order line items |
+| 23 | order_status_history | Order status audit trail |
+| 24 | gift_sets | Pre-packaged combos |
+| 25 | gift_set_items | Combo contents |
+| 26 | expense_categories | Expense types |
+| 27 | expenses | Expense tracking |
+| 28 | whatsapp_campaigns | Campaign management |
+| 29 | whatsapp_messages | Message log |
+| 30 | product_reviews | Customer reviews |
+| 31 | wishlists | Customer wishlists |
+| 32 | cart_items | Persistent shopping cart |
+| 33 | coupons | Discount codes |
+| 34 | settings | Key-value config store |
+| 35 | activity_log | Audit trail |
 
 ---
 
@@ -150,76 +286,16 @@ Tijarat-PRO/
 | Plan | Price | Features |
 |------|-------|----------|
 | Trial | Free (15 days) | All features |
-| Basic (1 PC) | Rs. 5,000 - 8,000 | Single PC license |
-| Network | Rs. 12,000 - 18,000 | Multiple cashiers |
-| Annual Support | Rs. 2,000/year | Updates + support |
+| Single Store POS | Rs. 10,000 - 15,000 | POS + inventory + reports |
+| Chain (3 branches) | Rs. 25,000 - 35,000 | Multi-branch + POS |
+| Full ERP + E-commerce | Rs. 50,000 - 80,000 | Everything including online store |
+| Annual Support | Rs. 5,000/year | Updates + support |
 
 ---
 
-## 🎯 Development Phases
+## 📝 Notes
 
-| Phase | Tasks | Status |
-|-------|-------|--------|
-| Phase 1 | Products + Categories + Inventory | 🟢 Completed |
-| Phase 2 | POS billing screen + Payments | 🟢 Completed |
-| Phase 3 | Customer Khata + Udhaar tracking | 🟢 Completed |
-| Phase 4 | Purchase management + Suppliers | 🟢 Completed |
-| Phase 5 | Reports + Printing | 🟡 In Progress (Receipt printing done) |
-| Phase 6 | WhatsApp + Licensing + Packaging | 🟡 In Progress (WhatsApp Campaigns done) |Phase 4 | Purchase management + Suppliers | 🔴 Not Started |
-| Phase 5 | Reports + Printing | 🔴 Not Started |
-| Phase 6 | WhatsApp + Licensing + Packaging | 🔴 Not Started |
-
----
-
-## 📝 Notes & Ideas
-
-- **Code Reuse:** BiteDesk-POS-Web aur PharmaPOS ka code bohot reuse ho sakta hai.
-- **Competitive Advantage vs Vyapar (vyapar.pk):**
-  - **One-time Pricing:** Vyapar is yearly subscription-based (Rs. 3000-6000/year). Hum local shops ko Rs. 5,000-8,000 one-time lifetime license key pe offer karenge, jo Pakistan market ke liye zyada attractive hai.
-  - **Urdu-First Simplicity:** Vyapar contains complex accounting terms. Hum interface ko Urdu main aur aam fahm terms (Sale, Purchase, Stock, Udhaar) ke sath rakhain ge.
-  - **10+ Receipt/Invoice Templates:** Vyapar ki tarah thermal aur A4 templates ki customization options denge (jis me client apna logo, header, footer aur design choose kar sake).
-  - **Free WhatsApp Messaging:** Vyapar charges extra for SMS. Hum direct WhatsApp Web/Baileys integration se free messaging setup karenge.
-  - **Advanced Multi-Software Restore Engine:** System settings mein 1-click restore option hoga jo humari backup file ke sath sath Vyapar (.vyb) aur baaqi competitors ke backups se directly data migrate/restore kar sakega (switching cost to zero).
-  - **Offline Reliability:** 100% offline local setup without requiring high-speed internet.
-- **Hardware Integration:** Barcode scanner support (USB) is critical for faster kiryana checkouts.
-- **Device Support:** Tablet version can be supported in Phase 2 via local network web access.
-- **Financial Goal:** Target: Rs. 5,000-8,000 per shop — 1000 shops = Rs. 50 lakh+.
-
----
-
-## 🔐 Final Phase: Security & Licensing System (Launch Se Pehle Lazim)
-
-> **Is phase ko complete kiye baghair software sell nahi karna!**
-> **Note:** BiteDesk/PharmaPOS jaisi exact same security — PHP/Node.js stack.
-
-### Steps:
-
-#### Step 1 — PC ID Generation
-- [ ] Python helper ya PHP exec se `MachineGuid` read → SHA256
-- [ ] Fallback: MAC + hostname → SHA256
-
-#### Step 2 — Trial (Server-Side, 15 days)
-- [ ] File nahi — server pe track
-- [ ] "Trial — X days remaining"
-
-#### Step 3 — License Activation
-- [ ] `XXXX-XXXX-XXXX-XXXX` format
-- [ ] `POST /api/activate` → encrypted local save
-
-#### Step 4 — Startup Validation
-- [ ] PC ID verify + expiry + 3-din online check
-- [ ] 7-din offline grace
-
-#### Step 5 — Deactivation + 3-Day Lock
-#### Step 6 — Code Protection (IonCube PHP / JS obfuscator)
-#### Step 7 — Admin License Panel
-
-### Phase Table:
-| Phase | Tasks | Status |
-|-------|-------|--------|
-| Phase 7 | PC ID + Trial (server) | 🔴 Not Started |
-| Phase 7 | License activation | 🔴 Not Started |
-| Phase 7 | Startup validation | 🔴 Not Started |
-| Phase 7 | Deactivation + lock | 🔴 Not Started |
-| Phase 7 | Admin license panel | 🔴 Not Started |
-| Phase 7 | Code protection + build | 🔴 Not Started |
+- **Existing code is preserved** — All original POS features remain fully functional in SQLite mode
+- **Dual-mode database** — System works in both SQLite (offline) and MySQL (online) modes
+- **Incremental migration** — Switch to MySQL when ready, no data loss
+- **Phase-wise development** — Each phase is independently testable and deployable

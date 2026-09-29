@@ -78,9 +78,49 @@ switch ($action) {
     // -----------------------------------------
     // PRODUCTS ENDPOINTS
     // -----------------------------------------
+    // PRODUCTS ENDPOINTS (Dynamic Item Types & Attributes Support)
+    // -----------------------------------------
     case 'get-products':
-        $rows = dbQuery("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.name ASC");
+        $type_id = !empty($data['item_type_id']) ? (int)$data['item_type_id'] : null;
+        $sql = "SELECT p.*, c.name as category_name, it.name as item_type_name, it.slug as item_type_slug, it.icon as item_type_icon, b.name as brand_name 
+                FROM products p 
+                LEFT JOIN categories c ON p.category_id = c.id 
+                LEFT JOIN item_types it ON p.item_type_id = it.id 
+                LEFT JOIN brands b ON p.brand_id = b.id";
+        $params = [];
+        if ($type_id) {
+            $sql .= " WHERE p.item_type_id = ?";
+            $params[] = $type_id;
+        }
+        $sql .= " ORDER BY p.name ASC";
+        $rows = dbQuery($sql, $params);
         reply('products-list', $rows);
+        break;
+
+    case 'get-product-details':
+        $id = (int)($data['id'] ?? 0);
+        if (!$id) {
+            reply('product-details', ['success' => false, 'msg' => 'Product ID is required']);
+            break;
+        }
+        $product = dbQueryFirst("SELECT p.*, c.name as category_name, it.name as item_type_name, it.slug as item_type_slug, it.icon as item_type_icon, b.name as brand_name 
+                                 FROM products p 
+                                 LEFT JOIN categories c ON p.category_id = c.id 
+                                 LEFT JOIN item_types it ON p.item_type_id = it.id 
+                                 LEFT JOIN brands b ON p.brand_id = b.id 
+                                 WHERE p.id = ?", [$id]);
+        if (!$product) {
+            reply('product-details', ['success' => false, 'msg' => 'Product not found']);
+            break;
+        }
+        $attrs = getProductAttributes($id);
+        $variants = dbQuery("SELECT * FROM product_variants WHERE product_id = ? ORDER BY sort_order ASC", [$id]);
+        reply('product-details', [
+            'success' => true,
+            'product' => $product,
+            'attributes' => $attrs,
+            'variants' => $variants
+        ]);
         break;
 
     case 'save-product':
@@ -88,12 +128,21 @@ switch ($action) {
         $barcode = !empty($data['barcode']) ? trim($data['barcode']) : null;
         $name = trim($data['name'] ?? '');
         $category_id = !empty($data['category_id']) ? (int)$data['category_id'] : null;
+        $item_type_id = !empty($data['item_type_id']) ? (int)$data['item_type_id'] : null;
+        $brand_id = !empty($data['brand_id']) ? (int)$data['brand_id'] : null;
         $purchase_price = (float)($data['purchase_price'] ?? 0.0);
         $sale_price = (float)($data['sale_price'] ?? 0.0);
         $unit = trim($data['unit'] ?? 'Piece');
         $stock_qty = (float)($data['stock_qty'] ?? 0.0);
         $min_stock = (float)($data['min_stock_threshold'] ?? 5.0);
         $expiry_date = !empty($data['expiry_date']) ? $data['expiry_date'] : null;
+        $sku = !empty($data['sku']) ? trim($data['sku']) : null;
+        $description = trim($data['description'] ?? '');
+        $image_url = trim($data['image_url'] ?? '');
+        $has_variants = !empty($data['has_variants']) ? 1 : 0;
+        $is_online = isset($data['is_online']) ? (int)$data['is_online'] : 1;
+        $is_featured = !empty($data['is_featured']) ? 1 : 0;
+        $attributes = $data['attributes'] ?? [];
 
         if (empty($name)) {
             reply('product-saved', ['success' => false, 'msg' => 'Product name is required']);
@@ -102,28 +151,58 @@ switch ($action) {
 
         if ($id) {
             // Update
-            $res = dbExecute("UPDATE products SET barcode = ?, name = ?, category_id = ?, purchase_price = ?, sale_price = ?, unit = ?, min_stock_threshold = ?, expiry_date = ? WHERE id = ?", [
-                $barcode, $name, $category_id, $purchase_price, $sale_price, $unit, $min_stock, $expiry_date, $id
+            $res = dbExecute("UPDATE products SET barcode = ?, name = ?, category_id = ?, item_type_id = ?, brand_id = ?, purchase_price = ?, sale_price = ?, unit = ?, min_stock_threshold = ?, expiry_date = ?, sku = ?, description = ?, image_url = ?, has_variants = ?, is_online = ?, is_featured = ? WHERE id = ?", [
+                $barcode, $name, $category_id, $item_type_id, $brand_id, $purchase_price, $sale_price, $unit, $min_stock, $expiry_date, $sku, $description, $image_url, $has_variants, $is_online, $is_featured, $id
             ]);
+            $productId = $id;
             $msg = 'Product updated successfully';
         } else {
             // Insert
-            $res = dbExecute("INSERT INTO products (barcode, name, category_id, purchase_price, sale_price, unit, stock_qty, min_stock_threshold, expiry_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [
-                $barcode, $name, $category_id, $purchase_price, $sale_price, $unit, $stock_qty, $min_stock, $expiry_date
+            $res = dbExecute("INSERT INTO products (barcode, name, category_id, item_type_id, brand_id, purchase_price, sale_price, unit, stock_qty, min_stock_threshold, expiry_date, sku, description, image_url, has_variants, is_online, is_featured) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+                $barcode, $name, $category_id, $item_type_id, $brand_id, $purchase_price, $sale_price, $unit, $stock_qty, $min_stock, $expiry_date, $sku, $description, $image_url, $has_variants, $is_online, $is_featured
             ]);
+            $productId = $res['insertId'] ?? null;
             $msg = 'Product added successfully';
         }
 
-        if (isset($res['error'])) {
-            reply('product-saved', ['success' => false, 'msg' => 'Database error: ' . $res['error']]);
-        } else {
-            reply('product-saved', ['success' => true, 'msg' => $msg]);
+        if (isset($res['error']) || !$productId) {
+            reply('product-saved', ['success' => false, 'msg' => 'Database error: ' . ($res['error'] ?? 'Unknown error')]);
+            break;
         }
+
+        // Save dynamic EAV attributes if provided
+        if ($item_type_id && !empty($attributes) && is_array($attributes)) {
+            saveProductAttributes($productId, $item_type_id, $attributes);
+        }
+
+        // Save variants if has_variants is true and variants array provided
+        if ($has_variants && isset($data['variants']) && is_array($data['variants'])) {
+            dbExecute("DELETE FROM product_variants WHERE product_id = ?", [$productId]);
+            foreach ($data['variants'] as $idx => $v) {
+                $vLabel = trim($v['variant_label'] ?? '');
+                if (empty($vLabel)) continue;
+                $vBarcode = !empty($v['barcode']) ? trim($v['barcode']) : null;
+                $vSku = !empty($v['sku']) ? trim($v['sku']) : null;
+                $vPurchase = (float)($v['purchase_price'] ?? $purchase_price);
+                $vSale = (float)($v['sale_price'] ?? $sale_price);
+                $vStock = (float)($v['stock_qty'] ?? 0.0);
+                $vMinStock = (float)($v['min_stock_threshold'] ?? 3.0);
+                $vAttrs = isset($v['attribute_values']) ? (is_array($v['attribute_values']) ? json_encode($v['attribute_values']) : $v['attribute_values']) : null;
+
+                dbExecute("INSERT INTO product_variants (product_id, variant_label, attribute_values, barcode, sku, purchase_price, sale_price, stock_qty, min_stock_threshold, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+                    $productId, $vLabel, $vAttrs, $vBarcode, $vSku, $vPurchase, $vSale, $vStock, $vMinStock, $idx
+                ]);
+            }
+        }
+
+        reply('product-saved', ['success' => true, 'msg' => $msg, 'product_id' => $productId]);
         break;
 
     case 'delete-product':
         $id = $data['id'] ?? null;
         if ($id) {
+            dbExecute("DELETE FROM product_attributes WHERE product_id = ?", [$id]);
+            dbExecute("DELETE FROM product_variants WHERE product_id = ?", [$id]);
             $res = dbExecute("DELETE FROM products WHERE id = ?", [$id]);
             if (isset($res['error'])) {
                 reply('product-deleted', ['success' => false, 'msg' => 'Cannot delete: product is referenced by transactions']);
@@ -131,6 +210,267 @@ switch ($action) {
                 reply('product-deleted', ['success' => true, 'msg' => 'Product deleted successfully']);
             }
         }
+        break;
+
+    // -----------------------------------------
+    // ITEM TYPES & ATTRIBUTES ENDPOINTS
+    // -----------------------------------------
+    case 'get-item-types':
+        $activeIds = getActiveItemTypes();
+        $types = dbQuery("SELECT * FROM item_types ORDER BY sort_order ASC, name ASC");
+        foreach ($types as &$t) {
+            $t['is_store_active'] = in_array((int)$t['id'], $activeIds);
+            // Count products in this type
+            $cnt = dbQueryFirst("SELECT COUNT(*) as count FROM products WHERE item_type_id = ?", [$t['id']]);
+            $t['product_count'] = (int)($cnt['count'] ?? 0);
+        }
+        reply('item-types-list', [
+            'success' => true,
+            'types' => $types,
+            'active_ids' => $activeIds
+        ]);
+        break;
+
+    case 'set-active-item-types':
+        $ids = $data['item_type_ids'] ?? [];
+        if (!is_array($ids) || empty($ids)) {
+            reply('active-item-types-saved', ['success' => false, 'msg' => 'Please select at least one item type']);
+            break;
+        }
+        $cleanIds = array_values(array_unique(array_map('intval', $ids)));
+        setConfig('active_item_types', json_encode($cleanIds));
+        reply('active-item-types-saved', ['success' => true, 'msg' => 'Active item types updated successfully', 'active_ids' => $cleanIds]);
+        break;
+
+    case 'get-type-attributes':
+        $type_id = (int)($data['item_type_id'] ?? 0);
+        if (!$type_id) {
+            reply('type-attributes-list', ['success' => false, 'msg' => 'Item type ID is required']);
+            break;
+        }
+        $attrs = getTypeAttributes($type_id);
+        // Decode JSON options for select fields
+        foreach ($attrs as &$a) {
+            if ($a['options']) {
+                $a['options_array'] = json_decode($a['options'], true) ?: [];
+            } else {
+                $a['options_array'] = [];
+            }
+        }
+        reply('type-attributes-list', [
+            'success' => true,
+            'item_type_id' => $type_id,
+            'attributes' => $attrs
+        ]);
+        break;
+
+    // -----------------------------------------
+    // BRANDS ENDPOINTS
+    // -----------------------------------------
+    case 'get-brands':
+        $brands = dbQuery("SELECT b.*, (SELECT COUNT(*) FROM products WHERE brand_id = b.id) as product_count FROM brands b ORDER BY b.name ASC");
+        reply('brands-list', ['success' => true, 'brands' => $brands]);
+        break;
+
+    case 'save-brand':
+        $id = $data['id'] ?? null;
+        $name = trim($data['name'] ?? '');
+        $country = trim($data['country'] ?? '');
+        $description = trim($data['description'] ?? '');
+        $is_local = !empty($data['is_local']) ? 1 : 0;
+
+        if (empty($name)) {
+            reply('brand-saved', ['success' => false, 'msg' => 'Brand name is required']);
+            break;
+        }
+
+        $slug = strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', $name));
+
+        if ($id) {
+            $res = dbExecute("UPDATE brands SET name = ?, slug = ?, country = ?, description = ?, is_local = ? WHERE id = ?", [
+                $name, $slug, $country, $description, $is_local, $id
+            ]);
+            $msg = 'Brand updated successfully';
+        } else {
+            $res = dbExecute("INSERT INTO brands (name, slug, country, description, is_local) VALUES (?, ?, ?, ?, ?)", [
+                $name, $slug, $country, $description, $is_local
+            ]);
+            $msg = 'Brand added successfully';
+        }
+
+        if (isset($res['error'])) {
+            reply('brand-saved', ['success' => false, 'msg' => 'Database error: ' . $res['error']]);
+        } else {
+            reply('brand-saved', ['success' => true, 'msg' => $msg]);
+        }
+        break;
+
+    case 'delete-brand':
+        $id = (int)($data['id'] ?? 0);
+        if ($id) {
+            $prodCount = dbQueryFirst("SELECT COUNT(*) as cnt FROM products WHERE brand_id = ?", [$id]);
+            if (($prodCount['cnt'] ?? 0) > 0) {
+                reply('brand-deleted', ['success' => false, 'msg' => 'Cannot delete brand: assigned to ' . $prodCount['cnt'] . ' product(s)']);
+                break;
+            }
+            $res = dbExecute("DELETE FROM brands WHERE id = ?", [$id]);
+            reply('brand-deleted', ['success' => true, 'msg' => 'Brand deleted successfully']);
+        }
+        break;
+
+    // -----------------------------------------
+    // PACKAGE & SETUP WIZARD ENDPOINTS
+    // -----------------------------------------
+    case 'get-packages':
+        $packages = [
+            'O1' => [
+                'code' => 'O1',
+                'name' => 'Offline Solo',
+                'name_ur' => 'سولو آف لائن',
+                'tier' => 'offline',
+                'description' => 'Fast, single-terminal POS for small single-counter shops',
+                'price' => 'One-time / Local',
+                'badge' => 'Offline Starter',
+                'features' => [
+                    'Single PC Core POS', 'Standard Inventory', 'Basic Customer Udhaar', 
+                    '58mm/80mm Thermal Receipt', 'Barcode Scanner Support', 'Daily Sales Report'
+                ]
+            ],
+            'O2' => [
+                'code' => 'O2',
+                'name' => 'Offline Pro',
+                'name_ur' => 'پرو آف لائن',
+                'tier' => 'offline',
+                'description' => 'Full retail workflow with supplier purchasing, WhatsApp receipts & AI bill scanner',
+                'price' => 'One-time / Local',
+                'badge' => 'Most Popular Offline',
+                'features' => [
+                    'Everything in O1', 'Supplier Khata & Purchases', 'Baileys WhatsApp Bot', 
+                    'Gemini AI Invoice OCR Scanner', 'Marketing & Birthday Alerts', 'Low Stock & Expiry Alerts'
+                ]
+            ],
+            'O3' => [
+                'code' => 'O3',
+                'name' => 'Offline Enterprise',
+                'name_ur' => 'انٹرپرائز آف لائن',
+                'tier' => 'offline',
+                'description' => 'Multi-counter LAN setup with dynamic variants & advanced loyalty engine',
+                'price' => 'One-time / Local',
+                'badge' => 'Offline Flagship',
+                'features' => [
+                    'Everything in O2', 'LAN Multi-Terminal (Counter + Kitchen/Warehouse)', 
+                    'Multi-Variant Matrix (Size/Color/Volume)', 'Customer Loyalty Points', 
+                    'Custom A4 / Invoice Templates', 'Expense Tracking & Balance Sheet'
+                ]
+            ],
+            'H1' => [
+                'code' => 'H1',
+                'name' => 'Hybrid Starter',
+                'name_ur' => 'ہائبرڈ سٹارٹر',
+                'tier' => 'hybrid',
+                'description' => 'Offline-first desktop POS that seamlessly syncs with your online web catalog',
+                'price' => 'Annual / Cloud',
+                'badge' => 'Web Enabled',
+                'features' => [
+                    'Full O2 Retail Suite Locally', 'Auto Cloud Sync (Works 100% Offline)', 
+                    'Online E-Commerce Web Storefront', 'Customer Web Catalog & Inquiries', 
+                    'Remote Sales Monitoring'
+                ]
+            ],
+            'H2' => [
+                'code' => 'H2',
+                'name' => 'Hybrid Multi-Store',
+                'name_ur' => 'ہائبرڈ ملٹی اسٹور',
+                'tier' => 'hybrid',
+                'description' => 'Connect multiple retail branches with central warehouse & inter-store stock transfers',
+                'price' => 'Annual / Cloud',
+                'badge' => 'Retail Chain Ready',
+                'features' => [
+                    'Full O3 Suite on Each Branch', 'Multi-Branch Cloud Sync Engine', 
+                    'Inter-Branch Stock Transfers', 'Centralized HQ Cloud Dashboard', 
+                    'Consolidated Profit & Stock Reports', 'Brand & Dynamic Item Matrix'
+                ]
+            ],
+            'H3' => [
+                'code' => 'H3',
+                'name' => 'Hybrid Omni-Channel ERP',
+                'name_ur' => 'اومنی چینل ای آر پی',
+                'tier' => 'hybrid',
+                'description' => 'Ultimate retail powerhouse: Evolution API WhatsApp + full web store + unlimited branches',
+                'price' => 'Custom / Cloud',
+                'badge' => 'Ultimate ERP',
+                'features' => [
+                    'Everything in H2', 'Full E-Commerce Cart & Checkout (Order Web → Bill in POS)', 
+                    'Evolution API WhatsApp (Multi-Device Auto-Responder)', 'Customer Online Portal & Khata Self-View', 
+                    'REST API Access for Mobile App', 'Automated Daily Cloud Backups'
+                ]
+            ]
+        ];
+
+        reply('packages-list', [
+            'success' => true,
+            'packages' => $packages,
+            'active_package' => getActivePackage(),
+            'is_hybrid' => isHybridPackage(),
+            'is_offline' => isOfflinePackage()
+        ]);
+        break;
+
+    case 'set-active-package':
+        $pkg = strtoupper(trim($data['package'] ?? ''));
+        $validPackages = ['O1', 'O2', 'O3', 'H1', 'H2', 'H3'];
+        if (!in_array($pkg, $validPackages)) {
+            reply('package-saved', ['success' => false, 'msg' => 'Invalid package code']);
+            break;
+        }
+        setConfig('active_package', $pkg);
+        reply('package-saved', ['success' => true, 'msg' => "Package successfully switched to $pkg", 'active_package' => $pkg]);
+        break;
+
+    case 'get-store-setup':
+        reply('store-setup-data', [
+            'success' => true,
+            'shop_name' => getConfig('shop_name', 'TijaratPro'),
+            'shop_phone' => getConfig('shop_phone', ''),
+            'shop_address' => getConfig('shop_address', ''),
+            'shop_currency' => getConfig('shop_currency', 'PKR'),
+            'active_package' => getActivePackage(),
+            'active_item_types' => getActiveItemTypes(),
+            'store_setup_complete' => getConfig('store_setup_complete', '0'),
+            'tax_enabled' => getConfig('tax_enabled', '0'),
+            'tax_number' => getConfig('tax_number', '')
+        ]);
+        break;
+
+    case 'complete-store-setup':
+        $shop_name = trim($data['shop_name'] ?? '');
+        $shop_phone = trim($data['shop_phone'] ?? '');
+        $shop_address = trim($data['shop_address'] ?? '');
+        $shop_currency = trim($data['shop_currency'] ?? 'PKR');
+        $active_package = strtoupper(trim($data['active_package'] ?? 'O1'));
+        $item_types = $data['active_item_types'] ?? [1];
+
+        if (!empty($shop_name)) setConfig('shop_name', $shop_name);
+        if (!empty($shop_phone)) setConfig('shop_phone', $shop_phone);
+        if (!empty($shop_address)) setConfig('shop_address', $shop_address);
+        if (!empty($shop_currency)) setConfig('shop_currency', $shop_currency);
+        
+        $validPackages = ['O1', 'O2', 'O3', 'H1', 'H2', 'H3'];
+        if (in_array($active_package, $validPackages)) {
+            setConfig('active_package', $active_package);
+        }
+
+        if (is_array($item_types) && !empty($item_types)) {
+            $cleanTypes = array_values(array_unique(array_map('intval', $item_types)));
+            setConfig('active_item_types', json_encode($cleanTypes));
+        }
+
+        setConfig('store_setup_complete', '1');
+
+        reply('store-setup-completed', [
+            'success' => true,
+            'msg' => 'Store setup completed successfully!'
+        ]);
         break;
 
     // -----------------------------------------
@@ -347,8 +687,9 @@ switch ($action) {
         }
         // Fetch sales
         $sales = dbQuery("SELECT id, invoice_no as reference, total as debit, paid_amount as credit, created_at, 'sale' as type, payment_method FROM sales WHERE customer_id = ? AND status = 'completed'", [$cust_id]);
-        // Fetch payments
-        $payments = dbQuery("SELECT id, 'PAY-' || id as reference, 0.0 as debit, amount as credit, created_at, 'payment' as type, payment_method FROM customer_payments WHERE customer_id = ?", [$cust_id]);
+        // Fetch payments (cross-DB compatible concat)
+        $concatRef = dbConcat("'PAY-'", "id");
+        $payments = dbQuery("SELECT id, {$concatRef} as reference, 0.0 as debit, amount as credit, created_at, 'payment' as type, payment_method FROM customer_payments WHERE customer_id = ?", [$cust_id]);
         
         // Merge
         $ledger = array_merge($sales, $payments);
@@ -675,10 +1016,23 @@ Do not include any explanation, notes, or markdown formatting (e.g. do not wrap 
     case 'search-products':
         $query = trim($data['query'] ?? '');
         if ($query === '') {
-            $rows = dbQuery("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.name ASC LIMIT 30");
+            $rows = dbQuery("SELECT p.*, c.name as category_name, b.name as brand_name, it.name as item_type_name, it.icon as item_type_icon 
+                             FROM products p 
+                             LEFT JOIN categories c ON p.category_id = c.id 
+                             LEFT JOIN brands b ON p.brand_id = b.id 
+                             LEFT JOIN item_types it ON p.item_type_id = it.id 
+                             ORDER BY p.name ASC LIMIT 30");
         } else {
             $param = '%' . $query . '%';
-            $rows = dbQuery("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.name LIKE ? OR p.barcode = ? ORDER BY p.name ASC LIMIT 30", [$param, $query]);
+            $rows = dbQuery("SELECT DISTINCT p.*, c.name as category_name, b.name as brand_name, it.name as item_type_name, it.icon as item_type_icon 
+                             FROM products p 
+                             LEFT JOIN categories c ON p.category_id = c.id 
+                             LEFT JOIN brands b ON p.brand_id = b.id 
+                             LEFT JOIN item_types it ON p.item_type_id = it.id 
+                             LEFT JOIN product_variants pv ON pv.product_id = p.id 
+                             WHERE p.name LIKE ? OR p.barcode = ? OR p.sku = ? OR b.name LIKE ? OR c.name LIKE ? OR pv.barcode = ?
+                             ORDER BY p.name ASC LIMIT 30", 
+                             [$param, $query, $query, $param, $param, $query]);
         }
         reply('search-results', $rows);
         break;
@@ -715,7 +1069,8 @@ Do not include any explanation, notes, or markdown formatting (e.g. do not wrap 
 
             // 2. Insert items & update inventory
             foreach ($cart as $item) {
-                $product_id = (int)$item['id'];
+                $product_id = !empty($item['productId']) ? (int)$item['productId'] : (int)$item['id'];
+                $variant_id = !empty($item['variantId']) ? (int)$item['variantId'] : null;
                 $qty = (float)$item['qty'];
                 $item_discount = (float)($item['discount'] ?? 0.0);
                 
@@ -725,7 +1080,7 @@ Do not include any explanation, notes, or markdown formatting (e.g. do not wrap 
                     throw new Exception("Product ID $product_id not found in catalog");
                 }
                 $purchase_price = (float)$prod['purchase_price'];
-                $sale_price = (float)$prod['sale_price'];
+                $sale_price = (float)($item['price'] ?? $prod['sale_price']);
                 $item_total = ($sale_price * $qty) - $item_discount;
 
                 // Insert sale item
@@ -735,6 +1090,12 @@ Do not include any explanation, notes, or markdown formatting (e.g. do not wrap 
                 // Update product stock (deduct)
                 $stmtStock = $conn->prepare("UPDATE products SET stock_qty = stock_qty - ? WHERE id = ?");
                 $stmtStock->execute([$qty, $product_id]);
+
+                // Update variant stock if applicable
+                if ($variant_id) {
+                    $stmtVar = $conn->prepare("UPDATE product_variants SET stock_qty = stock_qty - ? WHERE id = ?");
+                    $stmtVar->execute([$qty, $variant_id]);
+                }
             }
 
             // 3. Update customer outstanding credit balance (Udhaar)
@@ -744,7 +1105,29 @@ Do not include any explanation, notes, or markdown formatting (e.g. do not wrap 
             }
 
             $conn->commit();
-            reply('sale-processed', ['success' => true, 'msg' => 'Checkout completed successfully!', 'invoice_no' => $invoice_no, 'sale_id' => $sale_id]);
+
+            // WhatsApp Digital Receipt auto-send (if customer phone available)
+            $waSent = false;
+            if ($customer_id && class_exists('WhatsAppEngine')) {
+                $cust = dbQueryFirst("SELECT phone FROM customers WHERE id = ?", [$customer_id]);
+                if ($cust && !empty($cust['phone'])) {
+                    WhatsAppEngine::sendReceipt($cust['phone'], [
+                        'invoice_no' => $invoice_no,
+                        'total' => $total,
+                        'paid_amount' => $paid_amount,
+                        'balance_amount' => $balance_amount,
+                        'items' => $cart
+                    ]);
+                    $waSent = true;
+                }
+            }
+
+            reply('sale-processed', [
+                'success' => true,
+                'msg' => 'Checkout completed successfully!' . ($waSent ? ' WhatsApp receipt sent.' : ''),
+                'invoice_no' => $invoice_no,
+                'sale_id' => $sale_id
+            ]);
 
         } catch (Exception $e) {
             $conn->rollBack();

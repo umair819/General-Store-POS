@@ -1,17 +1,23 @@
 {
-    "db_type": "sqlite",
     "db_name": "general_store.db",
     "shop_name": "AH Traders",
     "shop_phone": "03001234567",
-    "shop_address": "Saddar, Karachi, Pakistan",
+    "shop_address": "123, Saddar, Karachi, Pakistan",
     "shop_currency": "PKR",
     "gemini_api_key": "",
     "whatsapp_mode": "link",
-    "receipt_template": "green",
+    "receipt_template": "default",
     "tax_number": "",
     "tax_enabled": "0",
-    "stop_negative_stock": "1",
+    "stop_negative_stock": "0",
     "enable_passcode": "0",
     "decimal_places": 2,
-    "font_scale": 100
+    "font_scale": 100,
+    "active_package": "H3",
+    "active_item_types": "[2]",
+    "store_setup_complete": "1",
+    "cloud_sync_enabled": "0",
+    "cloud_server_url": "",
+    "cloud_api_key": "",
+    "cloud_branch_slug": "main-store"
 }

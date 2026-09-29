@@ -321,6 +321,22 @@ $trans = [
         </div>
     </div>
 
+    <!-- Variant Picker Modal -->
+    <div class="modal" id="variantPickerModal" style="z-index: 1060;">
+        <div class="card modal-card" style="max-width: 480px; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h3 id="vpProdName" style="font-family: var(--font-heading); font-size: 18px; font-weight: 700;">Select Variant</h3>
+                <button type="button" onclick="closeVariantPicker()" style="background: none; border: none; font-size: 20px; color: var(--text-muted); cursor: pointer;">&times;</button>
+            </div>
+            <div id="vpList" style="max-height: 320px; overflow-y: auto;">
+                <!-- variants listed dynamically -->
+            </div>
+            <div class="modal-actions" style="margin-top: 14px;">
+                <button class="btn btn-secondary" onclick="closeVariantPicker()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const trans = <?php echo json_encode($trans[$lang]); ?>;
         let cart = [];
@@ -426,15 +442,112 @@ $trans = [
                 
                 const card = document.createElement('div');
                 card.className = 'product-catalog-card';
-                card.onclick = () => addToCart(p);
+                card.onclick = () => onProductCardClick(p);
+
+                const brandBadge = p.brand_name ? `<span style="font-size: 10px; font-weight: 700; color: #6366f1; background: rgba(99,102,241,0.1); padding: 1px 5px; border-radius: 3px; margin-right: 4px;">${p.brand_name}</span>` : '';
+                const typeIcon = p.item_type_icon ? `<span style="font-size: 13px; margin-right: 4px;">${p.item_type_icon}</span>` : '';
+                const variantTag = (p.has_variants == 1) ? `<span style="font-size: 10px; font-weight: 700; color: var(--accent); background: var(--accent-light); padding: 1px 5px; border-radius: 10px; margin-left: 4px;">Variants</span>` : '';
+
                 card.innerHTML = `
                     <span class="stock-badge" style="${badgeStyle}">${p.stock_qty} ${p.unit}</span>
-                    <span class="name">${p.name}</span>
+                    <span class="name">${typeIcon}${brandBadge}${p.name}${variantTag}</span>
                     <span class="barcode">${p.barcode || '-'}</span>
                     <span class="price">${parseFloat(p.sale_price).toFixed(2)}</span>
                 `;
                 results.appendChild(card);
             });
+        }
+
+        function onProductCardClick(product) {
+            if (product.has_variants == 1) {
+                openVariantPicker(product);
+            } else {
+                addToCart(product);
+            }
+        }
+
+        async function openVariantPicker(product) {
+            const modal = document.getElementById('variantPickerModal');
+            document.getElementById('vpProdName').innerText = product.name;
+            const container = document.getElementById('vpList');
+            container.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> Loading variants...</div>';
+            modal.classList.add('active');
+
+            try {
+                const res = await fetch('api.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'get-product-details', data: { id: product.id } })
+                });
+                const json = await res.json();
+                const resp = json.find(r => r.channel === 'product-details');
+                const variants = resp?.data?.variants || [];
+
+                if (variants.length === 0) {
+                    addToCart(product);
+                    closeVariantPicker();
+                    return;
+                }
+
+                container.innerHTML = '';
+                variants.forEach(v => {
+                    const row = document.createElement('div');
+                    row.className = 'variant-select-item';
+                    row.style = 'display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-sm); margin-bottom: 8px; cursor: pointer; transition: var(--transition-smooth);';
+                    row.onmouseover = () => row.style.borderColor = 'var(--accent)';
+                    row.onmouseout = () => row.style.borderColor = 'var(--border-color)';
+                    row.onclick = () => addVariantToCart(product, v);
+
+                    row.innerHTML = `
+                        <div>
+                            <div style="font-weight: 700; font-size: 14px;">${v.variant_label}</div>
+                            <div style="font-size: 11px; color: var(--text-muted); font-family: monospace;">${v.barcode || v.sku || '-'}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 700; color: var(--accent); font-size: 14px;">Rs. ${parseFloat(v.sale_price).toFixed(2)}</div>
+                            <div style="font-size: 11px; color: var(--text-muted);">Stock: ${v.stock_qty}</div>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            } catch (err) {
+                container.innerHTML = '<div style="color: var(--danger); text-align: center; padding: 15px;">Failed to load variants.</div>';
+            }
+        }
+
+        function closeVariantPicker() {
+            document.getElementById('variantPickerModal').classList.remove('active');
+        }
+
+        function addVariantToCart(product, variant) {
+            const cartItemId = `${product.id}_v_${variant.id}`;
+            const existing = cart.find(item => item.id === cartItemId);
+            const varPrice = parseFloat(variant.sale_price || product.sale_price);
+            const varStock = parseFloat(variant.stock_qty || product.stock_qty);
+            const currentCartQty = existing ? existing.qty : 0;
+            
+            if (stopNegativeStock && (currentCartQty + 1 > varStock)) {
+                alert(`Stock Limit Reached for variant "${variant.variant_label}". Available stock: ${varStock}.`);
+                return;
+            }
+
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({
+                    id: cartItemId,
+                    productId: product.id,
+                    variantId: variant.id,
+                    name: `${product.name} (${variant.variant_label})`,
+                    price: varPrice,
+                    qty: 1,
+                    discount: 0,
+                    stock_qty: varStock,
+                    unit: product.unit || 'units'
+                });
+            }
+            closeVariantPicker();
+            renderCart();
         }
 
         // Cart State Management

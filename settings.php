@@ -14,14 +14,6 @@ $trans = [
     'en' => [
         'title' => 'TijaratPro - Settings',
         'dashboard' => 'Dashboard Overview',
-        'menu_billing' => '🛒 Tijarat POS',
-        'menu_inventory' => '📦 Tijarat Inventory',
-        'menu_customers' => '👥 Tijarat Ledger (Khata)',
-        'menu_purchases' => '🧾 Purchases',
-        'menu_reports' => '📈 Sales Reports',
-        'menu_settings' => '⚙️ Settings',
-        'menu_marketing' => '📢 Marketing Tool',
-        'logout' => '🚪 Logout',
         'heading' => '⚙️ POS Settings & Utilities',
         'backup_head' => '🔄 Advanced Restore & Migration Engine',
         'backup_sub' => 'Seamlessly import backup archives from competitor billing softwares to start immediately.',
@@ -54,46 +46,38 @@ $trans = [
         'template_vintage' => 'Vintage Dot-Matrix',
     ],
     'ur' => [
-        'title' => 'TijaratPro - Settings',
-        'dashboard' => 'Dashboard Overview',
-        'menu_billing' => '🛒 Tijarat POS',
-        'menu_inventory' => '📦 Stock & Inventory',
-        'menu_customers' => '👥 Customers & Khata (Udhaar)',
-        'menu_purchases' => '🧾 Purchases (Khareedari)',
-        'menu_reports' => '📈 Sales Reports',
-        'menu_settings' => '⚙️ Settings',
-        'menu_marketing' => '📢 Marketing Tool',
-        'logout' => '🚪 Logout',
-        'heading' => '⚙️ POS Settings & Utilities',
-        'backup_head' => '🔄 Advanced Restore & Migration Engine',
-        'backup_sub' => 'Bina kisi pareshani ke doosray billing softwares (jaise Vyapar) ki backup file se saara data fori import karein.',
-        'select_file' => 'Backup File select karein',
-        'allowed_formats' => 'Supported Formats: Vyapar Backup Archive (.vyb)',
-        'btn_restore' => 'Migration / Restore start karein',
-        'store_details' => 'Store Information',
-        'store_name' => 'Store / Shop Ka Naam',
-        'store_phone' => 'Contact Number',
-        'store_address' => 'Shop Ka Address',
-        'store_currency' => 'Base Currency',
-        'save_settings' => 'Configuration Save Karein',
-        'success_saved' => 'Settings successfully save ho gayin.',
-        'migration_in_progress' => 'Backup file process ho rahi hai... Please wait karein.',
-        'migration_success' => 'Migration completed successfully!',
-        'gemini_api_key' => 'Google Gemini API Key',
-        'whatsapp_mode' => 'WhatsApp Marketing Send Mode',
-        'whatsapp_mode_link' => 'WhatsApp Web (Browser Tabs - Safe)',
-        'whatsapp_mode_api' => 'Local headless background service (Needs Setup)',
-        'receipt_template' => 'Thermal Receipt Design Template',
-        'template_default' => 'Default Classic (Thermal)',
-        'template_modern' => 'Sleek Modern (Sans-serif)',
-        'template_elegant' => 'Elegant Serif (Traditional)',
-        'template_compact' => 'Compact (Paper Saver)',
-        'template_bold' => 'Bold Accent (High Contrast)',
-        'template_blue' => 'Corporate Blue',
-        'template_green' => 'Grocery Green',
-        'template_urdu' => 'Urdu Traditional (RTL)',
-        'template_luxury' => 'Retail Luxury (Spaced)',
-        'template_vintage' => 'Vintage Dot-Matrix',
+        'title' => 'تجارت پرو - سیٹنگز',
+        'dashboard' => 'ڈیش بورڈ اوور ویو',
+        'heading' => '⚙️ پی او ایس سیٹنگز',
+        'backup_head' => '🔄 ایڈوانسڈ ری سٹور اور مائیگریشن انجن',
+        'backup_sub' => 'دوسرے بلنگ سافٹ وئیرز کا بیک اپ امپورٹ کریں۔',
+        'select_file' => 'بیک اپ فائل منتخب کریں',
+        'allowed_formats' => 'سپورٹڈ فارمیٹ: Vyapar Backup (.vyb)',
+        'btn_restore' => 'مائیگریشن شروع کریں',
+        'store_details' => 'اسٹور کی معلومات',
+        'store_name' => 'اسٹور کا نام',
+        'store_phone' => 'رابطہ نمبر',
+        'store_address' => 'دکان کا پتہ',
+        'store_currency' => 'کرنسی',
+        'save_settings' => 'سیٹنگز محفوظ کریں',
+        'success_saved' => 'سیٹنگز کامیابی سے محفوظ ہو گئیں۔',
+        'migration_in_progress' => 'بیک اپ پروسیس ہو رہا ہے...',
+        'migration_success' => 'مائیگریشن مکمل ہو گئی!',
+        'gemini_api_key' => 'گوگل جیمنائی API Key',
+        'whatsapp_mode' => 'واٹس ایپ موڈ',
+        'whatsapp_mode_link' => 'واٹس ایپ ویب',
+        'whatsapp_mode_api' => 'لوکل سروس',
+        'receipt_template' => 'رسید ٹیمپلیٹ',
+        'template_default' => 'ڈیفالٹ کلاسک',
+        'template_modern' => 'ماڈرن',
+        'template_elegant' => 'روایتی',
+        'template_compact' => 'کمپیکٹ',
+        'template_bold' => 'بولڈ',
+        'template_blue' => 'بلیو',
+        'template_green' => 'گرین',
+        'template_urdu' => 'اردو روایتی',
+        'template_luxury' => 'لگژری ریٹیل',
+        'template_vintage' => 'ونٹیج ڈاٹ میٹرکس',
     ]
 ];
 
@@ -102,10 +86,13 @@ $success_msg = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_config') {
     $shop_name = trim($_POST['shop_name'] ?? 'TijaratPro');
     
-    // Save to configuration JSON
-    $config_data = [
-        'db_type' => 'sqlite',
-        'db_name' => 'general_store.db',
+    // Read existing config first to preserve keys
+    $existing = [];
+    if (file_exists(__DIR__ . '/db_config.json')) {
+        $existing = json_decode(file_get_contents(__DIR__ . '/db_config.json'), true) ?: [];
+    }
+
+    $config_data = array_merge($existing, [
         'shop_name' => $shop_name,
         'shop_phone' => trim($_POST['shop_phone'] ?? ''),
         'shop_address' => trim($_POST['shop_address'] ?? ''),
@@ -119,7 +106,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         'enable_passcode' => isset($_POST['enable_passcode']) ? '1' : '0',
         'decimal_places' => intval($_POST['decimal_places'] ?? 2),
         'font_scale' => intval($_POST['font_scale'] ?? 100),
-    ];
+    ]);
+
+    if (!empty($_POST['active_package'])) {
+        $config_data['active_package'] = strtoupper(trim($_POST['active_package']));
+    }
+
+    if (isset($_POST['active_item_types']) && is_array($_POST['active_item_types'])) {
+        $cleanTypes = array_values(array_unique(array_map('intval', $_POST['active_item_types'])));
+        $config_data['active_item_types'] = json_encode($cleanTypes);
+    }
+
     file_put_contents(__DIR__ . '/db_config.json', json_encode($config_data, JSON_PRETTY_PRINT));
     $success_msg = $trans[$lang]['success_saved'];
 }
@@ -139,6 +136,9 @@ $config = [
     'enable_passcode' => '0',
     'decimal_places' => 2,
     'font_scale' => 100,
+    'active_package' => 'O1',
+    'active_item_types' => '[1]',
+    'store_setup_complete' => '0',
 ];
 if (file_exists(__DIR__ . '/db_config.json')) {
     $json = json_decode(file_get_contents(__DIR__ . '/db_config.json'), true);
@@ -146,6 +146,10 @@ if (file_exists(__DIR__ . '/db_config.json')) {
         $config = array_merge($config, $json);
     }
 }
+
+$all_item_types = dbQuery("SELECT * FROM item_types ORDER BY sort_order ASC, name ASC");
+$active_type_ids = getActiveItemTypes();
+$active_package_code = getActivePackage();
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>" data-theme="<?php echo $theme; ?>">
@@ -154,6 +158,7 @@ if (file_exists(__DIR__ . '/db_config.json')) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $trans[$lang]['title']; ?></title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .layout-wrapper { display: flex; height: 100vh; overflow: hidden; }
         .content-panel { flex-grow: 1; padding: 40px; display: flex; flex-direction: column; gap: 30px; height: 100vh; overflow-y: auto; }
@@ -161,10 +166,10 @@ if (file_exists(__DIR__ . '/db_config.json')) {
         
         /* Premium Settings Tabs Layout */
         .settings-container { display: flex; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md); min-height: 520px; }
-        .settings-tabs { width: 240px; background-color: #0f172a; border-right: 1px solid #1e293b; display: flex; flex-direction: column; padding: 20px 10px; gap: 6px; flex-shrink: 0; }
-        .settings-tab-btn { display: flex; align-items: center; gap: 12px; padding: 12px 18px; color: #94a3b8; background: transparent; border: none; border-radius: 6px; font-family: var(--font-heading); font-size: 14px; font-weight: 500; cursor: pointer; text-align: left; transition: var(--transition-smooth); width: 100%; }
-        .settings-tab-btn:hover { background-color: #1e293b; color: #fff; }
-        .settings-tab-btn.active { background-color: var(--accent); color: #fff; font-weight: 600; }
+        .settings-tabs { width: 250px; background-color: var(--bg-input); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; padding: 20px 10px; gap: 6px; flex-shrink: 0; }
+        .settings-tab-btn { display: flex; align-items: center; gap: 12px; padding: 12px 18px; color: var(--text-muted); background: transparent; border: none; border-radius: 6px; font-family: var(--font-heading); font-size: 14px; font-weight: 500; cursor: pointer; text-align: left; transition: var(--transition-smooth); width: 100%; }
+        .settings-tab-btn:hover { background-color: var(--bg-card); color: var(--text-main); }
+        .settings-tab-btn.active { background-color: var(--accent); color: #fff; font-weight: 600; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3); }
         
         .settings-form { flex-grow: 1; padding: 40px; }
         .settings-tab-content { display: none; }
@@ -188,22 +193,39 @@ if (file_exists(__DIR__ . '/db_config.json')) {
         .status-alert.info { background: rgba(59, 130, 246, 0.08); color: var(--primary-blue); border-color: var(--primary-blue); display: block; }
         .status-alert.success { background: rgba(16, 185, 129, 0.08); color: var(--success); border-color: var(--success); display: block; }
         .status-alert.danger { background: rgba(239, 68, 68, 0.08); color: var(--danger); border-color: var(--danger); display: block; }
+
+        /* Item Types Setting Grid */
+        .type-item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            transition: var(--transition-smooth);
+        }
+        .type-item-row:hover {
+            border-color: var(--accent);
+        }
     </style>
 </head>
 <body class="<?php echo ($lang === 'ur') ? 'lang-urdu' : ''; ?>">
  
     <div class="layout-wrapper">
-        
         <?php include __DIR__ . '/sidebar.php'; ?>
  
         <main class="content-panel">
-            
             <header class="header-nav">
                 <h2 style="font-size: 22px; font-weight: 600;">
                     <?php echo $trans[$lang]['heading']; ?>
                 </h2>
  
                 <div style="display: flex; gap: 12px; align-items: center;">
+                    <a href="setup_wizard.php" class="btn btn-secondary" style="font-size: 13px; padding: 8px 16px;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Store Setup Wizard
+                    </a>
                     <button class="toggle-btn" onclick="toggleLanguage()"><?php echo ($lang === 'ur') ? 'English' : 'اردو'; ?></button>
                     <button class="toggle-btn" onclick="toggleTheme()"><?php echo ($theme === 'dark') ? '☀️ Light' : '🌙 Dark'; ?></button>
                 </div>
@@ -218,6 +240,8 @@ if (file_exists(__DIR__ . '/db_config.json')) {
             <div class="settings-container">
                 <aside class="settings-tabs">
                     <button type="button" class="settings-tab-btn active" onclick="switchSettingsTab('general', this)">⚙️ General Settings</button>
+                    <button type="button" class="settings-tab-btn" onclick="switchSettingsTab('item-types', this)">🏷️ Item Types</button>
+                    <button type="button" class="settings-tab-btn" onclick="switchSettingsTab('packages', this)">📦 Edition & Packages</button>
                     <button type="button" class="settings-tab-btn" onclick="switchSettingsTab('pos-print', this)">🖨️ POS & Print</button>
                     <button type="button" class="settings-tab-btn" onclick="switchSettingsTab('taxes', this)">⚖️ Taxes & VAT</button>
                     <button type="button" class="settings-tab-btn" onclick="switchSettingsTab('inventory', this)">📦 Inventory Rules</button>
@@ -228,6 +252,7 @@ if (file_exists(__DIR__ . '/db_config.json')) {
                 <form class="settings-form" method="POST" action="settings.php">
                     <input type="hidden" name="action" value="save_config">
                     
+                    <!-- 1. GENERAL TAB -->
                     <div class="settings-tab-content active" id="set-general">
                         <h3 style="font-size: 18px; font-weight: 600;">🏢 Store Information</h3>
                         <div style="height: 1px; background: var(--border-color); margin: 15px 0 25px 0;"></div>
@@ -257,14 +282,102 @@ if (file_exists(__DIR__ . '/db_config.json')) {
                         <div class="settings-group" style="margin-top: 15px;">
                             <label class="form-label" for="fontScale">Interface Zoom (Font Scale): <span id="fontScaleVal" style="font-weight: bold; color: var(--accent);"><?php echo intval($config['font_scale'] ?? 100); ?>%</span></label>
                             <input type="range" id="fontScale" name="font_scale" min="85" max="115" step="5" value="<?php echo intval($config['font_scale'] ?? 100); ?>" oninput="document.getElementById('fontScaleVal').textContent = this.value + '%'" style="width: 100%; cursor: pointer;">
-                            <span style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px;">Adjust the zoom factor of text, tables, and buttons across POS pages.</span>
                         </div>
                         
                         <button class="btn btn-primary" type="submit" style="margin-top: 35px; border-radius: 30px; padding: 12px 30px;">
                             💾 <?php echo $trans[$lang]['save_settings']; ?>
                         </button>
                     </div>
+
+                    <!-- 2. ITEM TYPES TAB -->
+                    <div class="settings-tab-content" id="set-item-types">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="font-size: 18px; font-weight: 600;">🏷️ Store Business & Item Types</h3>
+                            <a href="setup_wizard.php" class="btn btn-secondary" style="font-size: 12px; padding: 6px 12px;">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Open Setup Wizard
+                            </a>
+                        </div>
+                        <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 20px 0;">Enable the product categories your retail business deals with. Selected item types display specialized fields in the product editor.</p>
+                        <div style="height: 1px; background: var(--border-color); margin: 15px 0 25px 0;"></div>
+
+                        <div style="max-height: 420px; overflow-y: auto; padding-right: 6px;">
+                            <?php foreach ($all_item_types as $it): 
+                                $isChecked = in_array((int)$it['id'], $active_type_ids);
+                            ?>
+                                <div class="type-item-row">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <span style="font-size: 24px;"><?php echo $it['icon']; ?></span>
+                                        <div>
+                                            <div style="font-weight: 700; font-size: 14px;"><?php echo htmlspecialchars($it['name']); ?> <small style="color: var(--accent);">(<?php echo htmlspecialchars($it['name_ur'] ?? ''); ?>)</small></div>
+                                            <div style="font-size: 12px; color: var(--text-muted);"><?php echo htmlspecialchars($it['description'] ?? ''); ?></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label style="cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600;">
+                                            <input type="checkbox" name="active_item_types[]" value="<?php echo $it['id']; ?>" <?php echo $isChecked ? 'checked' : ''; ?> style="width: 18px; height: 18px;">
+                                            <span>Active in Store</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit" style="margin-top: 25px; border-radius: 30px; padding: 12px 30px;">
+                            💾 Save Item Types
+                        </button>
+                    </div>
+
+                    <!-- 3. PACKAGES & EDITION TAB -->
+                    <div class="settings-tab-content" id="set-packages">
+                        <h3 style="font-size: 18px; font-weight: 600;">📦 Software Edition & Package Licensing</h3>
+                        <p style="font-size: 13px; color: var(--text-muted); margin: 6px 0 20px 0;">Tijarat PRO supports 3 Offline-first editions and 3 Hybrid cloud editions.</p>
+                        <div style="height: 1px; background: var(--border-color); margin: 15px 0 25px 0;"></div>
+
+                        <div class="settings-grid">
+                            <div class="settings-group">
+                                <label class="form-label" for="activePackageSelect">Active Package Edition</label>
+                                <select class="form-control" id="activePackageSelect" name="active_package">
+                                    <optgroup label="Offline Local Packages (Zero Internet Needed)">
+                                        <option value="O1" <?php echo $active_package_code === 'O1' ? 'selected' : ''; ?>>O1 — Offline Solo (Single PC, Core POS)</option>
+                                        <option value="O2" <?php echo $active_package_code === 'O2' ? 'selected' : ''; ?>>O2 — Offline Pro (Purchasing, Baileys WhatsApp, AI OCR)</option>
+                                        <option value="O3" <?php echo $active_package_code === 'O3' ? 'selected' : ''; ?>>O3 — Offline Enterprise (LAN Multi-Counter, Variants, Loyalty)</option>
+                                    </optgroup>
+                                    <optgroup label="Hybrid Cloud Packages (Local SQLite + Cloud MySQL)">
+                                        <option value="H1" <?php echo $active_package_code === 'H1' ? 'selected' : ''; ?>>H1 — Hybrid Starter (Local POS + Online Web Catalog)</option>
+                                        <option value="H2" <?php echo $active_package_code === 'H2' ? 'selected' : ''; ?>>H2 — Hybrid Multi-Store (Retail Chain, Stock Transfers, Cloud HQ)</option>
+                                        <option value="H3" <?php echo $active_package_code === 'H3' ? 'selected' : ''; ?>>H3 — Omni-Channel ERP (Web Cart/Checkout, Evolution WhatsApp, REST API)</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="settings-group">
+                                <label class="form-label">Active Mode</label>
+                                <div style="padding: 10px 14px; background: var(--bg-input); border-radius: var(--radius-sm); border: 1px solid var(--border-color); font-weight: 700; color: var(--accent);">
+                                    <i class="fa-solid <?php echo isHybridPackage() ? 'fa-cloud' : 'fa-hard-drive'; ?>"></i>
+                                    <?php echo isHybridPackage() ? 'Hybrid Cloud Mode (Sync Enabled)' : 'Offline Local Mode (SQLite Desktop)'; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 18px; margin-top: 15px;">
+                            <div style="font-weight: 700; font-size: 13px; margin-bottom: 8px;">Active Package Features:</div>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 12.5px;">
+                                <div><i class="fa-solid fa-check" style="color: var(--success);"></i> POS Billing & Thermal Printing</div>
+                                <div><i class="fa-solid fa-check" style="color: var(--success);"></i> Multi-Type Catalog & Dynamic Attributes</div>
+                                <div><i class="fa-solid fa-check" style="color: <?php echo hasFeature('khata') ? 'var(--success)' : 'var(--text-muted)'; ?>;"></i> Customer Khata / Udhaar Tracking</div>
+                                <div><i class="fa-solid fa-check" style="color: <?php echo hasFeature('purchases') ? 'var(--success)' : 'var(--text-muted)'; ?>;"></i> Supplier Purchasing & Khata</div>
+                                <div><i class="fa-solid fa-check" style="color: <?php echo hasFeature('whatsapp_baileys') ? 'var(--success)' : 'var(--text-muted)'; ?>;"></i> WhatsApp Bot Receipts & Reminders</div>
+                                <div><i class="fa-solid fa-check" style="color: <?php echo hasFeature('ai_ocr') ? 'var(--success)' : 'var(--text-muted)'; ?>;"></i> Gemini AI Invoice OCR Scanner</div>
+                                <div><i class="fa-solid fa-check" style="color: <?php echo hasFeature('variants') ? 'var(--success)' : 'var(--text-muted)'; ?>;"></i> Multi-Variant Matrix (Size/Volume)</div>
+                                <div><i class="fa-solid fa-check" style="color: <?php echo hasFeature('cloud_sync') ? 'var(--success)' : 'var(--text-muted)'; ?>;"></i> Cloud Sync & Multi-Store Transfers</div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit" style="margin-top: 30px; border-radius: 30px; padding: 12px 30px;">
+                            💾 Save Package Setting
+                        </button>
+                    </div>
                     
+                    <!-- 4. POS & PRINT TAB -->
                     <div class="settings-tab-content" id="set-pos-print">
                         <h3 style="font-size: 18px; font-weight: 600;">🖨️ POS Checkout & Printing</h3>
                         <div style="height: 1px; background: var(--border-color); margin: 15px 0 25px 0;"></div>
@@ -298,56 +411,60 @@ if (file_exists(__DIR__ . '/db_config.json')) {
                         <div class="settings-checkbox-group">
                             <input type="checkbox" id="enablePasscode" name="enable_passcode" value="1" <?php echo ($config['enable_passcode'] == '1') ? 'checked' : ''; ?>>
                             <div style="display: flex; flex-direction: column;">
-                                <label style="font-weight: 600; cursor: pointer;" for="enablePasscode">Enable Password Protection</label>
-                                <span style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Require admin PIN code authentication (1234) before critical actions (e.g. deleting receipts or clearing records).</span>
+                                <label for="enablePasscode" style="font-weight: 600; font-size: 14px; cursor: pointer;">Enable Quick Cashier Switch & Admin Passcode</label>
+                                <span style="font-size: 12px; color: var(--text-muted);">Enforces cashier passcode when giving discounts or clearing transactions.</span>
                             </div>
                         </div>
 
-                        <button class="btn btn-primary" type="submit" style="margin-top: 35px; border-radius: 30px; padding: 12px 30px;">
+                        <button class="btn btn-primary" type="submit" style="margin-top: 25px; border-radius: 30px; padding: 12px 30px;">
                             💾 <?php echo $trans[$lang]['save_settings']; ?>
                         </button>
                     </div>
 
+                    <!-- 5. TAXES TAB -->
                     <div class="settings-tab-content" id="set-taxes">
-                        <h3 style="font-size: 18px; font-weight: 600;">⚖️ Tax & VAT Configurations</h3>
+                        <h3 style="font-size: 18px; font-weight: 600;">⚖️ Tax & Fiscal Compliance</h3>
                         <div style="height: 1px; background: var(--border-color); margin: 15px 0 25px 0;"></div>
 
-                        <div class="settings-group" style="margin-bottom: 25px;">
-                            <label class="form-label" for="taxNumber">Tax / NTN / GST Registration Number</label>
-                            <input class="form-control" type="text" id="taxNumber" name="tax_number" value="<?php echo htmlspecialchars($config['tax_number'] ?? ''); ?>" placeholder="E.g. 1234567-8 or GST-12-34-5678-910">
-                            <span style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px;">This number will print at the top header of thermal checkouts.</span>
+                        <div class="settings-grid">
+                            <div class="settings-group">
+                                <label class="form-label" for="taxNumber">FBR STRN / NTN Tax Identifier</label>
+                                <input class="form-control" type="text" id="taxNumber" name="tax_number" value="<?php echo htmlspecialchars($config['tax_number'] ?? ''); ?>" placeholder="e.g. 1234567-8">
+                            </div>
                         </div>
 
                         <div class="settings-checkbox-group">
                             <input type="checkbox" id="taxEnabled" name="tax_enabled" value="1" <?php echo ($config['tax_enabled'] == '1') ? 'checked' : ''; ?>>
                             <div style="display: flex; flex-direction: column;">
-                                <label style="font-weight: 600; cursor: pointer;" for="taxEnabled">Apply Tax (GST/VAT) on Checkout</label>
-                                <span style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Automatically compute and append standard sales tax calculation logic to shopping carts.</span>
+                                <label for="taxEnabled" style="font-weight: 600; font-size: 14px; cursor: pointer;">Print Tax Information on Receipts</label>
+                                <span style="font-size: 12px; color: var(--text-muted);">Displays the STRN/NTN at the header of thermal slips and invoices.</span>
                             </div>
                         </div>
 
-                        <button class="btn btn-primary" type="submit" style="margin-top: 35px; border-radius: 30px; padding: 12px 30px;">
+                        <button class="btn btn-primary" type="submit" style="margin-top: 25px; border-radius: 30px; padding: 12px 30px;">
                             💾 <?php echo $trans[$lang]['save_settings']; ?>
                         </button>
                     </div>
 
+                    <!-- 6. INVENTORY TAB -->
                     <div class="settings-tab-content" id="set-inventory">
-                        <h3 style="font-size: 18px; font-weight: 600;">📦 Inventory & Catalog Settings</h3>
+                        <h3 style="font-size: 18px; font-weight: 600;">📦 Stock & Inventory Control</h3>
                         <div style="height: 1px; background: var(--border-color); margin: 15px 0 25px 0;"></div>
 
                         <div class="settings-checkbox-group">
                             <input type="checkbox" id="stopNegativeStock" name="stop_negative_stock" value="1" <?php echo ($config['stop_negative_stock'] == '1') ? 'checked' : ''; ?>>
                             <div style="display: flex; flex-direction: column;">
-                                <label style="font-weight: 600; cursor: pointer;" for="stopNegativeStock">Stop Sale on Negative Stock</label>
-                                <span style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Enforce strict stock boundaries, blocking POS invoicing if item store balance runs below requested billing quantities.</span>
+                                <label for="stopNegativeStock" style="font-weight: 600; font-size: 14px; cursor: pointer;">Stop Negative Inventory Billing</label>
+                                <span style="font-size: 12px; color: var(--text-muted);">Blocks checkout when an item has zero remaining stock quantity.</span>
                             </div>
                         </div>
 
-                        <button class="btn btn-primary" type="submit" style="margin-top: 35px; border-radius: 30px; padding: 12px 30px;">
+                        <button class="btn btn-primary" type="submit" style="margin-top: 25px; border-radius: 30px; padding: 12px 30px;">
                             💾 <?php echo $trans[$lang]['save_settings']; ?>
                         </button>
                     </div>
 
+                    <!-- 7. INTEGRATIONS TAB -->
                     <div class="settings-tab-content" id="set-integrations">
                         <h3 style="font-size: 18px; font-weight: 600;">📱 Integrations & API Configs</h3>
                         <div style="height: 1px; background: var(--border-color); margin: 15px 0 25px 0;"></div>
@@ -371,6 +488,7 @@ if (file_exists(__DIR__ . '/db_config.json')) {
                         </button>
                     </div>
 
+                    <!-- 8. BACKUP & RESTORE TAB -->
                     <div class="settings-tab-content" id="set-restore">
                         <h3 style="font-size: 18px; font-weight: 600;">🔄 <?php echo $trans[$lang]['backup_head']; ?></h3>
                         <div style="height: 1px; background: var(--border-color); margin: 15px 0 25px 0;"></div>
@@ -397,65 +515,56 @@ if (file_exists(__DIR__ . '/db_config.json')) {
 
                 </form>
             </div>
- 
         </main>
- 
     </div>
- 
+
     <script>
         const lang = "<?php echo $lang; ?>";
         const trans = <?php echo json_encode($trans[$lang]); ?>;
         let selectedFileBase64 = "";
 
-        // Client-side Settings Tabs Switcher
         function switchSettingsTab(tabId, btn) {
-            // Hide all tab content panes
             const contents = document.querySelectorAll('.settings-tab-content');
             contents.forEach(el => el.classList.remove('active'));
             
-            // Remove active classes from all tab selector buttons
             const buttons = document.querySelectorAll('.settings-tab-btn');
             buttons.forEach(el => el.classList.remove('active'));
             
-            // Display selected panel & highlight toggle
             document.getElementById('set-' + tabId).classList.add('active');
             btn.classList.add('active');
         }
- 
+
         function triggerFileSelect() {
             document.getElementById('backupFileInput').click();
         }
- 
+
         function handleFileChange(e) {
             const file = e.target.files[0];
             if (!file) return;
- 
+
             const nameDisplay = document.getElementById('fileNameDisplay');
             nameDisplay.innerText = "📄 " + file.name + " (" + (file.size / 1024).toFixed(1) + " KB)";
             nameDisplay.style.display = 'block';
- 
-            // Show restore action button
+
             document.getElementById('restoreBtn').style.display = 'block';
             
-            // Convert file to base64
             const reader = new FileReader();
             reader.onload = function(evt) {
                 selectedFileBase64 = evt.target.result;
             };
             reader.readAsDataURL(file);
         }
- 
+
         function startMigration() {
             if (!selectedFileBase64) return;
- 
+
             const alertBox = document.getElementById('statusAlert');
             alertBox.className = "status-alert info";
             alertBox.innerText = trans.migration_in_progress;
- 
-            // Disable buttons during execution
+
             document.getElementById('restoreBtn').disabled = true;
             document.getElementById('backupFileInput').disabled = true;
- 
+
             fetch('api.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -468,14 +577,12 @@ if (file_exists(__DIR__ . '/db_config.json')) {
             .then(data => {
                 const response = data.find(r => r.channel === 'backup-restored');
                 
-                // Re-enable actions
                 document.getElementById('restoreBtn').disabled = false;
                 document.getElementById('backupFileInput').disabled = false;
                 
                 if (response && response.data.success) {
                     alertBox.className = "status-alert success";
                     alertBox.innerText = "🎉 " + response.data.msg;
-                    // Reset inputs after delay
                     setTimeout(() => {
                         document.getElementById('fileNameDisplay').style.display = 'none';
                         document.getElementById('restoreBtn').style.display = 'none';
@@ -492,14 +599,14 @@ if (file_exists(__DIR__ . '/db_config.json')) {
                 alertBox.innerText = "Network error during restore process: " + err.message;
             });
         }
- 
+
         function toggleLanguage() {
             const currentLang = "<?php echo $lang; ?>";
             const newLang = (currentLang === 'en') ? 'ur' : 'en';
             document.cookie = "lang=" + newLang + "; path=/; max-age=" + (365*24*60*60);
             window.location.reload();
         }
- 
+
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = (currentTheme === 'dark') ? 'light' : 'dark';

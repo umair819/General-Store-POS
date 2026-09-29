@@ -5,6 +5,18 @@ $currentUserName = $_SESSION['name'] ?? $_SESSION['username'] ?? 'Admin';
 $currentUserRole = $_SESSION['role'] ?? 'Administrator';
 $avatarInitial = !empty($currentUserName) ? strtoupper(substr($currentUserName, 0, 1)) : 'A';
 ?>
+<?php
+$sidebar_pkg = getActivePackage();
+$is_hybrid = isHybridPackage();
+$pkgBadgeText = [
+    'O1' => 'O1 Solo',
+    'O2' => 'O2 Pro',
+    'O3' => 'O3 Enterprise',
+    'H1' => 'H1 Hybrid',
+    'H2' => 'H2 Multi-Store',
+    'H3' => 'H3 Omni ERP',
+][$sidebar_pkg] ?? $sidebar_pkg;
+?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <aside class="sidebar" id="mainSidebar">
     <!-- Brand Header Logo -->
@@ -15,8 +27,24 @@ $avatarInitial = !empty($currentUserName) ? strtoupper(substr($currentUserName, 
             </div>
             <div class="sidebar-brand-text">Tijarat<span>Pro</span></div>
         </a>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding: 4px 8px; background: var(--bg-input); border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+            <span style="font-size: 11px; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 5px;">
+                <i class="fa-solid <?php echo $is_hybrid ? 'fa-cloud' : 'fa-hard-drive'; ?>"></i>
+                <?php echo htmlspecialchars($pkgBadgeText); ?>
+            </span>
+            <a href="setup_wizard.php" title="Run Setup Wizard / Change Item Types" style="font-size: 11px; color: var(--text-muted); text-decoration: none; padding: 2px 6px; border-radius: 4px; background: var(--bg-card);">
+                <i class="fa-solid fa-sliders"></i>
+            </a>
+        </div>
     </div>
     
+<?php
+$pending_web_orders = 0;
+try {
+    $res = dbQuery("SELECT COUNT(*) as cnt FROM orders WHERE order_status = 'pending'");
+    $pending_web_orders = (int)($res[0]['cnt'] ?? 0);
+} catch (Exception $e) {}
+?>
     <!-- Flat Menu Navigation (Sleek Buttons, No Extra Group Headers) -->
     <ul class="sidebar-menu">
         <li>
@@ -27,6 +55,14 @@ $avatarInitial = !empty($currentUserName) ? strtoupper(substr($currentUserName, 
         <li>
             <a href="billing.php" class="menu-link <?php echo ($active_page === 'billing.php') ? 'active' : ''; ?>">
                 <i class="fa-solid fa-receipt"></i> <span>POS Billing</span>
+            </a>
+        </li>
+        <li>
+            <a href="online_orders.php" class="menu-link <?php echo ($active_page === 'online_orders.php') ? 'active' : ''; ?>">
+                <i class="fa-solid fa-earth-americas"></i> <span>Online Orders</span>
+                <?php if ($pending_web_orders > 0): ?>
+                    <span style="margin-left: auto; background: var(--accent); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 9999px;"><?php echo $pending_web_orders; ?></span>
+                <?php endif; ?>
             </a>
         </li>
         <li>

@@ -168,19 +168,51 @@ function activate_license($key, $customer_name = '') {
     $licenseFile = get_license_file_path();
     
     // 1. Emergency Offline Keys
-    if ($key === 'MASTER-UNLOCK-ERP-2026' || str_replace('-', '', $key) === 'MASTERUNLOCKERP2026') {
+    $packageKeys = [
+        'MASTER-O1-SOLO' => 'O1',
+        'MASTER-O2-PRO' => 'O2',
+        'MASTER-O3-ENT' => 'O3',
+        'MASTER-H1-HYBRID' => 'H1',
+        'MASTER-H2-CHAIN' => 'H2',
+        'MASTER-H3-ERP' => 'H3',
+    ];
+    $cleanKey = str_replace('-', '', $key);
+    foreach ($packageKeys as $k => $pkg) {
+        if ($key === $k || $cleanKey === str_replace('-', '', $k)) {
+            $expiry = date('Y-m-d', strtotime('+30 years'));
+            $data = [
+                'key' => $key,
+                'pc_id' => $pc_id,
+                'customer_name' => $customer_name ?: "Tijarat PRO ($pkg)",
+                'activated_at' => date('Y-m-d'),
+                'expires_at' => $expiry,
+                'last_verified' => date('Y-m-d'),
+                'plan' => $pkg
+            ];
+            _write_encrypted_file($licenseFile, $data);
+            if (function_exists('setConfig')) {
+                setConfig('active_package', $pkg);
+            }
+            return ['success' => true, 'message' => "Activation successful for Package $pkg!", 'plan' => $pkg];
+        }
+    }
+
+    if ($key === 'MASTER-UNLOCK-ERP-2026' || $cleanKey === 'MASTERUNLOCKERP2026') {
         $expiry = date('Y-m-d', strtotime('+30 years'));
         $data = [
             'key' => $key,
             'pc_id' => $pc_id,
-            'customer_name' => $customer_name ?: 'Emergency Master License',
+            'customer_name' => $customer_name ?: 'Emergency Master License (All Features)',
             'activated_at' => date('Y-m-d'),
             'expires_at' => $expiry,
             'last_verified' => date('Y-m-d'),
-            'plan' => 'lifetime'
+            'plan' => 'H3'
         ];
         _write_encrypted_file($licenseFile, $data);
-        return ['success' => true, 'message' => 'Master bypass activation successful!', 'plan' => 'lifetime'];
+        if (function_exists('setConfig')) {
+            setConfig('active_package', 'H3');
+        }
+        return ['success' => true, 'message' => 'Master bypass activation successful (H3 Ultimate ERP)!', 'plan' => 'H3'];
     }
     
     if ($key === 'MASTER-EXTEND-15-DAYS' || str_replace('-', '', $key) === 'MASTEREXTEND15DAYS') {
